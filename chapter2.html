@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>第2章 生成AI(ジェネレーティブAI) 復習チャット</title>
+<style>
+  :root{
+    --bg:#f5f3ef;
+    --card:#ffffff;
+    --text:#3a3630;
+    --sub:#8a8378;
+    --orange:#e8792c;
+    --orange-light:#fdece0;
+    --bot-bubble:#ffffff;
+    --user-bubble:#e8792c;
+    --correct:#4c9a6a;
+    --wrong:#d9534f;
+    --border:#e6e1d8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);}
+  #app{max-width:480px;margin:0 auto;height:100vh;height:-webkit-fill-available;height:100dvh;display:flex;flex-direction:column;background:var(--bg);}
+
+  header{
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+  header .avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--orange);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:bold;font-size:15px;flex-shrink:0;
+  }
+  header .title{font-size:15px;font-weight:600;line-height:1.3;}
+  header .sub{font-size:11px;color:var(--sub);}
+
+  .level-bar{
+    display:flex;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    flex-shrink:0;
+  }
+  .level-btn{
+    flex:1;
+    padding:9px 0;
+    border-radius:20px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    color:var(--sub);
+    font-size:13px;
+    font-weight:600;
+    text-align:center;
+  }
+  .level-btn.active{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#fff;
+  }
+
+  #chat{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 14px 90px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .bubble-row{display:flex;gap:8px;align-items:flex-end;}
+  .bubble-row.bot{justify-content:flex-start;}
+  .bubble-row.user{justify-content:flex-end;}
+
+  .mini-avatar{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--orange);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:bold;flex-shrink:0;
+  }
+
+  .bubble{
+    max-width:78%;
+    padding:10px 14px;
+    border-radius:16px;
+    font-size:14.5px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    box-shadow:0 1px 2px rgba(0,0,0,0.05);
+  }
+  .bot .bubble{
+    background:var(--bot-bubble);
+    border:1px solid var(--border);
+    border-bottom-left-radius:4px;
+  }
+  .user .bubble{
+    background:var(--user-bubble);
+    color:#fff;
+    border-bottom-right-radius:4px;
+  }
+  .bubble.correct{background:#eaf6ee;border:1px solid var(--correct);color:#2f6b46;}
+  .bubble.wrong{background:#fdecea;border:1px solid var(--wrong);color:#a83a34;}
+  .bubble.explain{background:var(--orange-light);border:1px solid #f3caa3;color:#7a4413;}
+  .bubble .tag{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:6px;
+    background:var(--orange);
+    color:#fff;
+  }
+
+  .choices{display:flex;flex-direction:column;gap:8px;margin-top:2px;padding-left:34px;}
+  .choice-btn{
+    text-align:left;
+    padding:10px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    font-size:14px;
+    color:var(--text);
+  }
+  .choice-btn:active{background:var(--orange-light);}
+  .choice-btn:disabled{opacity:0.5;}
+
+  .next-wrap{padding-left:34px;margin-top:2px;}
+  .next-btn{
+    padding:9px 20px;
+    border-radius:20px;
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    font-size:13.5px;
+    font-weight:600;
+  }
+
+  #progress-wrap{
+    position:sticky;
+    bottom:0;
+    background:linear-gradient(to top, var(--bg) 70%, transparent);
+    padding:10px 14px 14px 14px;
+    flex-shrink:0;
+  }
+  #progress-bar-bg{
+    background:var(--border);
+    border-radius:10px;
+    height:8px;
+    overflow:hidden;
+  }
+  #progress-bar-fg{
+    background:var(--orange);
+    height:100%;
+    width:0%;
+    transition:width 0.3s ease;
+  }
+  #progress-text{
+    font-size:11.5px;
+    color:var(--sub);
+    margin-top:5px;
+    text-align:center;
+  }
+
+  .result-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    margin-left:34px;
+  }
+  .result-card .score{font-size:32px;font-weight:800;color:var(--orange);margin:6px 0;}
+  .restart-btn{
+    margin-top:12px;
+    padding:10px 22px;
+    border-radius:20px;
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    font-size:14px;
+    font-weight:600;
+  }
+  .home-link{
+    display:inline-block;
+    margin-top:14px;
+    font-size:12.5px;
+    color:var(--sub);
+    text-decoration:underline;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="avatar">AI</div>
+    <div>
+      <div class="title">第2章 復習チャット</div>
+      <div class="sub">生成AI(ジェネレーティブAI) ー 生成AIパスポート対策</div>
+    </div>
+  </header>
+
+  <div class="level-bar">
+    <div class="level-btn active" id="btn-basic">基礎レベル</div>
+    <div class="level-btn" id="btn-advanced">応用レベル</div>
+  </div>
+
+  <div id="chat"></div>
+
+  <div id="progress-wrap">
+    <div id="progress-bar-bg"><div id="progress-bar-fg"></div></div>
+    <div id="progress-text">0 / 0 問</div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  basic: [
+    {q:"1980年代後半にヒントンらが提唱した、確率的なニューラルネットワークの一種は？", choices:["ボルツマンマシン","Transformer","GAN","LSTM"], answer:0,
+     explain:"ボルツマンマシンは実数を使った多層学習を可能にし、AI学習研究に活気を戻しました。"},
+    {q:"CNN(畳み込みニューラルネットワーク)が特に得意とする分野は？", choices:["画像認識・画像処理","音声合成のみ","表計算","翻訳のみ"], answer:0,
+     explain:"CNNは画像の一部分(局所的な範囲)を見て処理する「畳み込み」により、画像認識で高い性能を発揮します。"},
+    {q:"VAE(変分自己符号化器)を構成する2つの主要な部分は？", choices:["エンコーダとデコーダ","生成器と識別器","入力層と出力層","過去と未来"], answer:0,
+     explain:"VAEはエンコーダ(データを潜在ベクトルに変換)とデコーダ(元データに近いものを生成)から構成されます。"},
+    {q:"GAN(敵対的生成ネットワーク)を構成する2つのネットワークは？", choices:["生成器と識別器","エンコーダとデコーダ","入力層と隠れ層","RNNとLSTM"], answer:0,
+     explain:"GANは生成器(データを生成)と識別器(本物か偽物かを見分ける)が競い合うことで学習します。"},
+    {q:"時系列データの処理に適した、過去の情報を記憶しながら処理するモデルは？", choices:["RNN","CNN","VAE","GAN"], answer:0,
+     explain:"RNN(回帰型ニューラルネットワーク)は前の時刻の情報を次の処理に利用でき、時系列データに適しています。"},
+    {q:"2017年に「Attention Is All You Need」という論文で発表され、自己注意力を採用したモデルは？", choices:["Transformer","BERT","GPT-1","LSTM"], answer:0,
+     explain:"TransformerはGoogleの研究者らが発表し、データの順番に依存せず全要素を一度に処理できる特性を持ちます。"},
+    {q:"2022年11月にリリースされ、2か月でアクティブユーザー1億人を超えた対話型AIは？", choices:["ChatGPT","BERT","Gemini","Copilot"], answer:0,
+     explain:"ChatGPTはGPT-3.5を対話向けにファインチューニングしたサービスで、「AIの民主化」を進めたと評価されました。"},
+    {q:"AIが意味のない不正確な情報を堂々と生成してしまう現象を何と呼ぶ？", choices:["ハルシネーション","シンギュラリティ","ファインチューニング","アライメント"], answer:0,
+     explain:"ハルシネーション(幻覚)は、AI用語で不正確な情報をもっともらしく生成してしまう現象を指します。"},
+    {q:"テキスト・画像・音声など異なる種類のデータを同時に処理できるAI技術を何と呼ぶ？", choices:["マルチモーダル","シングルモーダル","ファインチューニング","アテンション"], answer:0,
+     explain:"マルチモーダルは、GPT-4以降で実現された、複数種類のデータを同時に処理できる技術です。"},
+    {q:"Anthropic社が開発する生成AIファミリーは？", choices:["Claude","Gemini","Copilot","Sora"], answer:0,
+     explain:"Claudeは安全性を最優先に掲げるAnthropic社が開発し、Haiku・Sonnet・Opusという階層構成を持ちます。"},
+    {q:"Googleの研究開発部門が提供する生成AIファミリーは？", choices:["Gemini","Claude","Copilot","GPT"], answer:0,
+     explain:"GeminiはGoogle DeepMindが設計・提供し、マルチモーダル設計とreasoning機構が特徴です。"},
+    {q:"Microsoftが展開する生成AI群を統一するブランド名は？", choices:["Copilot","Gemini","Claude","Watson"], answer:0,
+     explain:"CopilotはMicrosoftの生成AIブランドで、Word、Excel、Outlook、Teamsなどに組み込まれています。"},
+  ],
+  advanced: [
+    {q:"ボルツマンマシンを改良し、ネットワークを入力部分と推定部分に分けたモデルは？", choices:["制約付きボルツマンマシン","Transformer","LSTM","VAE"], answer:0,
+     explain:"制約付きボルツマンマシン(1986年)は学習が収束しやすく、教師なし学習も可能にしました。"},
+    {q:"RNNの長いシーケンスデータ処理での弱点(勾配消失・勾配爆発)を改良したモデルは？", choices:["LSTM","CNN","GAN","VAE"], answer:0,
+     explain:"LSTM(長・短期記憶)は1997年に提唱され、より長い時間の依存関係を学習できるよう改良されました。"},
+    {q:"BERTが採用した、ランダムに選んだ単語を隠して予測させる仕組みは？", choices:["Masked Language Model(MLM)","Next Sentence Prediction(NSP)のみ","Zero-Shot","RLHF"], answer:0,
+     explain:"MLMは単語をマスクして前後の文脈全体から予測させることで、BERTの双方向性を実現しています。"},
+    {q:"BERTの約10倍のデータ量で訓練された、Facebook AIによる改良モデルは？", choices:["RoBERTa","ALBERT","GPT-2","T5"], answer:0,
+     explain:"RoBERTaは2019年にFacebook AIが発表し、より多くのデータと時間で訓練することで性能を向上させました。"},
+    {q:"人間のフィードバックを元にモデルの出力を人間の意図に合わせる仕組みは？", choices:["RLHF(人間のフィードバックからの強化学習)","MLM","NSP","CNN"], answer:0,
+     explain:"RLHFはInstructGPTやGPT-3.5で採用され、人間にとって好ましい回答をモデルが学習する仕組みです。"},
+    {q:"GPT-4oの「o」が意味するものは？", choices:["omni(全ての)","open(開かれた)","optimal(最適な)","original(独自の)"], answer:0,
+     explain:"GPT-4oの「o」はomni(全ての)を意味し、テキスト・画像・音声を統合的に処理できることを表します。"},
+    {q:"「答えを返す前にじっくり考える」ことを設計思想に据えた推論モデルシリーズの第1弾は？", choices:["GPT-o1","GPT-4","GPT-3.5","GPT-4o"], answer:0,
+     explain:"GPT-o1はOpenAIが2024年に発表した推論(リーズニング)モデルシリーズの第1弾です。"},
+    {q:"OpenAIが提供する、テキストや画像から動画を生成できるAIは？", choices:["Sora","Operator","Codex","GPTs"], answer:0,
+     explain:"Soraは最大1080p・最長20秒の動画を生成でき、拡散モデルを採用したtransformerアーキテクチャです。"},
+    {q:"ブラウザ操作に特化し、フォーム入力や商品購入などを自動化するOpenAIのAIエージェントは？", choices:["Operator","Codex","Sora","GPTs"], answer:0,
+     explain:"Operatorは2025年1月に公開され、仮想ブラウザを起動して画面を解析しながら操作を自動実行します。"},
+    {q:"Claudeの3層構成(Haiku・Sonnet・Opus)のうち、複雑な推論を担う最上位モデルは？", choices:["Opus","Haiku","Sonnet","Nano"], answer:0,
+     explain:"Opusは複雑な推論を担う最上位モデルで、Haikuは超高速・低コスト、Sonnetは速度と能力のバランス型です。"},
+    {q:"スマートフォン向けに数十億パラメータ規模に圧縮されたGeminiのモデルは？", choices:["Gemini Nano","Gemini 2.5 Pro","Gemini 2.5 Flash","Gemini 1.5 Pro"], answer:0,
+     explain:"Gemini NanoはAndroidのAICoreを通じて、オフライン・プライバシー重視の生成AI体験を実現します。"},
+    {q:"Transformerの特徴のうち、単語の順序情報をモデルに取り込む仕組みは？", choices:["位置エンコーディング","Attention Mechanism","エンコーダ・デコーダ","並行処理"], answer:0,
+     explain:"位置エンコーディングは、シーケンス中の単語の位置情報を取り込み、単語の順序情報を保持する仕組みです。"},
+  ]
+};
+
+let level = "basic";
+let idx = 0;
+let correctCount = 0;
+let answered = false;
+
+const chatEl = document.getElementById('chat');
+const progressFg = document.getElementById('progress-bar-fg');
+const progressText = document.getElementById('progress-text');
+const btnBasic = document.getElementById('btn-basic');
+const btnAdvanced = document.getElementById('btn-advanced');
+
+function scrollToBottom(){
+  requestAnimationFrame(()=>{ chatEl.scrollTop = chatEl.scrollHeight; });
+}
+
+function addBotBubble(html, extraClass){
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  row.innerHTML = `<div class="mini-avatar">AI</div><div class="bubble ${extraClass||''}">${html}</div>`;
+  chatEl.appendChild(row);
+  scrollToBottom();
+  return row;
+}
+
+function addUserBubble(text){
+  const row = document.createElement('div');
+  row.className = 'bubble-row user';
+  row.innerHTML = `<div class="bubble">${text}</div>`;
+  chatEl.appendChild(row);
+  scrollToBottom();
+}
+
+function updateProgress(){
+  const list = QUESTIONS[level];
+  const pct = Math.round((idx/list.length)*100);
+  progressFg.style.width = pct + '%';
+  progressText.textContent = `${idx} / ${list.length} 問　(正解 ${correctCount})`;
+}
+
+function startLevel(newLevel){
+  level = newLevel;
+  idx = 0;
+  correctCount = 0;
+  answered = false;
+  chatEl.innerHTML = '';
+  btnBasic.classList.toggle('active', level==='basic');
+  btnAdvanced.classList.toggle('active', level==='advanced');
+  addBotBubble(`<span class="tag">${level==='basic'?'基礎レベル':'応用レベル'}</span><br>第2章「生成AI(ジェネレーティブAI)」の復習を始めましょう。全${QUESTIONS[level].length}問です。`);
+  updateProgress();
+  setTimeout(showQuestion, 400);
+}
+
+function showQuestion(){
+  const list = QUESTIONS[level];
+  if(idx >= list.length){
+    showResult();
+    return;
+  }
+  answered = false;
+  const item = list[idx];
+  addBotBubble(`<b>Q${idx+1}.</b> ${item.q}`);
+
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  const choicesHtml = document.createElement('div');
+  choicesHtml.className = 'choices';
+  item.choices.forEach((c, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.onclick = ()=> selectChoice(i, btn, row);
+    choicesHtml.appendChild(btn);
+  });
+  row.innerHTML = '<div class="mini-avatar" style="visibility:hidden"></div>';
+  row.appendChild(choicesHtml);
+  chatEl.appendChild(row);
+  scrollToBottom();
+}
+
+function selectChoice(i, btn, row){
+  if(answered) return;
+  answered = true;
+  const list = QUESTIONS[level];
+  const item = list[idx];
+  const allBtns = row.querySelectorAll('.choice-btn');
+  allBtns.forEach(b=>b.disabled = true);
+
+  addUserBubble(btn.textContent);
+
+  const isCorrect = i === item.answer;
+  if(isCorrect) correctCount++;
+
+  const resultLabel = isCorrect ? '正解です！' : `不正解 (正解: ${item.choices[item.answer]})`;
+  addBotBubble(resultLabel, isCorrect ? 'correct' : 'wrong');
+  addBotBubble(`<span class="tag">解説</span><br>${item.explain}`, 'explain');
+
+  const nextWrap = document.createElement('div');
+  nextWrap.className = 'next-wrap';
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'next-btn';
+  nextBtn.textContent = (idx+1 < list.length) ? '次の問題へ →' : '結果を見る →';
+  nextBtn.onclick = ()=>{
+    idx++;
+    updateProgress();
+    nextWrap.remove();
+    setTimeout(showQuestion, 200);
+  };
+  nextWrap.appendChild(nextBtn);
+  chatEl.appendChild(nextWrap);
+  scrollToBottom();
+}
+
+function showResult(){
+  updateProgress();
+  const list = QUESTIONS[level];
+  const pct = Math.round((correctCount/list.length)*100);
+  const card = document.createElement('div');
+  card.className = 'result-card';
+  card.innerHTML = `
+    <div style="font-size:14px;color:var(--sub);">お疲れさまでした！</div>
+    <div class="score">${correctCount} / ${list.length} 問正解</div>
+    <div style="font-size:13px;color:var(--sub);">正答率 ${pct}%</div>
+    <button class="restart-btn" id="restart">もう一度挑戦する</button>
+    <div><a class="home-link" href="./">章選択に戻る</a></div>
+  `;
+  chatEl.appendChild(card);
+  document.getElementById('restart').onclick = ()=> startLevel(level);
+  scrollToBottom();
+}
+
+btnBasic.onclick = ()=> { if(level!=='basic') startLevel('basic'); };
+btnAdvanced.onclick = ()=> { if(level!=='advanced') startLevel('advanced'); };
+
+startLevel('basic');
+</script>
+</body>
+</html>

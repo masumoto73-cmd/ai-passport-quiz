@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>第4章 情報リテラシー・基本理念とAI社会原則 復習チャット</title>
+<style>
+  :root{
+    --bg:#f5f3ef;
+    --card:#ffffff;
+    --text:#3a3630;
+    --sub:#8a8378;
+    --orange:#e8792c;
+    --orange-light:#fdece0;
+    --bot-bubble:#ffffff;
+    --user-bubble:#e8792c;
+    --correct:#4c9a6a;
+    --wrong:#d9534f;
+    --border:#e6e1d8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);}
+  #app{max-width:480px;margin:0 auto;height:100vh;height:-webkit-fill-available;height:100dvh;display:flex;flex-direction:column;background:var(--bg);}
+
+  header{
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+  header .avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--orange);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:bold;font-size:15px;flex-shrink:0;
+  }
+  header .title{font-size:15px;font-weight:600;line-height:1.3;}
+  header .sub{font-size:11px;color:var(--sub);}
+
+  .level-bar{
+    display:flex;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    flex-shrink:0;
+  }
+  .level-btn{
+    flex:1;
+    padding:9px 0;
+    border-radius:20px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    color:var(--sub);
+    font-size:13px;
+    font-weight:600;
+    text-align:center;
+  }
+  .level-btn.active{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#fff;
+  }
+
+  #chat{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 14px 90px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .bubble-row{display:flex;gap:8px;align-items:flex-end;}
+  .bubble-row.bot{justify-content:flex-start;}
+  .bubble-row.user{justify-content:flex-end;}
+
+  .mini-avatar{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--orange);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:bold;flex-shrink:0;
+  }
+
+  .bubble{
+    max-width:78%;
+    padding:10px 14px;
+    border-radius:16px;
+    font-size:14.5px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    box-shadow:0 1px 2px rgba(0,0,0,0.05);
+  }
+  .bot .bubble{
+    background:var(--bot-bubble);
+    border:1px solid var(--border);
+    border-bottom-left-radius:4px;
+  }
+  .user .bubble{
+    background:var(--user-bubble);
+    color:#fff;
+    border-bottom-right-radius:4px;
+  }
+  .bubble.correct{background:#eaf6ee;border:1px solid var(--correct);color:#2f6b46;}
+  .bubble.wrong{background:#fdecea;border:1px solid var(--wrong);color:#a83a34;}
+  .bubble.explain{background:var(--orange-light);border:1px solid #f3caa3;color:#7a4413;}
+  .bubble .tag{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:6px;
+    background:var(--orange);
+    color:#fff;
+  }
+
+  .choices{display:flex;flex-direction:column;gap:8px;margin-top:2px;padding-left:34px;}
+  .choice-btn{
+    text-align:left;
+    padding:10px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    font-size:14px;
+    color:var(--text);
+  }
+  .choice-btn:active{background:var(--orange-light);}
+  .choice-btn:disabled{opacity:0.5;}
+
+  .next-wrap{padding-left:34px;margin-top:2px;}
+  .next-btn{
+    padding:9px 20px;
+    border-radius:20px;
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    font-size:13.5px;
+    font-weight:600;
+  }
+
+  #progress-wrap{
+    position:sticky;
+    bottom:0;
+    background:linear-gradient(to top, var(--bg) 70%, transparent);
+    padding:10px 14px 14px 14px;
+    flex-shrink:0;
+  }
+  #progress-bar-bg{
+    background:var(--border);
+    border-radius:10px;
+    height:8px;
+    overflow:hidden;
+  }
+  #progress-bar-fg{
+    background:var(--orange);
+    height:100%;
+    width:0%;
+    transition:width 0.3s ease;
+  }
+  #progress-text{
+    font-size:11.5px;
+    color:var(--sub);
+    margin-top:5px;
+    text-align:center;
+  }
+
+  .result-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    margin-left:34px;
+  }
+  .result-card .score{font-size:32px;font-weight:800;color:var(--orange);margin:6px 0;}
+  .restart-btn{
+    margin-top:12px;
+    padding:10px 22px;
+    border-radius:20px;
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    font-size:14px;
+    font-weight:600;
+  }
+  .home-link{
+    display:inline-block;
+    margin-top:14px;
+    font-size:12.5px;
+    color:var(--sub);
+    text-decoration:underline;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="avatar">AI</div>
+    <div>
+      <div class="title">第4章 復習チャット</div>
+      <div class="sub">情報リテラシー・基本理念とAI社会原則 ー 生成AIパスポート対策</div>
+    </div>
+  </header>
+
+  <div class="level-bar">
+    <div class="level-btn active" id="btn-basic">基礎レベル</div>
+    <div class="level-btn" id="btn-advanced">応用レベル</div>
+  </div>
+
+  <div id="chat"></div>
+
+  <div id="progress-wrap">
+    <div id="progress-bar-bg"><div id="progress-bar-fg"></div></div>
+    <div id="progress-text">0 / 0 問</div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  basic: [
+    {q:"メールやWebサイトを通じてユーザーの個人情報を盗み出す詐欺を何と呼ぶ？", choices:["フィッシング詐欺","ソーシャルエンジニアリング","ランサムウェア","ディープフェイク"], answer:0,
+     explain:"フィッシング詐欺は偽のWebサイトに誘導し、個人情報を入力させて盗み取る典型的な詐欺手法です。"},
+    {q:"人間の心理的な隙(信頼・恐怖・好奇心など)を利用して情報を盗み出す手法を何と呼ぶ？", choices:["ソーシャルエンジニアリング攻撃","フィッシング詐欺","QRコード詐欺","Wi-Fiの罠"], answer:0,
+     explain:"ソーシャルエンジニアリング攻撃には、スピアフィッシングやベイト攻撃などの具体的な手法があります。"},
+    {q:"個人情報保護法が全面施行されたのは何年？", choices:["2005年","1995年","2015年","2000年"], answer:0,
+     explain:"個人情報保護法は2005年に全面施行され、個人情報の適正な取扱いに関する基本理念を定めています。"},
+    {q:"本人の人種、信条、病歴、犯罪歴など特に配慮が必要な個人情報を何と呼ぶ？", choices:["要配慮個人情報","匿名加工情報","限定提供データ","機微情報のみ"], answer:0,
+     explain:"要配慮個人情報は、不当な差別や偏見による不利益を防ぐため特に厳格な管理が求められる情報です。"},
+    {q:"特定の個人を識別できないように加工し、復元できないようにした情報を何と呼ぶ？", choices:["匿名加工情報","要配慮個人情報","営業秘密","個人識別符号"], answer:0,
+     explain:"匿名加工情報は、個人情報から特定の個人を識別する情報を削除・変更し、再識別できない状態にした情報です。"},
+    {q:"著作権はいつ発生する？", choices:["著作物を創作した時点","特許庁に出願した時点","登録した時点","公表してから1年後"], answer:0,
+     explain:"著作権は創作した時点で自動的に発生し、特許・商標・意匠と異なり出願や審査が不要です。"},
+    {q:"無断で自身の顔・姿態の写真等を撮影・公開されないための権利を何と呼ぶ？", choices:["肖像権","パブリシティ権","著作権","商標権"], answer:0,
+     explain:"肖像権は法律で定められた権利ではなく、判例によって確立された権利で、精神的苦痛から守る意義があります。"},
+    {q:"著名人の肖像や氏名等が持つ経済的価値を排他的に利用する権利を何と呼ぶ？", choices:["パブリシティ権","肖像権","著作権","意匠権"], answer:0,
+     explain:"パブリシティ権は著名人の顧客吸引力から生じる経済的利益を保護する、判例で確立された権利です。"},
+    {q:"「AI事業者ガイドライン」で示されている基本理念に含まれないものは？", choices:["公正競争(Fair Competition)","人間の尊厳が尊重される社会(Dignity)","多様性と包摂(Diversity & Inclusion)","持続可能な社会(Sustainability)"], answer:0,
+     explain:"基本理念はDignity、Diversity & Inclusion、Sustainabilityの3つで、公正競争確保は「共通の指針」10項目の一つです。"},
+    {q:"2025年6月4日に公布された、日本初のAI分野に特化した法律の通称は？", choices:["AI新法","個人情報保護法","不正競争防止法","著作権法"], answer:0,
+     explain:"AI新法(人工知能関連技術の研究開発及び活用の推進に関する法律)は、日本でAI分野に特化した初の法律です。"},
+    {q:"企業の機密情報のうち、秘密管理性・有用性・非公知性の3要件を満たすものを何と呼ぶ？", choices:["営業秘密","要配慮個人情報","匿名加工情報","限定提供データ"], answer:0,
+     explain:"営業秘密として認められるには、秘密管理性・有用性・非公知性の3つの要件を満たす必要があります。"},
+    {q:"公共のQRコードやWi-Fiに関する対策として適切なものは？", choices:["疑わしいものは利用せずURLを確認する","見た目が正規なら無条件で信用する","パスワードをすぐに入力する","全て安全なので気にしない"], answer:0,
+     explain:"疑わしいQRコードを読み込まない、リンク先URLを確認するなど、警戒心を持つことが重要です。"},
+  ],
+  advanced: [
+    {q:"意匠権による保護期間は、出願日からどれくらい？", choices:["25年","20年","10年","70年"], answer:0,
+     explain:"意匠権の保護期間は登録日から始まり、出願日から25年後に終了します。特許は出願日から20年です。"},
+    {q:"商標権侵害が認められる条件として正しいものは？", choices:["対象の商標・商品/サービスが同一または類似の場合","出願していない場合のみ","私的利用の場合のみ","著作権者の許可がある場合"], answer:0,
+     explain:"商標権侵害は、対象の商標同士および商品・サービス同士が同一または類似の場合に認められます。"},
+    {q:"「AI事業者ガイドライン」のピラミッド構造で、基本理念の上位(実践面)に位置づけられるものは？", choices:["原則・共通の指針","個人情報保護法","著作権法","不正競争防止法"], answer:0,
+     explain:"基本理念・原則・共通の指針の3つがピラミッド構造を成し、各主体が取り組む際の指針として定義されています。"},
+    {q:"「共通の指針」10項目に含まれないものは？", choices:["収益性","人間中心","公平性","アカウンタビリティ"], answer:0,
+     explain:"共通の指針は人間中心・安全性・公平性・プライバシー保護・セキュリティ確保・透明性・アカウンタビリティ・教育リテラシー・公正競争確保・イノベーションの10項目です。"},
+    {q:"AI新法は全何章何条(附則を除く)で構成されている？", choices:["全4章28条","全3章20条","全5章35条","全2章15条"], answer:0,
+     explain:"AI新法は総則、基本的施策、人工知能基本計画、人工知能戦略本部の全4章28条で構成されています。"},
+    {q:"AI新法における活用事業者の責務の特徴は？", choices:["国等の施策への協力義務(強制)が課される","罰則が科される","出願義務が課される","秘密保持義務のみ課される"], answer:0,
+     explain:"活用事業者には、他の主体の「努めるものとする」という努力義務より強い「協力しなければならない」義務が課されています。"},
+    {q:"AI新法とAI事業者ガイドラインの最も大きな違いは？", choices:["法的拘束力の有無","公布年","対象読者","文字数"], answer:0,
+     explain:"ガイドラインは法的拘束力のない自主的な取り組みですが、AI新法は活用事業者に協力義務という法的義務を課します。"},
+    {q:"生成AIを利用した発明が「人の発明」と認められる可能性が高いケースの考え方は？", choices:["人が創作的に関与していること","AIが完全に自律的に生成したこと","出願さえすれば自動的に認められること","発明者が存在しないこと"], answer:0,
+     explain:"特許庁の見解では、AIを利用した発明でも人が技術的特徴部分の具体化に創作的に関与していれば人の発明と考えられます。"},
+    {q:"不正競争防止法における「限定提供データ」の要件に含まれないものは？", choices:["秘密として管理されていること(秘密管理性)","相当量が蓄積されたデータであること","特定の者に限定して提供されること","電磁的方法により管理されていること"], answer:0,
+     explain:"限定提供データは営業秘密と異なり秘密管理性は要件とされず、相当量の蓄積・限定提供・電磁的管理が要件です。"},
+    {q:"EUのAI規制法(2024年発効)の特徴として正しいものは？", choices:["違反事業者に巨額の罰金を科す厳格な規制","罰則を設けず自主性を尊重する推進法","AI開発を全面禁止する法律","日本のAI新法と全く同じ内容"], answer:0,
+     explain:"EUのAI規制法は透明性の義務を課し、違反事業者には最大3500万ユーロの罰金を科す厳格な規制です。日本のAI新法は推進法的性格が強い点で対照的です。"},
+    {q:"著作権侵害が認められるための重要な要件は、類似性ともう一つ何か？", choices:["依拠性","公示性","秘密管理性","独占性"], answer:0,
+     explain:"侵害の疑いのある対象物が元の著作物に類似し、かつ依拠している(基づいて創作された)場合に著作権侵害が認められます。"},
+    {q:"AI事業者ガイドラインにおける「AI提供者」の役割として正しいものは？", choices:["AI開発者が開発したAIに付加価値を加えてサービスとして提供する","AIモデルそのものを研究開発する","AIシステムを事業活動で利用するだけ","国の施策を策定する"], answer:0,
+     explain:"AI提供者はAI開発者が開発するAIシステムに付加価値を加え、AI利用者にサービスとして提供する役割を担います。"},
+  ]
+};
+
+let level = "basic";
+let idx = 0;
+let correctCount = 0;
+let answered = false;
+
+const chatEl = document.getElementById('chat');
+const progressFg = document.getElementById('progress-bar-fg');
+const progressText = document.getElementById('progress-text');
+const btnBasic = document.getElementById('btn-basic');
+const btnAdvanced = document.getElementById('btn-advanced');
+
+function scrollToBottom(){
+  requestAnimationFrame(()=>{ chatEl.scrollTop = chatEl.scrollHeight; });
+}
+
+function addBotBubble(html, extraClass){
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  row.innerHTML = `<div class="mini-avatar">AI</div><div class="bubble ${extraClass||''}">${html}</div>`;
+  chatEl.appendChild(row);
+  scrollToBottom();
+  return row;
+}
+
+function addUserBubble(text){
+  const row = document.createElement('div');
+  row.className = 'bubble-row user';
+  row.innerHTML = `<div class="bubble">${text}</div>`;
+  chatEl.appendChild(row);
+  scrollToBottom();
+}
+
+function updateProgress(){
+  const list = QUESTIONS[level];
+  const pct = Math.round((idx/list.length)*100);
+  progressFg.style.width = pct + '%';
+  progressText.textContent = `${idx} / ${list.length} 問　(正解 ${correctCount})`;
+}
+
+function startLevel(newLevel){
+  level = newLevel;
+  idx = 0;
+  correctCount = 0;
+  answered = false;
+  chatEl.innerHTML = '';
+  btnBasic.classList.toggle('active', level==='basic');
+  btnAdvanced.classList.toggle('active', level==='advanced');
+  addBotBubble(`<span class="tag">${level==='basic'?'基礎レベル':'応用レベル'}</span><br>第4章「情報リテラシー・基本理念とAI社会原則」の復習を始めましょう。全${QUESTIONS[level].length}問です。`);
+  updateProgress();
+  setTimeout(showQuestion, 400);
+}
+
+function showQuestion(){
+  const list = QUESTIONS[level];
+  if(idx >= list.length){
+    showResult();
+    return;
+  }
+  answered = false;
+  const item = list[idx];
+  addBotBubble(`<b>Q${idx+1}.</b> ${item.q}`);
+
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  const choicesHtml = document.createElement('div');
+  choicesHtml.className = 'choices';
+  item.choices.forEach((c, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.onclick = ()=> selectChoice(i, btn, row);
+    choicesHtml.appendChild(btn);
+  });
+  row.innerHTML = '<div class="mini-avatar" style="visibility:hidden"></div>';
+  row.appendChild(choicesHtml);
+  chatEl.appendChild(row);
+  scrollToBottom();
+}
+
+function selectChoice(i, btn, row){
+  if(answered) return;
+  answered = true;
+  const list = QUESTIONS[level];
+  const item = list[idx];
+  const allBtns = row.querySelectorAll('.choice-btn');
+  allBtns.forEach(b=>b.disabled = true);
+
+  addUserBubble(btn.textContent);
+
+  const isCorrect = i === item.answer;
+  if(isCorrect) correctCount++;
+
+  const resultLabel = isCorrect ? '正解です！' : `不正解 (正解: ${item.choices[item.answer]})`;
+  addBotBubble(resultLabel, isCorrect ? 'correct' : 'wrong');
+  addBotBubble(`<span class="tag">解説</span><br>${item.explain}`, 'explain');
+
+  const nextWrap = document.createElement('div');
+  nextWrap.className = 'next-wrap';
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'next-btn';
+  nextBtn.textContent = (idx+1 < list.length) ? '次の問題へ →' : '結果を見る →';
+  nextBtn.onclick = ()=>{
+    idx++;
+    updateProgress();
+    nextWrap.remove();
+    setTimeout(showQuestion, 200);
+  };
+  nextWrap.appendChild(nextBtn);
+  chatEl.appendChild(nextWrap);
+  scrollToBottom();
+}
+
+function showResult(){
+  updateProgress();
+  const list = QUESTIONS[level];
+  const pct = Math.round((correctCount/list.length)*100);
+  const card = document.createElement('div');
+  card.className = 'result-card';
+  card.innerHTML = `
+    <div style="font-size:14px;color:var(--sub);">お疲れさまでした！</div>
+    <div class="score">${correctCount} / ${list.length} 問正解</div>
+    <div style="font-size:13px;color:var(--sub);">正答率 ${pct}%</div>
+    <button class="restart-btn" id="restart">もう一度挑戦する</button>
+    <div><a class="home-link" href="./">章選択に戻る</a></div>
+  `;
+  chatEl.appendChild(card);
+  document.getElementById('restart').onclick = ()=> startLevel(level);
+  scrollToBottom();
+}
+
+btnBasic.onclick = ()=> { if(level!=='basic') startLevel('basic'); };
+btnAdvanced.onclick = ()=> { if(level!=='advanced') startLevel('advanced'); };
+
+startLevel('basic');
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>第1章 AI(人工知能) 復習チャット</title>
+<style>
+  :root{
+    --bg:#f5f3ef;
+    --card:#ffffff;
+    --text:#3a3630;
+    --sub:#8a8378;
+    --orange:#e8792c;
+    --orange-light:#fdece0;
+    --bot-bubble:#ffffff;
+    --user-bubble:#e8792c;
+    --correct:#4c9a6a;
+    --wrong:#d9534f;
+    --border:#e6e1d8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);}
+  #app{max-width:480px;margin:0 auto;height:100vh;height:-webkit-fill-available;height:100dvh;display:flex;flex-direction:column;background:var(--bg);}
+
+  header{
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+  header .avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--orange);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:bold;font-size:15px;flex-shrink:0;
+  }
+  header .title{font-size:15px;font-weight:600;line-height:1.3;}
+  header .sub{font-size:11px;color:var(--sub);}
+
+  .level-bar{
+    display:flex;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    flex-shrink:0;
+  }
+  .level-btn{
+    flex:1;
+    padding:9px 0;
+    border-radius:20px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    color:var(--sub);
+    font-size:13px;
+    font-weight:600;
+    text-align:center;
+  }
+  .level-btn.active{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#fff;
+  }
+
+  #chat{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 14px 90px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .bubble-row{display:flex;gap:8px;align-items:flex-end;}
+  .bubble-row.bot{justify-content:flex-start;}
+  .bubble-row.user{justify-content:flex-end;}
+
+  .mini-avatar{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--orange);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:bold;flex-shrink:0;
+  }
+
+  .bubble{
+    max-width:78%;
+    padding:10px 14px;
+    border-radius:16px;
+    font-size:14.5px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    box-shadow:0 1px 2px rgba(0,0,0,0.05);
+  }
+  .bot .bubble{
+    background:var(--bot-bubble);
+    border:1px solid var(--border);
+    border-bottom-left-radius:4px;
+  }
+  .user .bubble{
+    background:var(--user-bubble);
+    color:#fff;
+    border-bottom-right-radius:4px;
+  }
+  .bubble.correct{background:#eaf6ee;border:1px solid var(--correct);color:#2f6b46;}
+  .bubble.wrong{background:#fdecea;border:1px solid var(--wrong);color:#a83a34;}
+  .bubble.explain{background:var(--orange-light);border:1px solid #f3caa3;color:#7a4413;}
+  .bubble .tag{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:10px;
+    margin-bottom:6px;
+    background:var(--orange);
+    color:#fff;
+  }
+
+  .choices{display:flex;flex-direction:column;gap:8px;margin-top:2px;padding-left:34px;}
+  .choice-btn{
+    text-align:left;
+    padding:10px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    font-size:14px;
+    color:var(--text);
+  }
+  .choice-btn:active{background:var(--orange-light);}
+  .choice-btn:disabled{opacity:0.5;}
+
+  .next-wrap{padding-left:34px;margin-top:2px;}
+  .next-btn{
+    padding:9px 20px;
+    border-radius:20px;
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    font-size:13.5px;
+    font-weight:600;
+  }
+
+  #progress-wrap{
+    position:sticky;
+    bottom:0;
+    background:linear-gradient(to top, var(--bg) 70%, transparent);
+    padding:10px 14px 14px 14px;
+    flex-shrink:0;
+  }
+  #progress-bar-bg{
+    background:var(--border);
+    border-radius:10px;
+    height:8px;
+    overflow:hidden;
+  }
+  #progress-bar-fg{
+    background:var(--orange);
+    height:100%;
+    width:0%;
+    transition:width 0.3s ease;
+  }
+  #progress-text{
+    font-size:11.5px;
+    color:var(--sub);
+    margin-top:5px;
+    text-align:center;
+  }
+
+  .result-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    margin-left:34px;
+  }
+  .result-card .score{font-size:32px;font-weight:800;color:var(--orange);margin:6px 0;}
+  .restart-btn{
+    margin-top:12px;
+    padding:10px 22px;
+    border-radius:20px;
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    font-size:14px;
+    font-weight:600;
+  }
+  .home-link{
+    display:inline-block;
+    margin-top:14px;
+    font-size:12.5px;
+    color:var(--sub);
+    text-decoration:underline;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="avatar">AI</div>
+    <div>
+      <div class="title">第1章 復習チャット</div>
+      <div class="sub">AI(人工知能) ー 生成AIパスポート対策</div>
+    </div>
+  </header>
+
+  <div class="level-bar">
+    <div class="level-btn active" id="btn-basic">基礎レベル</div>
+    <div class="level-btn" id="btn-advanced">応用レベル</div>
+  </div>
+
+  <div id="chat"></div>
+
+  <div id="progress-wrap">
+    <div id="progress-bar-bg"><div id="progress-bar-fg"></div></div>
+    <div id="progress-text">0 / 0 問</div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  basic: [
+    {q:"「AI」は何という英語の略ですか？", choices:["Artificial Intelligence","Automated Information","Advanced Interface","Applied Interaction"], answer:0,
+     explain:"AIはArtificial Intelligence(人工的な知能)の略です。ただしAIの定義自体は専門家の間でも完全には統一されていません。"},
+    {q:"AIとロボットの関係について正しいのはどれ？", choices:["AIとロボットは全く同じもの","AIは知能を担当し、ロボットは物理的な動作を担当する","ロボットは常にAIを搭載している","AIには物理的な実体が必要"], answer:1,
+     explain:"AIはソフトウェア(知能)として存在し、ロボットはその知能を使って物理的に動く機械です。両者は別の概念です。"},
+    {q:"「AI」という言葉が初めて使われたのはどの会議?", choices:["ダートマス会議","ジュネーブ会議","シリコンバレー会議","ケンブリッジ会議"], answer:0,
+     explain:"1956年、ジョン・マッカーシーらがダートマス会議で「AI」という用語を初めて使いました。"},
+    {q:"現在のAIで主流となっている、知能をもたらす仕組みはどちらですか？", choices:["ルールベース","機械学習"], answer:1,
+     explain:"かつてはルールベースが主流でしたが、開発・保守コストの高さから、現在は機械学習が主流です。"},
+    {q:"正解データ(ラベル)を与えてモデルを訓練する手法は？", choices:["教師あり学習","教師なし学習","強化学習"], answer:0,
+     explain:"入力データと正解データのペアを与えて学習させるのが教師あり学習です。"},
+    {q:"報酬を与えて最適な行動を学習させる手法は？", choices:["教師あり学習","教師なし学習","強化学習"], answer:2,
+     explain:"目標達成に近づくと報酬を与え、報酬を最大化する行動を学習するのが強化学習です。自動運転やゲームAIに応用されています。"},
+    {q:"人間の脳の神経細胞を模した仕組みを何と呼ぶ？", choices:["ニューラルネットワーク","データベース","アルゴリズム表","クラウドAI"], answer:0,
+     explain:"神経細胞(ニューロン)の仕組みを模した「人工ニューロン」を層状に配置したものがニューラルネットワークです。"},
+    {q:"ニューラルネットワークを何層にも重ねた仕組みを何と呼ぶ？", choices:["ディープラーニング","クラスタリング","次元削減","正則化"], answer:0,
+     explain:"ニューラルネットワークを何層にも重ねたものがディープラーニング(深層学習)です。"},
+    {q:"訓練データに適合しすぎて、未知のデータへの予測性能が落ちる現象を何と呼ぶ？", choices:["過学習(オーバーフィッティング)","転移学習","半教師あり学習","次元削減"], answer:0,
+     explain:"訓練データのノイズまで学習してしまい、新しいデータへの汎用性が落ちる現象を過学習と呼びます。"},
+    {q:"AIの「4つのレベル」のうち、単純な制御プログラムはレベルいくつ？", choices:["レベル1","レベル2","レベル3","レベル4"], answer:0,
+     explain:"レベル1は最も単純な制御プログラムで、AI搭載家電などがこれにあたります。"},
+    {q:"人間並みの知能を持つ、まだ実現していないAIを何と呼ぶ？", choices:["ANI(特化型AI)","AGI(汎用型AI)","ルールベースAI","レベル1のAI"], answer:1,
+     explain:"AGI(Artificial General Intelligence)は人間並みの汎用知能を持つ理論上のAIで、まだ実現していません。現在存在するのはANI(特化型AI)です。"},
+    {q:"AIが人間の知能を超えて自己進化する状態を何と呼ぶ？", choices:["シンギュラリティ","エキスパートシステム","ダートマス会議","AI効果"], answer:0,
+     explain:"シンギュラリティ(技術的特異点)は、レイ・カーツワイルらが提唱した概念で、2045年問題とも呼ばれます。"},
+  ],
+  advanced: [
+    {q:"教師なし学習の手法で、データを似た特徴のグループに分ける手法は？", choices:["クラスタリング","次元削減","強化学習","正則化"], answer:0,
+     explain:"クラスタリングは、正解データなしでデータの類似性からグループ分けを行う教師なし学習の代表的手法です。"},
+    {q:"次元削減の目的として正しいものは？", choices:["データの変数(次元)を減らし特徴を保ったまま扱いやすくする","報酬を最大化する行動を学習する","正解ラベルを自動生成する","ニューロンをランダムに無効化する"], answer:0,
+     explain:"次元削減は、情報をできるだけ保持しながらデータの変数(次元)を減らし、可視化や計算コスト削減につなげる手法です。"},
+    {q:"少量のラベル付きデータと大量のラベルなしデータを組み合わせて学習する手法は？", choices:["半教師あり学習","強化学習","転移学習","アーリーストッピング"], answer:0,
+     explain:"半教師あり学習は教師あり学習と教師なし学習の中間で、少量の正解データを使い学習コストを抑えられます。"},
+    {q:"「どの問題にも万能な唯一のモデルは存在しない」という機械学習の大前提を何と呼ぶ？", choices:["ノーフリーランチ定理","過学習の法則","AI効果","ムーアの法則"], answer:0,
+     explain:"ノーフリーランチ定理(1995年)は、あるタスクで優れた性能を出すアルゴリズムは他のタスクでは性能が下がるという前提です。"},
+    {q:"過学習を防ぐために、検証データで性能を確認しながら最適なタイミングで学習を止める手法は？", choices:["アーリーストッピング","ドロップアウト","正則化","転移学習"], answer:0,
+     explain:"アーリーストッピングは検証用データを使い、性能が悪化し始める前に学習を止める手法です。"},
+    {q:"ニューラルネットワークの中間層で、一部のノードをランダムに無効化して過学習を防ぐ手法は？", choices:["ドロップアウト","アーリーストッピング","クラスタリング","半教師あり学習"], answer:0,
+     explain:"ドロップアウトは学習中に一部の人工ニューロンをランダムに無効化し、特定ノードへの依存を減らして汎化性能を高めます。"},
+    {q:"1つの問題で学習したモデルの知識を別の問題に応用する手法は？", choices:["転移学習","強化学習","正則化","次元削減"], answer:0,
+     explain:"転移学習は、リンゴとミカンの識別で学習した重みをバナナとレモンの識別に応用するような、知識の転用を行う手法です。"},
+    {q:"検索エンジンのように、入力から自らデータパターンを見出すが、特徴量は人間が設定するAIはレベルいくつ？", choices:["レベル2","レベル3","レベル4","レベル1"], answer:1,
+     explain:"レベル3のAIは機械学習を利用し、特徴量は人間が設定しますが、レベル2より多様な出力が可能です。代表例は検索エンジンです。"},
+    {q:"自動運転技術のように、特徴量の調整も含め自ら学習を行うAIはレベルいくつ？", choices:["レベル2","レベル3","レベル4","レベル1"], answer:2,
+     explain:"レベル4のAIはディープラーニングを利用し、特徴量の調整も自ら行う点がレベル3との大きな違いです。"},
+    {q:"第一次AIブームで主に研究の焦点となっていたのは何？", choices:["探索と推論","ビッグデータとディープラーニング","エキスパートシステム","トランスフォーマー"], answer:0,
+     explain:"第一次AIブーム(1956年〜)は探索と推論が中心で、ルールベースのシステム開発が主流でした。"},
+    {q:"第二次AIブームで注目された、専門家の知識をコンピュータに取り込むシステムを何と呼ぶ？", choices:["エキスパートシステム","強化学習システム","レベル4AI","ノーフリーランチシステム"], answer:0,
+     explain:"第二次AIブーム(1980年代後半〜)ではエキスパートシステムが注目されましたが、知識ベースの管理が困難という課題があり、その後「AIの冬」を迎えました。"},
+    {q:"「AI搭載」などの新製品への過度な期待が、実際の性能とのギャップで失望に変わる心理現象を何と呼ぶ？", choices:["AI効果","シンギュラリティ","過学習","AGI"], answer:0,
+     explain:"AI効果とは、AIへの期待が高すぎるあまり、実際に使うと「思っていたものと違う」と失望してしまう心理現象です。"},
+  ]
+};
+
+let level = "basic";
+let idx = 0;
+let correctCount = 0;
+let answered = false;
+
+const chatEl = document.getElementById('chat');
+const progressFg = document.getElementById('progress-bar-fg');
+const progressText = document.getElementById('progress-text');
+const btnBasic = document.getElementById('btn-basic');
+const btnAdvanced = document.getElementById('btn-advanced');
+
+function scrollToBottom(){
+  requestAnimationFrame(()=>{ chatEl.scrollTop = chatEl.scrollHeight; });
+}
+
+function addBotBubble(html, extraClass){
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  row.innerHTML = `<div class="mini-avatar">AI</div><div class="bubble ${extraClass||''}">${html}</div>`;
+  chatEl.appendChild(row);
+  scrollToBottom();
+  return row;
+}
+
+function addUserBubble(text){
+  const row = document.createElement('div');
+  row.className = 'bubble-row user';
+  row.innerHTML = `<div class="bubble">${text}</div>`;
+  chatEl.appendChild(row);
+  scrollToBottom();
+}
+
+function updateProgress(){
+  const list = QUESTIONS[level];
+  const pct = Math.round((idx/list.length)*100);
+  progressFg.style.width = pct + '%';
+  progressText.textContent = `${idx} / ${list.length} 問　(正解 ${correctCount})`;
+}
+
+function startLevel(newLevel){
+  level = newLevel;
+  idx = 0;
+  correctCount = 0;
+  answered = false;
+  chatEl.innerHTML = '';
+  btnBasic.classList.toggle('active', level==='basic');
+  btnAdvanced.classList.toggle('active', level==='advanced');
+  addBotBubble(`<span class="tag">${level==='basic'?'基礎レベル':'応用レベル'}</span><br>第1章「AI(人工知能)」の復習を始めましょう。全${QUESTIONS[level].length}問です。`);
+  updateProgress();
+  setTimeout(showQuestion, 400);
+}
+
+function showQuestion(){
+  const list = QUESTIONS[level];
+  if(idx >= list.length){
+    showResult();
+    return;
+  }
+  answered = false;
+  const item = list[idx];
+  addBotBubble(`<b>Q${idx+1}.</b> ${item.q}`);
+
+  const row = document.createElement('div');
+  row.className = 'bubble-row bot';
+  const choicesHtml = document.createElement('div');
+  choicesHtml.className = 'choices';
+  item.choices.forEach((c, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.onclick = ()=> selectChoice(i, btn, row);
+    choicesHtml.appendChild(btn);
+  });
+  row.innerHTML = '<div class="mini-avatar" style="visibility:hidden"></div>';
+  row.appendChild(choicesHtml);
+  chatEl.appendChild(row);
+  scrollToBottom();
+}
+
+function selectChoice(i, btn, row){
+  if(answered) return;
+  answered = true;
+  const list = QUESTIONS[level];
+  const item = list[idx];
+  const allBtns = row.querySelectorAll('.choice-btn');
+  allBtns.forEach(b=>b.disabled = true);
+
+  addUserBubble(btn.textContent);
+
+  const isCorrect = i === item.answer;
+  if(isCorrect) correctCount++;
+
+  const resultLabel = isCorrect ? '正解です！' : `不正解 (正解: ${item.choices[item.answer]})`;
+  addBotBubble(resultLabel, isCorrect ? 'correct' : 'wrong');
+  addBotBubble(`<span class="tag">解説</span><br>${item.explain}`, 'explain');
+
+  const nextWrap = document.createElement('div');
+  nextWrap.className = 'next-wrap';
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'next-btn';
+  nextBtn.textContent = (idx+1 < list.length) ? '次の問題へ →' : '結果を見る →';
+  nextBtn.onclick = ()=>{
+    idx++;
+    updateProgress();
+    nextWrap.remove();
+    setTimeout(showQuestion, 200);
+  };
+  nextWrap.appendChild(nextBtn);
+  chatEl.appendChild(nextWrap);
+  scrollToBottom();
+}
+
+function showResult(){
+  updateProgress();
+  const list = QUESTIONS[level];
+  const pct = Math.round((correctCount/list.length)*100);
+  const card = document.createElement('div');
+  card.className = 'result-card';
+  card.innerHTML = `
+    <div style="font-size:14px;color:var(--sub);">お疲れさまでした！</div>
+    <div class="score">${correctCount} / ${list.length} 問正解</div>
+    <div style="font-size:13px;color:var(--sub);">正答率 ${pct}%</div>
+    <button class="restart-btn" id="restart">もう一度挑戦する</button>
+    <div><a class="home-link" href="./">章選択に戻る</a></div>
+  `;
+  chatEl.appendChild(card);
+  document.getElementById('restart').onclick = ()=> startLevel(level);
+  scrollToBottom();
+}
+
+btnBasic.onclick = ()=> { if(level!=='basic') startLevel('basic'); };
+btnAdvanced.onclick = ()=> { if(level!=='advanced') startLevel('advanced'); };
+
+startLevel('basic');
+</script>
+</body>
+</html>
