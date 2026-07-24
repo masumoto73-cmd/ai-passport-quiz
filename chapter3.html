@@ -65,6 +65,31 @@
     color:#fff;
   }
 
+  .top-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 12px;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    flex-shrink:0;
+    font-size:12.5px;
+  }
+  .top-nav a{
+    color:var(--sub);
+    text-decoration:none;
+    padding:5px 9px;
+    border-radius:8px;
+  }
+  .top-nav a:active{background:var(--orange-light);}
+  .top-nav a.home{
+    color:var(--orange);
+    font-weight:700;
+  }
+  .top-nav a.disabled{
+    visibility:hidden;
+  }
+
   #chat{
     flex:1;
     overflow-y:auto;
@@ -198,6 +223,11 @@
 </head>
 <body>
 <div id="app">
+  <div class="top-nav">
+    <a href="chapter2.html">‹ 前の章</a>
+    <a href="index.html" class="home">🏠 メニュー</a>
+    <a href="chapter4.html">次の章 ›</a>
+  </div>
   <header>
     <div class="avatar">AI</div>
     <div>
