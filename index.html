@@ -95,6 +95,19 @@
     flex-shrink:0;
   }
 
+  .section-label{
+    font-size:12px;
+    font-weight:700;
+    color:var(--sub);
+    margin:6px 2px 0 2px;
+    letter-spacing:0.02em;
+  }
+  .section-label:first-child{margin-top:0;}
+
+  .chapter-num.alt{
+    background:var(--text);
+  }
+
   footer{
     padding:0 20px 24px 20px;
     font-size:11px;
@@ -107,11 +120,22 @@
 <div id="app">
   <header>
     <div class="eyebrow">生成AIパスポート対策教材</div>
-    <div class="title">章を選んで復習しましょう</div>
-    <div class="sub">各章ごとに「基礎レベル」「応用レベル」の一問一答クイズがあります。タップして始めてください。</div>
+    <div class="title">教材を選んで学習しましょう</div>
+    <div class="sub">全文教材・章別クイズ(基礎/応用)・模擬試験をこのページからまとめて利用できます。</div>
   </header>
 
   <div id="list">
+    <div class="section-label">学習教材(全文を読む)</div>
+    <a class="chapter-card" href="study-material.html">
+      <div class="chapter-num alt">書</div>
+      <div class="chapter-info">
+        <div class="name">生成AIパスポート 学習教材</div>
+        <div class="desc">前付け〜第5章〜後付けまで、公式テキストの内容を全文読める教材です</div>
+      </div>
+      <div class="chapter-arrow">›</div>
+    </a>
+
+    <div class="section-label">章別 復習クイズ(基礎/応用レベル)</div>
     <a class="chapter-card" href="chapter1.html">
       <div class="chapter-num">1</div>
       <div class="chapter-info">
@@ -153,6 +177,16 @@
       <div class="chapter-info">
         <div class="name">第5章　テキスト生成AIのプロンプト制作と実例</div>
         <div class="desc">LM/LLM、プロンプトエンジニアリング、ビジネス応用、AIの不得意分野</div>
+      </div>
+      <div class="chapter-arrow">›</div>
+    </a>
+
+    <div class="section-label">模擬試験</div>
+    <a class="chapter-card" href="practice-quiz.html">
+      <div class="chapter-num alt">模</div>
+      <div class="chapter-info">
+        <div class="name">練習問題(模擬問題)</div>
+        <div class="desc">試験形式に近い模擬問題に挑戦できます</div>
       </div>
       <div class="chapter-arrow">›</div>
     </a>
