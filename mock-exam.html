@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成AIパスポート 模擬試験｜総合保険プランニング株式会社 社内教材</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f2ef; --bg2:#ece8e2; --card:#ffffff; --line:#e2ddd6;
+  --ink:#2f2d2a; --ink2:#6f6a63; --ink3:#9a948c;
+  --accent:#e8720c; --accent-soft:#fdf1e5; --accent-dark:#c25c05;
+  --ok:#2e9e6b; --ok-soft:#e8f6ef; --ng:#d64545; --ng-soft:#fdecec;
+  --r:14px; --sh:0 2px 10px rgba(60,50,40,.07); --sh2:0 6px 26px rgba(60,50,40,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px 64px}
+/* header */
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;box-shadow:0 1px 6px rgba(60,50,40,.05)}
+.hd{max-width:820px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hd h1{font-size:1.02rem;font-weight:900;letter-spacing:.01em;line-height:1.35}
+.hd h1 span{color:var(--accent)}
+.hd .sub{font-size:.7rem;color:var(--ink3);font-weight:500}
+.hd .spacer{flex:1}
+.pill{background:var(--accent-soft);color:var(--accent-dark);border:1px solid #f3d9bd;border-radius:99px;padding:4px 12px;font-size:.76rem;font-weight:700;white-space:nowrap}
+.pill.time{background:#fff;border-color:var(--line);color:var(--ink);font-variant-numeric:tabular-nums}
+.pill.time.warn{background:var(--ng-soft);border-color:#f3c9c9;color:var(--ng)}
+#bar-area{background:var(--bg2);border-bottom:1px solid var(--line);display:none}
+.bar-in{max-width:820px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:10px}
+.track{flex:1;height:8px;background:#dcd6ce;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#f0952f);transition:width .3s}
+.bar-in .lbl{font-size:.74rem;color:var(--ink2);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:24px;margin-top:20px}
+h2{font-size:1.28rem;font-weight:900;margin-bottom:6px;letter-spacing:.01em}
+h2 .ac{color:var(--accent)}
+h3{font-size:1rem;font-weight:800;margin:22px 0 10px;padding-left:11px;border-left:4px solid var(--accent);line-height:1.4}
+p.lead{color:var(--ink2);font-size:.92rem}
+.note{background:var(--bg2);border-radius:10px;padding:14px 16px;font-size:.84rem;color:var(--ink2);margin-top:14px}
+.note b{color:var(--ink)}
+/* option cards (mode select) */
+.opts{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.opts{grid-template-columns:1fr}}
+.sel{border:2px solid var(--line);background:#fff;border-radius:12px;padding:15px 16px;cursor:pointer;text-align:left;font-family:inherit;transition:.15s;position:relative}
+.sel:hover{border-color:#e8c9a5;background:#fffdfa}
+.sel.on{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px rgba(232,114,12,.11)}
+.sel .t{font-weight:800;font-size:.94rem;display:block;margin-bottom:3px}
+.sel .d{font-size:.78rem;color:var(--ink2);line-height:1.6;display:block}
+.sel.on .t{color:var(--accent-dark)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:14px 30px;font-size:1rem;font-weight:800;font-family:inherit;cursor:pointer;transition:.15s;box-shadow:0 3px 10px rgba(232,114,12,.28)}
+.btn:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.btn:disabled{background:#cfc9c1;box-shadow:none;cursor:not-allowed;transform:none}
+.btn.sm{padding:10px 20px;font-size:.87rem}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{background:var(--bg2);border-color:#d3ccc3}
+.btn.wide{width:100%}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.center{text-align:center}
+/* quiz */
+.qmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tag{font-size:.72rem;font-weight:700;border-radius:99px;padding:3px 11px;background:var(--bg2);color:var(--ink2)}
+.tag.no{background:var(--ink);color:#fff}
+.tag.ch{background:var(--accent-soft);color:var(--accent-dark)}
+.qtext{font-size:1.06rem;font-weight:700;line-height:1.85;margin-bottom:18px}
+.olist{display:flex;flex-direction:column;gap:10px}
+.o{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;font-family:inherit;font-size:.93rem;line-height:1.7;cursor:pointer;transition:.13s;color:var(--ink)}
+.o:hover:not(:disabled){border-color:#e8c9a5;background:#fffdfa}
+.o .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--bg2);color:var(--ink2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;margin-top:1px}
+.o.on{border-color:var(--accent);background:var(--accent-soft)}
+.o.on .n{background:var(--accent);color:#fff}
+.o.right{border-color:var(--ok);background:var(--ok-soft)}
+.o.right .n{background:var(--ok);color:#fff}
+.o.wrong{border-color:var(--ng);background:var(--ng-soft)}
+.o.wrong .n{background:var(--ng);color:#fff}
+.o:disabled{cursor:default}
+.exp{margin-top:16px;border-radius:11px;padding:15px 17px;font-size:.88rem;line-height:1.85;display:none}
+.exp.show{display:block}
+.exp.o{background:var(--ok-soft);border:1px solid #bfe5d2}
+.exp.x{background:var(--ng-soft);border:1px solid #f3c9c9}
+.exp .h{font-weight:900;margin-bottom:7px;font-size:.95rem}
+.exp.o .h{color:var(--ok)} .exp.x .h{color:var(--ng)}
+.nav{display:flex;gap:10px;margin-top:20px;align-items:center}
+.nav .spacer{flex:1}
+.flagbtn{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:9px 14px;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;color:var(--ink2)}
+.flagbtn.on{background:#fff7e8;border-color:#f0c987;color:var(--accent-dark)}
+/* palette */
+.pal{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.pal button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-size:.76rem;font-weight:700;font-family:inherit;cursor:pointer;color:var(--ink2)}
+.pal button.done{background:var(--bg2);border-color:#d3ccc3;color:var(--ink)}
+.pal button.flag{border-color:var(--accent);color:var(--accent-dark);background:#fff7e8}
+.pal button.cur{outline:2.5px solid var(--accent);outline-offset:1px}
+/* result */
+.score{text-align:center;padding:8px 0 4px}
+.score .big{font-size:3.6rem;font-weight:900;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.score .big small{font-size:1.2rem;color:var(--ink3);font-weight:700}
+.judge{display:inline-block;margin-top:14px;padding:9px 30px;border-radius:99px;font-weight:900;font-size:1.05rem}
+.judge.pass{background:var(--ok-soft);color:var(--ok);border:2px solid var(--ok)}
+.judge.fail{background:var(--ng-soft);color:var(--ng);border:2px solid var(--ng)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.st{background:var(--bg2);border-radius:10px;padding:12px 8px;text-align:center}
+.st .v{font-size:1.35rem;font-weight:900;font-variant-numeric:tabular-nums}
+.st .k{font-size:.72rem;color:var(--ink2);font-weight:700;margin-top:2px}
+.rev{border:1px solid var(--line);border-radius:11px;padding:16px;margin-top:12px;background:#fff}
+.rev.miss{border-left:4px solid var(--ng)}
+.rev.hit{border-left:4px solid var(--ok)}
+.rev .q{font-weight:700;font-size:.93rem;margin:8px 0 10px;line-height:1.8}
+.rev .a{font-size:.85rem;line-height:1.8;margin-bottom:4px}
+.rev .a b{font-weight:800}
+.rev .a.you{color:var(--ng)} .rev .a.cor{color:var(--ok)}
+.rev .e{font-size:.84rem;color:var(--ink2);line-height:1.85;margin-top:8px;padding-top:10px;border-top:1px dashed var(--line)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.filters button{background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:7px 16px;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;color:var(--ink2)}
+.filters button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+footer{text-align:center;font-size:.74rem;color:var(--ink3);padding:26px 16px;line-height:1.9}
+.hide{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(47,45,42,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal.on{display:flex}
+.modal .box{background:#fff;border-radius:var(--r);padding:26px;max-width:400px;width:100%;box-shadow:var(--sh2);text-align:center}
+.modal .box p{font-size:.92rem;color:var(--ink2);margin:10px 0 20px;line-height:1.8}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <div>
+      <h1>生成AIパスポート <span>模擬試験</span></h1>
+      <div class="sub">総合保険プランニング株式会社 社内教材（公式テキストV4.8 / 2026年2月シラバス準拠）</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="pill time hide" id="clock">60:00</div>
+    <div class="pill hide" id="mode-pill">本番モード</div>
+  </div>
+</header>
+<div id="bar-area">
+  <div class="bar-in">
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="lbl" id="prog">0 / 60</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ========== START ========== -->
+<section id="s-start">
+  <div class="card">
+    <h2>60問・60分の<span class="ac">模擬試験</span></h2>
+    <p class="lead">全<b id="pool-n">—</b>問のプールから毎回60問をランダム出題します。何度受けても違う組み合わせで演習できます。</p>
+
+    <h3>1. 受験モードを選ぶ</h3>
+    <div class="opts">
+      <button class="sel on" data-k="mode" data-v="exam">
+        <span class="t">本番モード</span>
+        <span class="d">60分の制限時間つき。解説は最後にまとめて表示されます。本番の時間感覚をつかみたい方へ。</span>
+      </button>
+      <button class="sel" data-k="mode" data-v="study">
+        <span class="t">学習モード</span>
+        <span class="d">1問ごとに正誤と解説をすぐ表示。時間制限なし。はじめて学ぶ方・知識を確認したい方へ。</span>
+      </button>
+    </div>
+
+    <h3>2. 出題範囲を選ぶ</h3>
+    <div class="opts" id="range-opts">
+      <button class="sel on" data-k="range" data-v="all"><span class="t">全章から60問</span><span class="d">第1章〜第5章を本番の配分に近い比率で出題します。</span></button>
+      <button class="sel" data-k="range" data-v="1"><span class="t">第1章だけ演習</span><span class="d">AI（人工知能）の基礎概念・歴史から25問</span></button>
+      <button class="sel" data-k="range" data-v="2"><span class="t">第2章だけ演習</span><span class="d">生成AIの誕生・ChatGPT・主要生成AIから25問</span></button>
+      <button class="sel" data-k="range" data-v="3"><span class="t">第3章だけ演習</span><span class="d">生成AIの動向・ディープフェイク・RAG・AIエージェントから25問</span></button>
+      <button class="sel" data-k="range" data-v="4"><span class="t">第4章だけ演習</span><span class="d">情報リテラシー・個人情報・知的財産・AI社会原則・AI新法から25問</span></button>
+      <button class="sel" data-k="range" data-v="5"><span class="t">第5章だけ演習</span><span class="d">LLM・プロンプトエンジニアリング・ビジネス応用から25問</span></button>
+    </div>
+
+    <div class="note">
+      <b>合格ラインの目安：正答率80%（60問中48問）</b><br>
+      本模擬試験は社内学習用に作成した非公式教材です。出題は当社が保有する公式テキスト（V4.8）本文および2026年2月適用シラバスの範囲に基づいています。実際の試験の出題内容・配点を保証するものではありません。
+    </div>
+
+    <div class="btnrow"><button class="btn wide" id="go">この設定で開始する</button></div>
+  </div>
+</section>
+
+<!-- ========== QUIZ ========== -->
+<section id="s-quiz" class="hide">
+  <div class="card">
+    <div class="qmeta">
+      <span class="tag no" id="q-no">Q1 / 60</span>
+      <span class="tag ch" id="q-ch">第1章</span>
+      <span class="tag" id="q-cat">AIの定義</span>
+      <span class="tag" id="q-d">難易度 ★☆☆</span>
+    </div>
+    <div class="qtext" id="q-text"></div>
+    <div class="olist" id="q-opts"></div>
+    <div class="exp" id="q-exp"></div>
+    <div class="nav">
+      <button class="btn ghost sm" id="prev">← 前の問題</button>
+      <button class="flagbtn" id="flag">🔖 あとで見直す</button>
+      <div class="spacer"></div>
+      <button class="btn sm" id="next">次の問題 →</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">解答状況</h3>
+    <div class="pal" id="pal"></div>
+    <div class="btnrow"><button class="btn ghost sm" id="finish">採点して結果を見る</button></div>
+  </div>
+</section>
+
+<!-- ========== RESULT ========== -->
+<section id="s-result" class="hide">
+  <div class="card">
+    <div class="score">
+      <div class="big"><span id="r-score">0</span><small> / <span id="r-total">60</span>問正解</small></div>
+      <div><span class="judge" id="r-judge">合格ライン到達</span></div>
+    </div>
+    <div class="stats">
+      <div class="st"><div class="v" id="r-rate">0%</div><div class="k">正答率</div></div>
+      <div class="st"><div class="v" id="r-miss">0</div><div class="k">誤答数</div></div>
+      <div class="st"><div class="v" id="r-time">--:--</div><div class="k">所要時間</div></div>
+    </div>
+    <div class="note" id="r-msg"></div>
+    <div class="btnrow">
+      <button class="btn" id="again-miss">誤答だけをもう一度解く</button>
+      <button class="btn ghost" id="again-new">新しい60問に挑戦</button>
+      <button class="btn ghost" id="again-top">最初の画面に戻る</button>
+    </div>
+  </div>
+  <div class="card">
+    <h2 style="font-size:1.1rem">解答と解説</h2>
+    <div class="filters">
+      <button class="on" data-f="all">すべて</button>
+      <button data-f="miss">誤答のみ</button>
+      <button data-f="hit">正答のみ</button>
+    </div>
+    <div id="r-list"></div>
+  </div>
+</section>
+
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h2 style="font-size:1.1rem" id="m-title">未解答の問題があります</h2>
+    <p id="m-body">このまま採点しますか？</p>
+    <div class="btnrow" style="justify-content:center;margin-top:0">
+      <button class="btn sm" id="m-ok">採点する</button>
+      <button class="btn ghost sm" id="m-no">問題に戻る</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  生成AIパスポート 模擬試験｜総合保険プランニング株式会社 社内教材<br>
+  本教材は生成AI活用普及協会（GUGA）および試験実施団体とは関係のない、社内学習用の非公式教材です。
+</footer>
+
+<script>
+const POOL = [
+/* ===== 第1章 AI（人工知能） ===== */
+{ch:1,cat:"AIの定義",d:1,q:"「AI」の略語のもとになっている英語として正しいものはどれか。",o:["Artificial Intelligence","Automatic Intelligence","Advanced Information","Artificial Information"],a:0,e:"AIはArtificial（人工的な）Intelligence（知能）の頭文字をとったものです。一般的には「人間の知能に近い人工的な知能を持ったコンピュータ」と見なされていますが、その定義は明確には定まっておらず、技術の進歩に伴って変化してきました。"},
+{ch:1,cat:"AIの定義",d:2,q:"AIの定義に関する説明として、最も適切なものはどれか。",o:["AIの定義は法律で厳密に定められており、変化することはない","AIの定義は明確には定まっておらず、これまでも変化してきた","AIとは人間の知能を完全に再現できたコンピュータのみを指す","AIの定義はダートマス会議で確定し、以後変更されていない"],a:1,e:"AIの定義については多くの人々が議論しており、明確には定まっていません。歴史を見るとAIの定義は変化してきたため、今後も技術の進歩に伴って変化していく可能性があります。また現在のAIは限定的な能力しか持たず、人間の知能の全てを再現することはできません。"},
+{ch:1,cat:"AIとロボット",d:1,q:"AIとロボットの関係について、正しく説明しているものはどれか。",o:["AIとロボットは同じ意味であり、区別する必要はない","AIは物理的な機械であり、ロボットはソフトウェアである","AIはロボットの「知能」を担当し、ロボットは知能を活用して物理的な動作を行う機械である","ロボットにはAIが必ず搭載されていなければならないと法律で定められている"],a:2,e:"AIは知覚・認識・理解・学習・問題解決能力などを持ち、ソフトウェアやアプリケーションの形で存在します。一方ロボットはAIの技術を搭載した自動的に行動できる機械そのもので、物理的な存在です。AIが「知能」、ロボットが「物理的な動作を行う機械」という役割分担になります。"},
+{ch:1,cat:"AIの歴史",d:2,q:"「AI（人工知能）」という用語が初めて使われた会議として正しいものはどれか。",o:["ダボス会議","ダートマス会議","チューリング会議","ジュネーブ会議"],a:1,e:"AIという用語は、1956年にアメリカのジョン・マッカーシー、マービン・ミンスキー、クロード・シャノン、ナサニエル・ロチェスターらが、ダートマス会議と呼ばれる研究会議で初めて使いました。彼らはAI研究の礎を築きました。"},
+{ch:1,cat:"AIの仕組み",d:1,q:"AIに知能をもたらす仕組みとして、大きく2つに分けられるものの組み合わせとして正しいものはどれか。",o:["ルールベースと機械学習","探索と推論","分類と回帰","エンコーダとデコーダ"],a:0,e:"AIに知能をもたらす仕組みは、大きく分けるとルールベースと機械学習の2つの手法があります。現在主流となっているのは機械学習であり、ディープラーニングは機械学習を構築する手法の1つとして定義されています。"},
+{ch:1,cat:"ルールベース",d:2,q:"ルールベースのシステムの説明として、適切でないものはどれか。",o:["人間が事前に作成したルールや知識をプログラムに組み込む技術である","大量のルールをプログラムするため、開発やメンテナンスに時間とコストがかかる","複雑な問題に対処するには大量のルールが必要で、管理が困難になる","入力された大量のデータから、コンピュータ自身がルールを見出して判断する"],a:3,e:"ルールベースは、人間が事前に作成したルールや知識をコンピュータプログラムに組み込み、それに基づいて予測や判断を行う技術です。コンピュータ自身がデータからパターンを見出すのは機械学習のアプローチであり、ルールベースの説明としては誤りです。"},
+{ch:1,cat:"機械学習",d:2,q:"機械学習を最初に定義づけた人物と、その所属の組み合わせとして正しいものはどれか。",o:["ジョン・マッカーシー／MIT","アーサー・サミュエル／IBM","イアン・グッドフェロー／Google","ジェフリー・ヒントン／トロント大学"],a:1,e:"最初に機械学習を定義づけたのは、IBMの研究者であるアーサー・サミュエルでした（1959年）。彼は機械学習を「明示的にプログラムされることなく、経験から学習する能力をコンピュータに与える学問領域」と定義付けました。"},
+{ch:1,cat:"機械学習",d:1,q:"大量のデータを学習させた後に得られる、データのパターンや関係性を把握し表現するモデルを何と呼ぶか。",o:["ハイパーパラメータ","学習済みモデル（Pre-trained model）","知識ベース","潜在ベクトル"],a:1,e:"大量のデータを学習させた後に得られる、データのパターンや関係性を把握し表現するモデルのことを「学習済みモデル（Pre-trained model）」と言います。スパムメールの自動分類、顔認識、音声認識、自動運転などに利用されています。"},
+{ch:1,cat:"機械学習の手法",d:1,q:"入力データとそれに対する正解データ（教師データ）のペアを与えてモデルを訓練する手法はどれか。",o:["教師あり学習","教師なし学習","強化学習","転移学習"],a:0,e:"教師あり学習は、入力したデータとそれに対する正解データ（教師データ）のペアを与えてモデルをトレーニングする手法です。分類や回帰など様々な問題に応用でき、未知のデータに対しても正しいラベルを予測できる点が大きな特徴です。"},
+{ch:1,cat:"機械学習の手法",d:2,q:"教師なし学習の代表的な手法として、本文で挙げられている2つの組み合わせはどれか。",o:["分類と回帰","クラスタリングと次元削減","探索と推論","畳み込みとプーリング"],a:1,e:"教師なし学習では、正解データを与えず、データ自体のパターンや構造をモデルが自己で発見します。代表的な手法としてクラスタリング（似た特徴を持つグループへの分類）と次元削減（変数を減らして特徴を抽出）があります。"},
+{ch:1,cat:"機械学習の手法",d:2,q:"次元削減に関する説明として、最も適切なものはどれか。",o:["データ件数そのものを削減して学習コストを下げること","データの次元（変数）を減らし、情報を保持しながら特徴を抽出すること","ニューラルネットワークの層の数を減らすこと","正解ラベルの種類を減らして分類を容易にすること"],a:1,e:"次元削減とは、データの次元（変数）を減らすことで、情報を保持しながらデータの特徴を抽出することです。データの可視化や解析が容易になるだけでなく、計算コストの削減やモデルの性能向上が期待できます。"},
+{ch:1,cat:"機械学習の手法",d:1,q:"目標の達成に近づくたびに「報酬」を与えることで、最適な行動を自ら学習させる手法はどれか。",o:["教師あり学習","半教師あり学習","強化学習","転移学習"],a:2,e:"強化学習は、コンピュータに目標を設定し、達成に近づくたびに報酬を与えることで最適な行動を自ら学習させる手法です。報酬を最大化するために「価値」（各状態や行動の良さを示す指標）や「方策」（各状態でどのような行動を取るべきかを示すルール）といった概念も利用されます。"},
+{ch:1,cat:"機械学習の手法",d:3,q:"半教師あり学習の説明として、適切でないものはどれか。",o:["少量の正解データと大量のラベルのないデータを組み合わせて学習する","データ全てにラベル付けをする必要がなく、学習コストを削減できる","仮ラベルの偏りなどにより、教師あり学習より精度が低くなることが多い","正解データを一切使用せず、データの構造のみから学習する"],a:3,e:"半教師あり学習は、教師あり学習と教師なし学習を組み合わせた手法で、少量の正解データを用いて大量のラベルのないデータを効率的に学習します。正解データを一切使わないのは教師なし学習の説明です。"},
+{ch:1,cat:"機械学習の考え方",d:2,q:"「どの問題にも万能で汎用的なモデルは存在しない」という機械学習の大前提を示す定理はどれか。",o:["ノーフリーランチ定理","ベイズの定理","中心極限定理","チューリングの定理"],a:0,e:"ノーフリーランチ定理は1995年に提唱され、「どの問題にも万能で汎用的なモデルは存在しない」という前提を示します。目的、データの種類、処理方法などを考慮し、ケースに応じて最適な手法を選択することが重要であるという考え方です。"},
+{ch:1,cat:"ニューラルネットワーク",d:2,q:"人間の神経細胞（ニューロン）の仕組みをプログラミングによって再現したものを何と呼ぶか。",o:["人工ニューロン（ノード）","シナプス","軸索","樹状突起"],a:0,e:"神経細胞の仕組みをプログラミングによって再現した物を「人工ニューロン（ノード）」と呼びます。ニューラルネットワークとは、これらの人工ニューロンをいくつかの層に配列し、入力値を次々に変換して情報を処理する仕組みです。"},
+{ch:1,cat:"ニューラルネットワーク",d:2,q:"ニューラルネットワークにおいて、人間の神経細胞におけるシナプスの大きさに相当するものは何と表現されるか。",o:["特徴量","重み","報酬","誤差"],a:1,e:"ニューラルネットワークでは、人間の神経細胞におけるシナプスの大きさのことを「重み」と表現します。またノードが情報量を調節することを「情報の重みづけ」と表現します。繰り返し重みを調整することで学習し、性能が改善します。"},
+{ch:1,cat:"ニューラルネットワーク",d:2,q:"ニューラルネットワークの層の構成として、正しい組み合わせはどれか。",o:["入力層・隠れ層・出力層","エンコーダ層・潜在層・デコーダ層","畳み込み層・プーリング層・全結合層","生成層・識別層・評価層"],a:0,e:"画像認識AIの中心となるニューラルネットワークでは、データを受け取る入力層、学習内容に応じてネットワークの繋がり方を変える隠れ層、そして最終データを出す出力層があります。それぞれの層は人工ニューロン（ノード）からなっています。"},
+{ch:1,cat:"ディープラーニング",d:1,q:"ニューラルネットワークを何層にも重ねて作られたシステムを何と呼ぶか。",o:["ルールベースシステム","エキスパートシステム","ディープラーニング（深層学習）","強化学習"],a:2,e:"ニューラルネットワークを何層にも重ねて作られたシステムがディープラーニング（深層学習）と呼ばれます。各層が積み重なるたびに、入力されたデータから更に複雑な特徴や情報を抽出できるようになります。"},
+{ch:1,cat:"過学習",d:2,q:"過学習（オーバーフィッティング）の説明として、最も適切なものはどれか。",o:["学習量が不足しており、訓練データに対しても精度が出ない状態","訓練データに過剰に適合し、新しい未知のデータにうまく予測できなくなる現象","学習を途中で打ち切ることで精度を高める手法","複数のモデルを組み合わせて精度を高める手法"],a:1,e:"過学習とは、訓練データに過剰に適合してしまい、新しい未知のデータに対してうまく予測できなくなる現象です。訓練データに含まれる特定のパターンやノイズまで学習してしまうことで起こり、訓練データには高精度でも未知データには予測性能が低くなります。"},
+{ch:1,cat:"過学習",d:2,q:"ニューラルネットワークの中間層において、ランダムに一部の人工ニューロンを無効化することで過学習を避ける手法はどれか。",o:["正則化","ドロップアウト","アーリーストッピング","転移学習"],a:1,e:"ドロップアウトは、ニューラルネットワークの中間層においてランダムに一部の人工ニューロンを無効化（休ませる）することで過学習を避ける手法です。ネットワーク全体の依存関係が偏らないよう調整でき、モデルの汎化能力を向上させられます。"},
+{ch:1,cat:"過学習",d:2,q:"検証用データでモデル性能を定期的にチェックし、最適なタイミングで学習を停止させる手法はどれか。",o:["アーリーストッピング","ドロップアウト","データ拡張","クラスタリング"],a:0,e:"アーリーストッピングは、データの一部を検証用データとして取っておき、学習過程で定期的にモデルの性能をチェックすることで、最適なタイミングで学習をストップさせる手法です。過学習は一般的に学習のし過ぎによって起こるため有効です。"},
+{ch:1,cat:"過学習",d:2,q:"モデルの複雑さを制限する（例えばパラメータを制限する）ことで過学習に対処する手法はどれか。",o:["転移学習","正則化","次元削減","強化学習"],a:1,e:"正則化は、モデルの複雑さを制限することで過学習に対処します。具体例の1つとして、モデルのパラメータを制限する方法があります。適切な量の情報を学習するようにパラメータを制限することで、過学習を避けます。"},
+{ch:1,cat:"転移学習",d:2,q:"転移学習の説明として、最も適切なものはどれか。",o:["1つの問題で学習したモデルの知識を、別の問題へ適用する手法","学習済みモデルを削除して一から学習し直す手法","複数のモデルの出力を多数決で決める手法","学習データを人工的に増やす手法"],a:0,e:"転移学習とは、1つの問題で学習したモデルの知識を、別の問題へ適用する手法です。例えばリンゴとミカンを見分けるプログラムで学習された重みを使って、バナナとレモンを見分けるプログラムを作るなど、学習内容の応用ができます。"},
+{ch:1,cat:"AIの4つのレベル",d:3,q:"AIの4つのレベルに関する説明として、適切でないものはどれか。",o:["レベル1は条件分岐で構成された単純な制御プログラムである","レベル2はルールベースのシステムやパターン認識アルゴリズムに基づいている","レベル3は機械学習を用いるが、特徴量は人間が設定する必要がある","レベル4はディープラーニングを用いるが、特徴量は人間が設定する必要がある"],a:3,e:"レベル4のAIはディープラーニングを用いて学習し、レベル3との最も大きな違いは、自ら特徴量の調整を含めた学習を行うことができる点です。特徴量を人間が設定する必要があるのはレベル3のAIです。"},
+{ch:1,cat:"AIの4つのレベル",d:2,q:"レベル2のAIの代表例として、本文で挙げられているものはどれか。",o:["AI搭載の冷蔵庫やエアコン","検索エンジン","自動運転技術","質問応答システム（IBMのWatsonなど）"],a:3,e:"レベル2のAIはチャットボットや音声認識システムなどの質問応答システムで利用されています。IBMの開発した「Watson」がアメリカのクイズ番組Jeopardy!で優勝したことで話題になりました。なおAI搭載家電はレベル1、検索エンジンはレベル3、自動運転はレベル4の代表例です。"},
+{ch:1,cat:"ANIとAGI",d:2,q:"弱いAI（ANI）と強いAI（AGI）に関する説明として、最も適切なものはどれか。",o:["現在自動運転や家電製品に搭載されているAIは全てAGIである","AGIは人間並みの知能を持つAIであり、未だこの世に存在しない理論的なコンセプトである","ANIの進歩はほとんどないが、AGIの進歩は目覚ましい","ANIは特定のタスクにしか対応できないため、大きなインパクトを生むことはない"],a:1,e:"現在自動運転や家電製品に搭載されているAIは全てANI（弱いAI）です。AGI（強いAI）は人間並みの知能やタスク処理能力を持つAIで、未だ存在しない理論的なコンセプトです。ANIの進歩は目覚ましい一方、AGIの進歩はほとんどない状況です。"},
+{ch:1,cat:"AIの歴史",d:2,q:"第一次AIブームにおいて、研究の主な焦点となっていたものの組み合わせはどれか。",o:["探索と推論","ビッグデータとディープラーニング","エキスパートシステムと知識ベース","生成と識別"],a:0,e:"第一次AIブームは1956年のダートマス会議で始まり約20年続きました。この時期のAI研究は主に探索と推論に焦点を当てていました。1970年代後半にはルールベースのシステムが複雑な問題に不適切であることが明らかになり、急速に終息しました。"},
+{ch:1,cat:"AIの歴史",d:2,q:"第二次AIブームで注目を集めた、人間の専門家が持つ知識をコンピュータに取り込んで問題を解決するシステムを何と呼ぶか。",o:["レコメンドシステム","エキスパートシステム","マルチエージェントシステム","ニューラルネットワーク"],a:1,e:"第二次AIブーム（1980年代後半〜1990年代初頭）ではエキスパートシステムが注目を集めました。専門家の意思決定プロセスを模倣し、医療や工場などで利用されましたが、知識の取り込みの困難さや知識ベースの肥大化などの課題を抱え、その後「AIの冬」が訪れました。"},
+{ch:1,cat:"AIの歴史",d:2,q:"第三次AIブームの主な特徴として、最も適切な組み合わせはどれか。",o:["探索と推論の高度化","エキスパートシステムの普及","ビッグデータの活用とディープラーニング技術の発展","ルールベースシステムの再評価"],a:2,e:"第三次AIブームは2010年代に入ってから現在までのAIの急速な発展を指します。主な特徴はビッグデータの活用とディープラーニング技術の発展です。膨大なデータを高速処理できるコンピュータ技術の発展により、より高度なAIシステムの構築が実現されました。"},
+{ch:1,cat:"シンギュラリティ",d:2,q:"シンギュラリティ（技術的特異点）に関する説明として、適切でないものはどれか。",o:["AIが人間を超越し知能的に自己進化する状態を指す","数学者のヴァーナー・ヴィンジによって提唱された","レイ・カーツワイルの提唱により2045年問題とも呼ばれる","2045年に必ず起こることが科学的に証明されている"],a:3,e:"シンギュラリティが起こるかどうか、または起こったとして2045年以降なのか以前なのかは、科学的な根拠に基づいても予測することができません。ヴァーナー・ヴィンジが提唱し、レイ・カーツワイルが2005年の著書で言及、一般に2045年問題とも呼ばれています。"},
+{ch:1,cat:"AI効果",d:2,q:"「AI搭載」と聞いて大きく期待したが、実際に使ってみると「思っていたものと違う」と失望してしまう心理現象を何と呼ぶか。",o:["AI効果","ハルシネーション","自動化バイアス","プラセボ効果"],a:0,e:"人々のAI技術に対する期待や信頼感が高過ぎるため、実際に使用したり技術を知ったりすると自身の過大評価から失望してしまう心理現象を『AI効果』と言います。自動運転技術の登場当初などがその例として挙げられています。"},
+/* ===== 第1章 追加 ===== */
+{ch:1,cat:"AIの定義",d:2,q:"一般的にAIと呼ぶために求められる「人間の知能を再現する能力」の具体例として、本文で挙げられていないものはどれか。",o:["知覚、認識","理解、学習","問題解決能力","物理的な移動能力"],a:3,e:"一般的にAIと呼ぶためには「人間の知能を再現する能力」を持つことが求められます。具体的には知覚、認識、理解、学習、問題解決能力などが挙げられます。物理的な動作を行うのはロボットの役割です。"},
+{ch:1,cat:"AIの研究",d:3,q:"AIの研究が始まった背景として、本文に記載されているものはどれか。",o:["計算機の発展や第二次世界大戦","インターネットの普及","スマートフォンの登場","ビッグデータの蓄積"],a:0,e:"AIの研究が始まった背景には、計算機の発展や第二次世界大戦などがあります。第二次世界大戦中、戦争に必要な数値計算を行うため初めてコンピュータが開発され、さらなる発展を目指して人間のような判断ができる機械を作ることがAI研究の目的となりました。"},
+{ch:1,cat:"AIの研究",d:2,q:"AIの応用が広がると同時に生じている懸念として、本文で挙げられているものはどれか。",o:["AIが人間の仕事を奪うことや、プライバシー・倫理的な問題","AIの計算速度が遅すぎること","AIが電力を消費しないこと","AIが物理的に壊れやすいこと"],a:0,e:"AIの応用が広がると同時に、AIが人間の仕事を奪うことや、プライバシーや倫理的な問題が生じる可能性についての懸念が生じています。そのためAIの開発や利用には社会的な責任を持つことが求められます。"},
+{ch:1,cat:"教師あり学習",d:2,q:"教師あり学習が応用できる問題として、本文で挙げられているものの組み合わせはどれか。",o:["分類や回帰","クラスタリングや次元削減","探索や推論","畳み込みやプーリング"],a:0,e:"教師あり学習は、分類や回帰など、様々な問題に応用することができます。未知のデータに対しても正しいラベルを予測できることが、ルールベースにはなかった機械学習の大きな特徴です。"},
+{ch:1,cat:"クラスタリング",d:2,q:"クラスタリングの説明として、最も適切なものはどれか。",o:["与えられたデータを似た特徴やパターンを持つグループに分類すること","正解ラベルを与えて分類器を訓練すること","データの次元を減らして特徴を抽出すること","報酬を最大化する行動を学習すること"],a:0,e:"クラスタリングとは、与えられたデータを似た特徴やパターンを持つグループに分類することです。モデル自身にデータの特徴を見つけ出させ、それを元にデータをいくつかのクラスタに分けます。データの理解や分析、異常検知などに役立ちます。"},
+{ch:1,cat:"強化学習",d:3,q:"強化学習で報酬を最大化するために利用される概念のうち、「各状態でどのような行動を取るべきかを示すルール」を指すものはどれか。",o:["価値","方策","重み","特徴量"],a:1,e:"強化学習では「価値」と「方策」といった概念が利用されます。「価値」とは各状態や行動の良さを示す指標であり、「方策」とは各状態でどのような行動を取るべきかを示すルールです。"},
+{ch:1,cat:"強化学習",d:2,q:"強化学習の応用先として、本文で挙げられているものの組み合わせはどれか。",o:["ゲームAIの開発と自動運転車","スパムメールの分類と顔認識","文章の要約と翻訳","次元削減と異常検知"],a:0,e:"強化学習は、ゲームAIの開発において重要な役割を果たしているだけでなく、自動運転車のような実世界の問題にも応用されています。自動運転車は交通ルールを守りながら目的地に効率的かつ安全に到着する必要があります。"},
+{ch:1,cat:"半教師あり学習",d:3,q:"半教師あり学習の精度に関する説明として、最も適切なものはどれか。",o:["正解ラベルの偏りや予測ラベルの不正確さにより、教師あり学習に比べて低くなることが多い","常に教師あり学習より高い精度が得られる","教師なし学習と同じ精度になる","精度は学習データ量に一切影響されない"],a:0,e:"半教師あり学習では、正解ラベルをつける際に偏りが生じたり、後から予測されたラベルが正確でなかったりする可能性があるので、学習の精度に関しては教師あり学習に比べるとどうしても低くなることが多いです。"},
+{ch:1,cat:"神経細胞",d:3,q:"人間の神経細胞において、神経細胞同士や神経細胞と筋肉細胞などの間で情報を伝達する機能を持つ部位はどれか。",o:["大脳","シナプス","軸索","樹状突起"],a:1,e:"シナプスは、神経細胞同士や神経細胞と筋肉細胞などの間で情報を伝達する機能を持っています。ある程度繰り返して情報を伝達し続けると、その部分に当たるシナプスが大きくなり、伝達効率が上がります。"},
+{ch:1,cat:"画像認識",d:2,q:"AIが画像を判別する際、画素から数値データとして抽出する情報の組み合わせとして正しいものはどれか。",o:["位置情報と色情報","解像度と圧縮率","撮影日時と撮影者","ファイル名と拡張子"],a:0,e:"AIは画像を判別する時、その画像をたくさんの細かい画素（ピクセル）に分けて見ます。そして、画素がどの位置にあるかという「位置情報」と、その画素が何色なのかという「色情報」を、数値データとして抽出します。"},
+{ch:1,cat:"画像認識",d:3,q:"AIが画像から特徴を抽出していく順序として、本文の記述に合致するものはどれか。",o:["直線や曲線など単純な形の特徴から、徐々に複雑な形をした特徴へ","複雑な形の特徴から、徐々に単純な形の特徴へ","色情報のみを抽出し、形状は判別しない","画像全体を一度に判別し、部分的な特徴は見ない"],a:0,e:"AIは画素の繋がりを見て、直線や曲線など単純な形の特徴を抽出します。これらの特徴が組み合わさり、徐々に複雑な形をした特徴が抽出されていき、最終的に対象物の概念が抽出されて“認識”します。人間の認識の仕組みと非常に似ているといえます。"},
+{ch:1,cat:"学習と改善",d:3,q:"ニューラルネットワークモデルの学習における「誤差」の説明として、最も適切なものはどれか。",o:["出力データと正解データの誤差であり、これを最小にする重みを計算することで性能が改善する","入力データと訓練データの件数の差","学習にかかる時間の予測値との差","モデルのパラメータ数と理想値の差"],a:0,e:"誤差とは出力データと正解データの誤差です。例えば「バナナ」の画像を入力した際、出力が「バナナ」なら誤差は「無」、「レモン」や「リンゴ」なら誤差は「有」となります。この誤差を最小にする重みを計算することでモデルの性能が改善され、最適化されます。"},
+{ch:1,cat:"過学習",d:3,q:"過学習が起こる原因として、本文の記述に合致するものはどれか。",o:["モデルが訓練データに含まれる特定のパターンやノイズまで学習してしまうこと","学習データが少なすぎて学習が進まないこと","モデルのパラメータが少なすぎること","検証用データを使いすぎること"],a:0,e:"過学習は、モデルが訓練データそれぞれに過剰適応し、訓練データに含まれる特定のパターンやノイズ（本質的なパターンとは関係のないランダムな変動）まで学習してしまうことで起こります。"},
+{ch:1,cat:"ドロップアウト",d:3,q:"ドロップアウトを用いる際の注意点として、本文に記載されているものはどれか。",o:["適切なドロップアウト率を選択する必要がある","必ず全ての人工ニューロンを無効化する必要がある","入力層に対してのみ適用する必要がある","学習が完了した後にのみ適用する必要がある"],a:0,e:"ドロップアウトでは適切なドロップアウト率を選択する必要があります。情報を詰め込めば詰め込むほど良いというものではなく、使われる人工ニューロンの数を変更することで、より汎用性が高く本質的な特徴を抽出できるAIとなります。"},
+{ch:1,cat:"AIの4つのレベル",d:2,q:"AI搭載の冷蔵庫やエアコンなど、いわゆる「AI搭載家電」が該当するAIのレベルはどれか。",o:["レベル1","レベル2","レベル3","レベル4"],a:0,e:"AI搭載家電という言葉における「AI搭載」は、通常レベル1のAIを指します。レベル1は条件分岐で構成された単純な制御プログラムで、入力に応じて予め決められているルールに従い出力を行います。"},
+{ch:1,cat:"AIの4つのレベル",d:2,q:"レベル3のAIの代表例として、本文で挙げられているものはどれか。",o:["AI搭載エアコン","チャットボット","検索エンジン","自動運転技術"],a:2,e:"レベル3のAIの代表例は検索エンジンです。検索エンジンのAIはどの記事が最適かを自動で判断し、ユーザーのニーズに合わせた検索結果を表示するためにビッグデータを参照し、機械学習を用いて学習します。"},
+{ch:1,cat:"AIの4つのレベル",d:2,q:"レベル4のAIの代表例として、本文で挙げられているものはどれか。",o:["自動運転技術","AI搭載冷蔵庫","質問応答システム","検索エンジン"],a:0,e:"レベル4のAIはディープラーニングを用いて学習し、大量のデータを処理できます。代表例としては車などの自動運転技術です。目の前の車や人の動きを予測し、障害物の種類を素早く判別しながら運転を続けます。"},
+{ch:1,cat:"特徴量",d:2,q:"特徴量の説明として、最も適切なものはどれか。",o:["機械学習モデルが学習や予測を行うために使用する、データの特定の要素","モデルの学習前に手動で設定するパラメータ","出力データと正解データの差","ニューラルネットワークの層の数"],a:0,e:"特徴量とは、機械学習モデルが学習や予測を行うために使用する、データの特定の要素を指します。例えば、画像認識タスクでは、画像の色、形状、テクスチャなどを指します。"},
+{ch:1,cat:"AIの歴史",d:3,q:"第一次AIブームが1970年代後半に急速に終息した理由として、本文に記載されているものはどれか。",o:["ルールベースのシステムが複雑な問題に対して不適切であることが明らかになったため","コンピュータの価格が高騰したため","ディープラーニングが登場したため","研究者の数が不足したため"],a:0,e:"1970年代後半には第一次AIブームは急速に終息し、人々からAIに対する期待と興味が失われました。これは、ルールベースのシステムが複雑な問題に対して不適切であることが明らかになったためでした。"},
+{ch:1,cat:"AIの歴史",d:3,q:"エキスパートシステムが抱えていた課題として、本文で挙げられているものはどれか。",o:["専門家の知識を正確に取り込むことが困難で、知識ベースが大きくなり過ぎ管理が困難になった","計算に必要なデータが多すぎて処理できなかった","自然言語を一切扱えなかった","特徴量を自動で抽出してしまい制御できなかった"],a:0,e:"エキスパートシステムは、専門家が持つ知識を正確に取り込むことが困難であったり、知識ベースが大きくなり過ぎて管理が困難になったりする課題を抱えていました。その後、非実用的なシステムが多くなり「AIの冬」と呼ばれる時代が訪れました。"},
+{ch:1,cat:"AIの歴史",d:2,q:"AI技術の進歩が鈍化した時代を指す言葉として、本文で使われているものはどれか。",o:["AIの冬","AI効果","AIバブル","シンギュラリティ"],a:0,e:"第二次AIブームの後、人々の期待に応えることができない非実用的なシステムが多くなったことから、AI技術の進歩が鈍化し、「AIの冬」と呼ばれる時代が訪れました。"},
+{ch:1,cat:"シンギュラリティ",d:3,q:"シンギュラリティを提唱した人物と、その年・媒体の組み合わせとして正しいものはどれか。",o:["ヴァーナー・ヴィンジが1993年に発表したエッセイ","レイ・カーツワイルが1993年に発表したエッセイ","ジョン・マッカーシーが2005年に発表した著書","アーサー・サミュエルが1959年に発表した論文"],a:0,e:"シンギュラリティは、ヴァーナー・ヴィンジという数学者によって提唱されました。1993年に発表したエッセイの中で、シンギュラリティによって「人類の時代は終わる」と言及しています。またレイ・カーツワイルが2005年の著書で言及し大きな話題を呼びました。"},
+{ch:1,cat:"ディープラーニング",d:2,q:"近年のディープラーニングの進化によって精度が大幅に向上した分野として、本文で挙げられているものの組み合わせはどれか。",o:["画像認識と自然言語処理","経理処理と在庫管理","電力供給と物流配送","印刷技術と製本技術"],a:0,e:"近年では、ディープラーニングと呼ばれる技術の進化によって、画像認識や自然言語処理の精度が大幅に向上しました。また、AIが自動的に画像の生成などを行うGANや、自動的に生成される音楽、映像など、新たな応用分野も広がっています。"},
+/* ===== 第2章 生成AI（ジェネレーティブAI） ===== */
+{ch:2,cat:"生成モデルの誕生",d:2,q:"1980年代後半にジェフリー・ヒントンらの研究グループが提唱した、確率的なニューラルネットワークの一種はどれか。",o:["ボルツマンマシン","パーセプトロン","オートエンコーダ","Transformer"],a:0,e:"1980年代後半に、ジェフリー・ヒントンとテリー・セジュノスキー率いる研究グループが、確率的なニューラルネットワークの一種であるボルツマンマシンを提唱しました。これにより実数を使った多層学習が可能になりましたが、処理に膨大な時間がかかり実用化には至りませんでした。"},
+{ch:2,cat:"生成モデルの誕生",d:3,q:"1986年に開発された制約付きボルツマンマシンに関する説明として、適切でないものはどれか。",o:["ネットワークを入力部分と推定する部分の2つに分けた","学習が収束しやすいモデルとなった","次元削減やデータの分類などに応用できる","教師あり学習のみが可能で、教師なし学習には対応できない"],a:3,e:"制約付きボルツマンマシンは、次元削減、データの分類、データを特徴づける傾向の学習などに応用でき、教師あり学習に加えて教師なし学習も可能となりました。ネットワークを入力部分と推定部分に分けることで学習が収束しやすくなっています。"},
+{ch:2,cat:"自己回帰モデル",d:2,q:"過去のデータを使って次のデータを予測する方法であり、時系列データの予測に特に効果的なモデルはどれか。",o:["自己回帰モデル","敵対的生成ネットワーク","変分自己符号化器","エキスパートシステム"],a:0,e:"自己回帰モデルは過去のデータを使って次のデータを予測する方法であり、時系列データの予測に対して特に効果的です。株価や天気など時間の経過により変化するデータに対して、過去のデータを基に予測することが可能です。"},
+{ch:2,cat:"CNN",d:2,q:"CNN（畳み込みニューラルネットワーク）の特徴として、最も適切なものはどれか。",o:["全ての入力と出力が結びついているため、画像処理の計算量が少ない","画像の一部分（局所的な範囲）だけを見て情報の処理が可能である","時系列データの処理に特化しており、画像処理には向かない","エンコーダとデコーダの2つで構成される"],a:1,e:"CNNは画像の一部分（局所的な範囲）だけを見て情報の処理が可能で、これを「畳み込み」と呼びます。畳み込みを繰り返すことで、初めの層では線や色、次の層では形状、さらに深い層では物体や風景といった複雑な特徴を認識できます。"},
+{ch:2,cat:"VAE",d:2,q:"VAE（変分自己符号化器）を構成する2つの主要な部分の組み合わせとして正しいものはどれか。",o:["生成器と識別器","エンコーダとデコーダ","入力層と出力層","リカレント層とAttention層"],a:1,e:"VAEはエンコーダとデコーダの2つの主要な部分から構成されます。エンコーダは入力データを潜在ベクトル（潜在変数）と呼ばれる低次元の表現に変換し、デコーダは潜在ベクトルを受け取って元のデータに近いものを生成します。"},
+{ch:2,cat:"GAN",d:2,q:"2014年にイアン・グッドフェローによって提唱されたGAN（敵対的生成ネットワーク）を構成する2つのネットワークはどれか。",o:["エンコーダとデコーダ","生成器（Generator）と識別器（Discriminator）","入力層と隠れ層","プレトレーニングとファインチューニング"],a:1,e:"GANは、生成器（Generator）と識別器（Discriminator）の2つのネットワークから構成されます。生成器は識別器を騙すようなデータを生成しようとし、識別器は本物と生成データを正確に区別するよう学習します。この競争を通じて生成器の能力が向上します。"},
+{ch:2,cat:"RNN",d:2,q:"RNN（回帰型ニューラルネットワーク）の特徴として、最も適切なものはどれか。",o:["前の時刻の隠れ層の出力を、次の時刻の隠れ層の入力として利用する","全ての単語を一度に並列処理できる","画像の局所的な特徴を抽出することに特化している","正解データを使わずにクラスタリングを行う"],a:0,e:"RNNは前の時刻の隠れ層の出力を次の時刻の隠れ層の入力として利用します。これにより過去の情報を記憶しながら新たな情報を処理でき、時系列データの処理に適しています。ただし長いシーケンスデータでは勾配消失問題や勾配爆発問題を引き起こすことがありました。"},
+{ch:2,cat:"LSTM",d:2,q:"LSTM（長・短期記憶）に関する説明として、最も適切なものはどれか。",o:["CNNの改良版であり、画像認識の精度を高めた","RNNの改良版であり、より長い時間におけるシーケンスデータの依存関係を学習できる","Attention層のみで構成されたモデルである","教師なし学習に特化した生成モデルである"],a:1,e:"LSTMはシーケンスデータを処理するための特殊な種類のRNNで、1997年にホッホライター博士とシュミットヒューバー博士によって提唱されました。改良により、より長い時間におけるシーケンスデータの依存関係を学習できるようになりました。"},
+{ch:2,cat:"Transformer",d:2,q:"2017年にGoogleの研究者らが発表した論文「Attention Is All You Need」で紹介されたモデルはどれか。",o:["BERTモデル","GPTモデル","Transformerモデル","VAE"],a:2,e:"Transformerモデルは、2017年にGoogleの研究者であるアシシュ・バスワニらによって「Attention Is All You Need」という論文で紹介されました。自己注意力（Self-Attention）という新しい機能を採用し、その後の自然言語処理の研究に大きな影響を与えました。"},
+{ch:2,cat:"Transformer",d:3,q:"Transformerモデルの特徴として、適切でないものはどれか。",o:["Attention Mechanismを用いて入力された単語の重要度を得点付けする","RNNやLSTMと同様に、入力に対し順を追って1語ずつ処理する","位置エンコーディングを用いて単語の順序情報を保持する","エンコーダとデコーダから構成される"],a:1,e:"RNNやLSTMは入力に対し順を追って処理しますが、Transformerは一度に全ての単語を処理します（シーケンス全体の並行処理）。これによりトレーニング速度が大幅に向上し、大規模なデータセットの学習時間を短縮できるようになりました。"},
+{ch:2,cat:"BERT",d:2,q:"2018年10月にGoogleが開発したBERTモデルで採用されている、ランダムに選ばれた単語を隠してその単語を予測する仕組みを何と呼ぶか。",o:["MLM（Masked Language Model）","NSP（Next Sentence Prediction）","RLHF","Attention Mechanism"],a:0,e:"BERTで採用した「Masked Language Model（MLM）」は、ランダムに選ばれた単語をマスク（隠す）してその単語を予測する仕組みです。マスクした単語の前後の情報を全て使うことでBERTは双方向性を実現しました。"},
+{ch:2,cat:"BERT",d:2,q:"BERTの特徴の1つであるNSP（Next Sentence Prediction）の説明として正しいものはどれか。",o:["隠された単語が何であったかを予測する","ある文が別の文の直後に来るかどうかを予測する","次に生成すべき単語の確率を計算する","文章を要約して次の段落を生成する"],a:1,e:"NSP（Next Sentence Prediction）は、ある文が別の文の直後に来るかどうかを予測するタスクです。これによりBERTは2つの文の関連性を理解する能力を身につけ、文章の流れや意味の連続性を理解します。"},
+{ch:2,cat:"派生モデル",d:3,q:"BERTの派生モデルに関する説明として、適切でないものはどれか。",o:["RoBERTaは2019年にFacebook AIが発表したBERTの改良モデルである","RoBERTaはBERTの約10倍のデータ量と長い時間を使って訓練された","ALBERTはBERTを軽量にするモデルで、Googleの研究者によって開発された","ALBERTはパラメータ数を大幅に増やすことで性能を向上させた"],a:3,e:"ALBERT（A Lite BERT）は、いくつかの工夫を通じてパラメータの数を大幅に削減し、モデルの効率を向上させたモデルです。BERTの性能を保ちながら、計算リソースが制限されている環境でも高いパフォーマンスを実現できるようになりました。"},
+{ch:2,cat:"ChatGPT",d:1,q:"ChatGPTの「GPT」が示す3つの単語の組み合わせとして正しいものはどれか。",o:["Generative（生成）・Pre-trained（事前学習）・Transformer","General（汎用）・Programmed（プログラム済）・Technology","Generative（生成）・Personalized（個別化）・Tool","Graphic（図形）・Processing（処理）・Training（訓練）"],a:0,e:"ChatGPTのChatは「対話型」であることを示し、GPTはGenerative「生成」、Pre-trained「事前学習」、Transformer「Transformerモデル」を示しています。OpenAIが開発した一連の自然言語処理モデルです。"},
+{ch:2,cat:"ChatGPT",d:2,q:"2022年11月に発表されたChatGPTに関する説明として、最も適切なものはどれか。",o:["登場から2か月ほどでアクティブユーザーが1億人を超えたと言われている","GPT-4を対話向けにファインチューニングしたものである","登場と同時に日本語の出力精度が英語を上回った","公開当初から最新の情報をリアルタイムで参照できた"],a:0,e:"2022年11月に発表されたChatGPTは、登場してから2か月ほどでアクティブユーザーが1億人を超えたと言われています。GPT-3.5を対話向けにファインチューニングしたもので、当初は2021年9月までの情報しか提供できないという制約がありました。"},
+{ch:2,cat:"GPTの歴史",d:2,q:"GPT-3が持つとされるパラメータ数として、本文に記載されている数値はどれか。",o:["17.5億","175億","1750億","1兆7500億"],a:2,e:"2020年に発表されたGPT-3は、これまでのモデルよりもはるかに大規模なモデルであり、1750億のパラメータを持つことで知られています。様々なタスクで驚異的な結果を示しました。"},
+{ch:2,cat:"GPTの歴史",d:2,q:"GPT-2が発表された当初、OpenAIがフルモデルの公開を控えた理由として最も適切なものはどれか。",o:["計算コストが高すぎたため","潜在的な誤用や悪用に関する懸念があったため","日本語の精度が低かったため","著作権上の問題が解決していなかったため"],a:1,e:"2019年に発表されたGPT-2は非常に強力であったため、その潜在的な誤用や悪用に関する懸念から、初めはフルモデルの公開を控えました。その後、悪用のリスクを管理するフレームワークが整備されたため、全てのバージョンとソースコードを公開しました。"},
+{ch:2,cat:"RLHF",d:2,q:"人間の評価者からのフィードバックを元にモデルが学習する強化学習の手法を何と呼ぶか。",o:["RLHF（Reinforcement Learning from Human Feedback）","RAG（Retrieval-Augmented Generation）","MLM（Masked Language Model）","NSP（Next Sentence Prediction）"],a:0,e:"RLHF（Reinforcement Learning from Human Feedback）は強化学習の1つの手法で、人間の評価者からフィードバックを受け取り、モデルがそれを元に学習していきます。InstructGPTやGPT-3.5で採用されており、モデルを人間の意図に合わせることをアライメント（Alignment）と呼びます。"},
+{ch:2,cat:"アライメント",d:2,q:"モデルを人間の意図に合わせることを表す用語はどれか。",o:["ファインチューニング","アライメント（Alignment）","ハルシネーション","プレトレーニング"],a:1,e:"モデルを人間の意図に合わせることはアライメント（Alignment）と呼ばれています。GPT-3.5はGPT-3と基本的な構造は同じですが、InstructGPTと同じRLHFを使用することで、人間の価値観に基づくポリシー内で動作するように設計されています。"},
+{ch:2,cat:"ハルシネーション",d:1,q:"AIが意味のない不正確な情報を、堂々と生成してしまう現象を何と呼ぶか。",o:["バイアス","ハルシネーション（Hallucination）","オーバーフィッティング","アライメント"],a:1,e:"ハルシネーション（Hallucination）はAIの幻覚と呼ばれる現象で、意味のない不正確な情報を堂々と生成してしまう傾向を指します。GPT-4でもハルシネーションは起きていますが、GPT-3.5と比べて全体で19％〜29％程度低くなっています。"},
+{ch:2,cat:"マルチモーダル",d:2,q:"テキストや画像、音声、動画などの異なる種類のデータを一度に処理することが可能なAI技術を何と呼ぶか。",o:["マルチタスク","マルチモーダル","マルチエージェント","マルチクラス分類"],a:1,e:"マルチモーダルとはテキストや画像、音声、動画などの異なる種類のデータを一度に処理することが可能なAI技術です。GPT-4では「文章と画像を合わせて指示を出し、データを生成する」といったことが可能になりました。"},
+{ch:2,cat:"Code Interpreter",d:2,q:"2023年7月にリリースされた、ChatGPTがPythonのソースコードを作成し自ら実行できる機能はどれか。",o:["GPTs","Code Interpreter","Operator","Image Generation"],a:1,e:"Code Interpreterは2023年7月にリリースされた、ChatGPTがPythonのソースコードを作成し、その書いたソースコードを自ら実行することができる機能です。データの分析、グラフの作成、数学的な計算、ファイルの読み込みや操作などが可能になりました。"},
+{ch:2,cat:"GPTs",d:2,q:"ユーザが様々な用途に合わせてChatGPTをカスタマイズできる機能はどれか。",o:["GPTs","Code Interpreter","Sora","Codex"],a:0,e:"GPTsはユーザが様々な用途に合わせてChatGPTをカスタマイズできる機能です。特定の振る舞いの設定、特定のテキストファイルの参照、外部APIとの連携などが可能で、作成したGPTsはGPTストアで公開することもできます。"},
+{ch:2,cat:"GPT-4o",d:2,q:"2024年5月にリリースされたGPT-4oの「o」が意味するものとして正しいものはどれか。",o:["online（オンライン）","omni（全ての）","open（開かれた）","optimized（最適化された）"],a:1,e:"GPT-4oの「o」は「omni（全ての）」を意味し、テキスト、画像、音声を組み合わせて統合的に処理できることから、マルチモーダルと区別するためにオムニモーダルモデルと名付けられています。音声入力に対して最短232ミリ秒で応答できます。"},
+{ch:2,cat:"リーズニングモデル",d:2,q:"GPT-o1に関する説明として、最も適切なものはどれか。",o:["「答えを返す前に自分でじっくり考える」ことを設計思想に据えたリーズニング（推論）モデルである","GPT-4oの軽量版であり、応答速度を最優先に設計されている","動画生成に特化したモデルである","ブラウザ操作に特化したAIエージェントである"],a:0,e:"GPT-o1はOpenAIが2024年に発表した“リーズニング（推論）モデル”シリーズの第1弾で、「答えを返す前に自分でじっくり考える」ことを設計思想に据えた大規模言語モデルです。研究やソフトウェア開発など論理的に難易度の高いタスクを得意とします。"},
+{ch:2,cat:"リーズニングモデル",d:3,q:"GPT-o4に関する説明として、最も適切なものはどれか。",o:["GPT-4o（オムニ）の後継であり、同じ系列のモデルである","リーズニングモデル群の総称であり、GPT-4oとはまったく別系列である","画像生成専用のモデルである","BERTをベースにした自然言語理解モデルである"],a:1,e:"GPT-o4はOpenAIが2025年4月16日に発表したリーズニングモデル群の総称です。名前が似ているGPT-4o（オムニ）とはまったく別系列なので注意が必要です。o3モデルと同様にツール呼び出しを自律的に組み合わせて複雑な課題を解くことが可能です。"},
+{ch:2,cat:"GPT-4.1",d:3,q:"2025年4月に公開されたGPT-4.1ファミリーの特徴として、適切でないものはどれか。",o:["最大100万トークンという長コンテキスト処理能力を持つ","実コード修正タスクでSOTAを更新するコーディング性能を持つ","標準版に加えてminiとnanoの計3サイズが用意されている","感性を要する芸術批評に特化して最適化されている"],a:3,e:"GPT-4.1ファミリーは従来のGPT-4系列を「開発者向け実務」に最適化した改良版です。最大100万トークンの長コンテキスト、SOTAを更新するコーディング性能、厳密な指示追従、低レイテンシ・低コストを実現し、標準版・mini・nanoの3サイズが用意されています。"},
+{ch:2,cat:"GPT-5",d:2,q:"2025年8月に公開されたGPT-5について、本文で「注目するべき特徴」として挙げられているものはどれか。",o:["画像生成機能の統合","ハルシネーションの減少","動画生成時間の延長","無料での無制限利用"],a:1,e:"GPT-5は博士号レベルの高い専門性を必要とするタスクにも対応可能で、注目するべき特徴はハルシネーションの減少です。推論モデルであるGPT-5 thinkingでは、o3モデルに比較して約80%ほどハルシネーションが減少したと報告されています。"},
+{ch:2,cat:"Sora",d:2,q:"OpenAIが提供する動画生成AI「Sora」に関する説明として、最も適切なものはどれか。",o:["Transformerアーキテクチャを採用した拡散モデルである","GANのみで構成された生成モデルである","テキスト入力には対応せず、画像入力のみを受け付ける","静止画のみを生成し、動画は生成できない"],a:0,e:"SoraはOpenAIの提供する、テキストや画像からの動画を生成できる動画生成AIです。transformerアーキテクチャを採用した拡散モデルであり、静的ノイズのようなものから始めて段階的にノイズを取り除きながら動画を変換していきます。"},
+{ch:2,cat:"Operator",d:2,q:"OpenAIが2025年1月に公開した、ブラウザ操作に特化したAIエージェントはどれか。",o:["Codex","Operator","Sora","GPTs"],a:1,e:"OperatorはOpenAIが2025年1月23日に公開したブラウザ操作に特化したAIエージェントです。独自の仮想ブラウザを起動し、画面を画像として解析しながらクリックや入力を自動で実行し、オンラインでの購入や予約などを肩代わりできます。"},
+{ch:2,cat:"Codex",d:3,q:"OpenAI Codexに関する説明として、最も適切なものはどれか。",o:["画像生成に特化したモデルである","クラウド上の隔離サンドボックスで複数の開発タスクを同時に処理できるAI開発エージェントである","音声合成に特化したサービスである","検索エンジンの検索結果を要約するツールである"],a:1,e:"OpenAI Codexは2025年5月16日に研究プレビューとして公開された、クラウド上の隔離サンドボックスを立ち上げて機能追加・バグ修正・PR作成など複数の開発タスクを同時に処理できるAI開発エージェントです。基盤にはo3派生モデル「codex-1」を採用しています。"},
+{ch:2,cat:"Image Generation",d:3,q:"2025年3月にリリースされたGPT-4o統合の画像生成機能が採用している方式として正しいものはどれか。",o:["従来と同じ拡散モデル","自己回帰モデル","GAN","VAE"],a:1,e:"この画像生成は従来のDALL·EやStable Diffusionなどで使用されている拡散モデルとは異なり、“自己回帰モデル”を採用することで、画像の左上から右下へトークンを一つずつ描いていく方式になりました。これにより画像内の文字の生成も可能になりました。"},
+{ch:2,cat:"その他の生成AI",d:2,q:"Google DeepMindが設計・提供する生成AIファミリーはどれか。",o:["Claude","Gemini","Copilot","Llama"],a:1,e:"GeminiはGoogleの研究開発部門であるGoogle DeepMindが設計・提供する生成AIファミリーです。テキストだけでなく画像・音声・動画・PDFまで統合的に扱えるネイティブなマルチモーダル設計と、reasoning機構が特徴です。"},
+{ch:2,cat:"その他の生成AI",d:2,q:"Anthropic社が開発したClaudeで採用されている、独自の訓練手法の名称はどれか。",o:["Constitutional AI","RLHF only","Masked Language Model","Chain of Thought"],a:0,e:"Claudeは、安全性を最優先に掲げるAnthropic社が開発した生成AIファミリーです。「Constitutional AI」と呼ばれる独自の訓練手法によって、モデル内部に「有害でない・役に立つ・正直である」という価値観を組み込んでいます。"},
+{ch:2,cat:"その他の生成AI",d:3,q:"Claude 3の三層構成のモデル名として、正しい組み合わせはどれか。",o:["Nano・Pro・Ultra","Haiku・Sonnet・Opus","Flash・Pro・Lite","mini・standard・max"],a:1,e:"Claude 3は、超高速・低コスト志向のHaiku、速度と能力のバランスを取ったSonnet、複雑な推論を担う最上位のOpusという三層構成を採っています。標準で20万トークンの長大なコンテキストとマルチモーダル入出力を扱えます。"},
+{ch:2,cat:"その他の生成AI",d:2,q:"Microsoftが展開する生成AI群を統一するブランド名はどれか。",o:["Gemini","Claude","Copilot","Watson"],a:2,e:"CopilotはMicrosoftが展開する生成AI群を統一するブランドで、2023年11月にBing ChatやMicrosoft 365 Copilotなどをまとめて「Microsoft Copilot」と呼称を改めました。Windows・Edge・モバイル・クラウドへ横断的に組み込まれています。"},
+/* ===== 第2章 追加 ===== */
+{ch:2,cat:"生成AIの位置づけ",d:2,q:"本文において、生成AIの出現はどのように表現されているか。",o:["インプットのAI革命","アウトプットのAI革命","ハードウェアのAI革命","ネットワークのAI革命"],a:1,e:"2013年頃のディープラーニングのブレークスルーによりAIは学習能力を大幅に向上させました。これをインプットのAI革命とする場合、生成AIの出現は、まさに「アウトプットのAI革命」だと言えると本文では述べられています。"},
+{ch:2,cat:"ボルツマンマシン",d:3,q:"ボルツマンマシンが実用化に至らなかった理由として、本文に記載されているものはどれか。",o:["学習できるデータ量が増えたことで、処理に膨大な時間がかかるようになったため","二値しか扱えず多層学習ができなかったため","教師なし学習に対応していなかったため","当時のAI研究が活発でなかったため"],a:0,e:"ボルツマンマシンの登場によって実数を使った多層学習が可能になりましたが、同時に学習できるデータ量が大幅に増えたことで処理に膨大な時間がかかるようになり、実用化するには未完成なモデルとなってしまいました。"},
+{ch:2,cat:"ディープラーニング",d:3,q:"2006年に提唱され、ディープラーニング技術が飛躍的に発展するきっかけとなったものはどれか。",o:["制約付きボルツマンマシンを多段に重ねた深層ネットワーク","Attention層のみで構成されたモデル","畳み込み演算を用いたモデル","生成器と識別器を競わせるモデル"],a:0,e:"2006年に制約付きボルツマンマシンを多段に重ねた深層ネットワークが提唱され、この提唱からディープラーニングの技術は飛躍的に発展しました。"},
+{ch:2,cat:"CNN",d:3,q:"CNNとディープラーニングの可能性が広く認識されるきっかけとなった出来事はどれか。",o:["2012年の画像認識技術の世界大会でCNNを用いたモデルが圧倒的な成績を収めたこと","2017年にAttention Is All You Needが発表されたこと","2014年にGANが提唱されたこと","2022年にChatGPTが公開されたこと"],a:0,e:"2012年に開催された画像認識技術の世界大会で、CNNを用いたモデルが圧倒的な成績を収めたことで、ディープラーニングとCNNの可能性が広く認識されるきっかけとなりました。"},
+{ch:2,cat:"VAE",d:3,q:"2013年にVAE（変分自己符号化器）を提唱した人物の組み合わせとして正しいものはどれか。",o:["ディーデリック・P・キングマとマックス・ウェリング","イアン・グッドフェロー","ジェフリー・ヒントンとテリー・セジュノスキー","ホッホライターとシュミットヒューバー"],a:0,e:"2013年にディーデリック・P・キングマとマックス・ウェリングによってVAE（Variational Autoencoder）が提唱されました。データの次元削減やデータ生成に使用されるニューラルネットワークです。"},
+{ch:2,cat:"VAE",d:2,q:"VAEの主な特徴として、本文に記載されているものはどれか。",o:["ノイズ（不要な情報）が混ざったデータから元のデータを再現する能力がある","2つのネットワークを競わせて学習する","時系列データの依存関係を長期間保持できる","全ての単語を並列に処理できる"],a:0,e:"VAEの主な特徴としては、ノイズ（不要な情報）が混ざったデータから元のデータを再現する能力があることです。データの特徴学習、次元削減、データ生成、異常検知などの様々な応用に活用されています。"},
+{ch:2,cat:"GAN",d:3,q:"GANの利点として、本文に記載されているものはどれか。",o:["大量のデータを必要とせず、訓練データから新しいデータを生成できる","学習に必要な時間が全くかからない","生成物が必ず著作権フリーになる","人間のフィードバックが不要になる"],a:0,e:"GANは大量のデータを必要とせず、訓練データから新しいデータを生成することができるため、現在もジェネレーティブAIの分野において大きな影響を与えています。"},
+{ch:2,cat:"RNN",d:3,q:"RNNが注目された理由として、本文で説明されている「データの性質」はどれか。",o:["人間の言語や音楽などのデータは時間的指向性を持つため","画像は左右を反転させても意味が変わらないため","データが必ず数値で表現されるため","データ量が少なくて済むため"],a:0,e:"人間の言語や音楽などのデータは時間的指向性を持ちます。画像は左右を反転させても「猫」は「猫」のままですが、音楽は逆再生してしまうと全く別のものになってしまいます。こういったデータの取り扱いのために注目されたのがRNNです。"},
+{ch:2,cat:"RNN",d:3,q:"RNNが長いシーケンスデータを扱う際に引き起こすことがある問題の組み合わせとして正しいものはどれか。",o:["勾配消失問題と勾配爆発問題","過学習と学習不足","バイアスとハルシネーション","データ漏洩とプライバシー侵害"],a:0,e:"RNNは長いシーケンスデータを扱う際に、勾配消失問題（学習が進まなくなる）または勾配爆発問題（学習が不安定になる）を引き起こすことがありました。そのためRNNの改良版であるLSTMがよく用いられるようになりました。"},
+{ch:2,cat:"シーケンスデータ",d:2,q:"「シーケンスデータ」の説明として、最も適切なものはどれか。",o:["文章や音声、動画など、時間や順序に関連付けられたデータの集まり","正解ラベルが付与されたデータの集まり","匿名加工処理が施されたデータの集まり","画像のみで構成されたデータの集まり"],a:0,e:"シーケンスデータとは、文章や音声、動画など、一つのデータが次のデータに続いているような、時間や順序に関連付けられたデータの集まりを指します。"},
+{ch:2,cat:"LSTM",d:3,q:"LSTMやRNNが抱えていた課題として、本文に記載されているものはどれか。",o:["時系列での学習になるため並列学習に向かず、大規模データの学習に多大な時間がかかる","画像データを一切扱えない","短い文章では精度が下がる","教師なし学習にしか対応できない"],a:0,e:"これらの技術では、入力される自然言語があまりにも長文になると精度が下がってしまう課題や、時系列での学習になるので並列学習に向かず、大規模データを学習するのには多大な時間がかかってしまうという課題がありました。"},
+{ch:2,cat:"Transformer",d:2,q:"Transformerモデルが採用した、データの順番に依存せず全ての要素を一度に考慮して処理できる機能を何と呼ぶか。",o:["自己注意力（Self-Attention）","位置エンコーディング","畳み込み演算","リカレント層"],a:0,e:"Transformerモデルは自己注意力（Self-Attention）という新しい機能を採用しました。データが時系列に従って処理されるRNNやLSTMとは違い、データの順番に依存せず全ての要素を一度に考慮に入れて処理できるという特性があります。"},
+{ch:2,cat:"Transformer",d:2,q:"Transformerにおける「位置エンコーディング」の役割として、最も適切なものはどれか。",o:["シーケンスの単語の位置情報を取り込み、単語の順序情報を保持する","単語の重要度を得点付けする","入力を数値表現に変換する","過学習を防ぐために一部のノードを無効化する"],a:0,e:"シーケンスの単語の位置情報は重要であり、Transformerは「位置エンコーディング」を用いてこの情報を取り込みます。これにより、単語の順序情報が保持されます。"},
+{ch:2,cat:"Transformer",d:3,q:"Transformerのエンコーダとデコーダの役割の説明として、正しいものはどれか。",o:["エンコーダは入力を数値表現に変換し、デコーダはそれを使用して最終的な出力を生成する","エンコーダは出力を生成し、デコーダは入力を受け取る","エンコーダは学習を行い、デコーダは検証を行う","エンコーダは画像を処理し、デコーダは音声を処理する"],a:0,e:"Transformerはエンコーダとデコーダから構成されます。エンコーダは入力を数値表現に変換し、デコーダはこれらの数値表現を使用して最終的な出力（翻訳されたテキストなど）を生成します。"},
+{ch:2,cat:"GPTモデル",d:2,q:"2018年6月にOpenAIの研究チームが開発したGPTモデルのベースとなっているアーキテクチャはどれか。",o:["Transformer","CNN","LSTM","ボルツマンマシン"],a:0,e:"2018年6月にOpenAIの研究チームが開発したGPTモデルは、大量のテキストデータを学習して新しい文章を生成するAIです。GPTモデルはTransformerのアーキテクチャをベースとしています。"},
+{ch:2,cat:"BERT",d:2,q:"BERTの重要な特性である「双方向性」の説明として、最も適切なものはどれか。",o:["単語の意味を決定する際に、その単語の前後の単語を含む文脈全体を利用すること","入力と出力の両方向にデータを流すこと","日本語と英語の両方を同時に処理できること","学習と推論を同時に行うこと"],a:0,e:"双方向性とは、単語の意味を決定する際に、その単語が出現する文脈全体（すなわちその単語の前後の単語）を利用することを指します。これにより、単語の意味が周囲の文脈により変わる場合でも適切に捉えることができます。"},
+{ch:2,cat:"GPTの歴史",d:3,q:"OpenAIがGPTの研究を開始した年として、本文に記載されているものはどれか。",o:["2015年","2018年","2020年","2022年"],a:0,e:"本文の年表によると、2015年にGPTの研究を開始し、自然言語生成や文章の理解などのタスクにおいて優れた結果を示しました。2018年にGPT-1、2019年にGPT-2、2020年にGPT-3が発表されています。"},
+{ch:2,cat:"GPT-1",d:3,q:"GPT-1の主な問題点として、本文に記載されているものはどれか。",o:["文脈の理解が短絡的で、長期的な会話の文脈を保持する能力が不十分だった","文法的に誤りの多い文章しか生成できなかった","日本語にしか対応していなかった","画像を生成できなかった"],a:0,e:"GPT-1は一貫性があり流暢なテキストを生成することができましたが、文脈の理解が短絡的であり長期的な会話の文脈を保持する能力が不十分だったこと、特定の質問やタスクに対する回答が不十分だった点が主な問題点でした。"},
+{ch:2,cat:"GPT-2",d:3,q:"GPT-1からGPT-2への改良で、AIの学習に使われたデータ量の変化として本文に記載されているものはどれか。",o:["約10倍のデータが使われた","約2倍のデータが使われた","約100倍のデータが使われた","データ量は変わらなかった"],a:0,e:"GPT-1からGPT-2に改良されるにあたり、約10倍のデータがAIの学習に使われました。GPT-2は前モデルと構造は同じですが、さらに大規模なデータセットでトレーニングされました。"},
+{ch:2,cat:"パラメータ",d:2,q:"GPTにおける「パラメータ」の説明として、最も適切なものはどれか。",o:["テキストをどのように理解し新しいテキストを生成するかを決定する設定項目や値","入力できる文字数の上限","学習に使用したデータの件数","出力される文章の温度設定"],a:0,e:"「パラメータ」は、GPTがテキストをどのように理解し、新しいテキストを生成するかを決定する「設定項目」や「値」のことで、これらは学習過程で調整されます。パラメータ数が増えると、より複雑なパターンや文脈を学習することが可能になります。"},
+{ch:2,cat:"GPT-3",d:3,q:"GPT-3が誤った回答をする可能性がある理由として、本文に記載されているものはどれか。",o:["直感的な理解や外部知識へのアクセスを欠いているため","パラメータ数が少なすぎるため","日本語のデータしか学習していないため","RLHFを採用しているため"],a:0,e:"GPT-3は微調整なしで幅広い自然言語処理タスクを実行できる能力を示しましたが、完全に人間のような理解を行うわけではなく、誤った回答をする可能性がありました。これは、GPT-3が直感的な理解や外部知識へのアクセスを欠いているためです。"},
+{ch:2,cat:"InstructGPT",d:3,q:"2022年1月にリリースされたInstructGPTに関する説明として、最も適切なものはどれか。",o:["GPT-3をベースに開発され、人間のフィードバックに基づいて出力を矯正するRLHFを採用した","GPT-4をベースに開発された画像生成モデルである","BERTの改良版として開発された","Googleが開発した対話型AIである"],a:0,e:"ネット上の攻撃的・誤った情報を学習してしまう課題の解決策として、人間のフィードバックに基づいて出力を矯正する方法が模索され、GPT-3をベースに開発された「InstructGPT」が2022年1月にリリースされました。RLHFという仕組みを採用しています。"},
+{ch:2,cat:"ファインチューニング",d:2,q:"ChatGPTの誕生に関する説明として、最も適切なものはどれか。",o:["GPT-3.5を対話向けにファインチューニングしたWebアプリケーションサービスである","GPT-4をゼロから学習し直して作られた","BERTをベースに開発された","ルールベースシステムを高度化したものである"],a:0,e:"2022年11月、GPT-3.5を対話向けにファインチューニングしたWebアプリケーションサービスChatGPTが登場しました。ファインチューニングとは、特定の用途のためにモデルを微調整することを指します。"},
+{ch:2,cat:"GPT-4",d:3,q:"GPT-4がアメリカの司法試験で示した成績として、本文に記載されているものはどれか。",o:["上位10％に入る成績","上位50％に入る成績","合格点に届かなかった","受験していない"],a:0,e:"2023年にGPT-4が発表されました。GPT-4はさらに性能が向上し、アメリカの司法試験では上位10％に入る成績を叩き出しました。"},
+{ch:2,cat:"GPT-4",d:3,q:"GPT-4における多言語の文章生成精度の向上について、本文に記載されている内容として正しいものはどれか。",o:["26言語のうち24言語で、GPT-3.5の英語の出力精度を上回る精度が得られた","全ての言語でGPT-3.5と同等の精度だった","日本語のみ精度が低下した","英語以外の言語には対応していない"],a:0,e:"多言語の文章生成精度はGPT-4において大幅に改善され、26言語のうち24言語で、GPT-3.5の英語の出力精度を上回る精度が得られるようになりました。GPT-3.5の英語スコア70.1%に対し、GPT-4の日本語スコアは79.9％に達しています。"},
+{ch:2,cat:"GPT-o3",d:3,q:"GPT-o3が前世代のo1と比べて最大の違いとされている点はどれか。",o:["内部で“思考の下書き”となるprivate chain-of-thoughtを用いてより長く熟考してから回答する","画像生成機能を統合した","ブラウザを自動操作できる","パラメータ数を大幅に削減した"],a:0,e:"GPT-o3は「推論特化型」大規模言語モデルです。前世代のo1と比べ、内部で“思考の下書き”となるprivate chain-of-thoughtを用いてより長く熟考してから回答する点が最大の違いで、数学・科学・コードなど複雑領域での正答率が大幅に向上しました。"},
+{ch:2,cat:"Sora",d:3,q:"Soraの「ストーリーボード機能」の説明として、最も適切なものはどれか。",o:["フレーム（ショット）ごとに入力や意図を精密に指定し、時間軸に沿って並べることで狙いどおりの構成に仕上げられる","生成した動画を自動的にSNSへ投稿する","動画に自動で字幕を付与する","動画の著作権を自動判定する"],a:0,e:"Soraのストーリーボード機能では、フレーム（ショット）ごとに入力や意図を精密に指定し、時間軸に沿って並べることで狙いどおりの構成に仕上げることができるのが特徴です。"},
+{ch:2,cat:"Gemini",d:3,q:"2025年春に一般提供が始まったGemini 2.5 Proの特徴として、本文に記載されているものはどれか。",o:["最大104万トークンという超長コンテキストを扱いながら高度な推論を行える","スマートフォン向けに数十億パラメータ規模へ圧縮されている","テキストのみを扱う専用モデルである","画像生成に特化している"],a:0,e:"Gemini 2.5系列の中でも2.5 Proはコード・数学・大規模データ解析に強い最上位モデルで、最大104万トークンという超長コンテキストを扱いながら高度な推論を行えます。2.5 Flashは応答速度とコスト効率を重視した構成です。"},
+{ch:2,cat:"Gemini",d:3,q:"スマートフォン向けに圧縮され、AndroidのAICoreを通じてオフライン・プライバシー重視の生成AI体験を実現するモデルはどれか。",o:["Gemini Nano","Gemini 2.5 Pro","Gemini 1.5 Flash","Gemini Ultra"],a:0,e:"スマートフォン向けには数十億パラメータ規模に圧縮したGemini Nanoが用意され、AndroidのAICoreを通じてオフライン・プライバシー重視の生成AI体験を実現しています。"},
+{ch:2,cat:"Claude",d:3,q:"Claude 3.5 Sonnetで追加された、リアルタイムでコードや文書を並行生成できる機能の名称はどれか。",o:["Artifacts","Canvas","Workspace","Studio"],a:0,e:"2024年6月にClaude 3.5系の第一弾として3.5 Sonnetが公開され、Opus 3を上回る推論精度を保ちつつ応答速度を約二倍に向上させ、画像理解性能とリアルタイムでコードや文書を並行生成できる“Artifacts”機能も追加されました。"},
+{ch:2,cat:"Claude",d:3,q:"2025年5月に投入されたClaude 4の特徴として、本文に記載されているものはどれか。",o:["拡張推論モードで外部ツールを並列呼び出ししながら長時間タスクを遂行できるハイブリッド設計","画像生成に特化した単一モデル構成","オフライン専用モデルへの移行","無料版のみの提供"],a:0,e:"2025年5月のClaude 4ではOpus 4とSonnet 4が投入され、拡張推論モードで外部ツールを並列呼び出ししながら長時間タスクを遂行できるハイブリッド設計を採用しました。2025年8月にはClaude Opus 4.1が公開されました。"},
+{ch:2,cat:"Copilot",d:3,q:"Copilot for Microsoft 365が、ユーザーが閲覧権を持つデータを参照する際に用いる仕組みはどれか。",o:["Microsoft Graph","Copilot Studio","Recall","Security Copilot"],a:0,e:"業務用途では、Copilot for Microsoft 365がWord、Excel、Outlook、Teamsなどに組み込まれ、ユーザーが閲覧権を持つデータをMicrosoft Graphで参照しながら安全に生成AIを利用できます。"},
+{ch:2,cat:"Copilot",d:3,q:"NPUを搭載したCopilot+ PCで提供される、画面履歴をオフラインで検索できる機能の名称はどれか。",o:["Recall","Studio","Graph","Spaces"],a:0,e:"ハードウェア面ではNPUを搭載したCopilot+ PCが登場し、画面履歴をオフラインで検索できるRecallなどローカル処理型のAI体験を提供しています。"},
+{ch:2,cat:"Copilot",d:3,q:"Microsoftの脅威インテリジェンスとGPT-4を組み合わせ、インシデント対応の自動化を支援するサービスはどれか。",o:["Security Copilot","GitHub Copilot","Copilot Studio","Microsoft Graph"],a:0,e:"Security CopilotがMicrosoftの脅威インテリジェンスとGPT-4を組み合わせ、インシデント対応の自動化を支援します。またローコードツールのCopilot Studioを使えば自社向けの独自Copilotも容易に構築できます。"},
+{ch:2,cat:"ChatGPTの評価",d:2,q:"ChatGPTが世界から大きな注目を集めた理由として、本文で述べられているものはどれか。",o:["文章精度の高さや自然な言葉遣いにより「AIの民主化」を進めたと評価されたため","無料で無制限に利用できたため","日本語のみに特化していたため","インターネット接続が不要だったため"],a:0,e:"チャットのやり取りが機械的なものではなく、まるで人間と会話しているように展開されるのが特徴です。このような文章精度の高さや自然な言葉遣いが可能になっていることで世界から非常に大きな注目が集まり、一気に「AIの民主化」を進めたことで評価されました。"},
+/* ===== 第3章 現在の生成AIの動向 ===== */
+{ch:3,cat:"テキスト生成AI",d:1,q:"テキスト生成AIを利用するメリットとして、本文で挙げられていないものはどれか。",o:["作業効率が向上する","内容の補完と拡張ができる","プログラミングコードの生成・修正ができる","出力された情報の正確性が常に保証される"],a:3,e:"テキスト生成AIは時折誤った情報や偽情報を生成することもあるため、生成されたテキストの信頼性や正確性を人間が慎重に評価する必要があります。正確性が保証されるわけではありません。"},
+{ch:3,cat:"テキスト生成AI",d:2,q:"テキスト生成AIを利用する際のデメリットや注意点として、適切でないものはどれか。",o:["学習データに偏りがある場合、差別的な表現や偏った意見を生成することがある","入力テキストには個人情報やセンシティブ情報を含めないよう配慮する","特定の文脈や専門知識に関して限定的な理解しか持っていない場合がある","入力したテキストが学習に利用されることは技術的にあり得ない"],a:3,e:"テキスト生成AIは、ユーザーが入力するテキストから学習することがあります。そのため入力テキストには個人情報やセンシティブ情報を含めないよう配慮するなど、自らプライバシー対策とセキュリティ対策を講じる必要があります。"},
+{ch:3,cat:"画像生成AI",d:2,q:"画像生成AIにおける一般的な前処理手法として、本文で挙げられているものの組み合わせはどれか。",o:["画像のリサイズ、正規化、データの水増し（augmentation）","トークン化、埋め込み、位置エンコーディング","チャンク分割、ベクトル化、インデックス化","マスキング、匿名加工、暗号化"],a:0,e:"GANを用いた画像生成では、収集した画像を前処理してモデルに適した形式に変換します。一般的な前処理手法には、画像のリサイズ、正規化、データの水増し（augmentation）などがあります。"},
+{ch:3,cat:"画像生成AI",d:2,q:"現在の画像生成AIで主流とされているモデルはどれか。",o:["ボルツマンマシン","ディフュージョンモデル","n-gramモデル","エキスパートシステム"],a:1,e:"VAEやGANは高速・高画質の一方で解像度や学習安定性に課題があったため、現在主流なのはディフュージョンモデルです。ノイズ除去を段階的に逆再生する仕組みにより安定した学習と高精細な描画を両立し、テキスト条件付けで文章との整合性も向上しています。"},
+{ch:3,cat:"画像生成AI",d:2,q:"本文で挙げられている画像生成AIのモデル・サービスとして、適切でないものはどれか。",o:["Stable Diffusion","DALL·E","Flux（FLUX.1）","LSTM"],a:3,e:"本文では画像生成AIの例としてStable Diffusion、DALL·E、Flux（FLUX.1）などが挙げられています。LSTMはシーケンスデータを扱うRNNの一種であり、画像生成AIのサービス名ではありません。"},
+{ch:3,cat:"画像生成AI",d:2,q:"画像生成AIを利用するデメリットや注意点として、適切でないものはどれか。",o:["学習データの偏りにより、特定の人種や性別に偏った画像を生成する可能性がある","生成された画像が既存の著作物を模倣した場合、著作権法に触れる可能性がある","本物と見分けがつかない高品質化により、偽情報や改ざん画像がSNSで広まる可能性がある","AIが生成した画像であれば、商用利用に際して権利確認は一切不要である"],a:3,e:"生成した画像の商用利用をする場合、その画像が他に帰属する著作権を侵害していないかどうかを確認する必要があります。AIが生成した画像であっても権利確認が不要になるわけではありません。"},
+{ch:3,cat:"音楽生成AI",d:2,q:"音楽生成AIにおいて、音符の連続といったシーケンスデータの生成に適しているとされるディープラーニングモデルはどれか。",o:["CNN","RNN","GAN","VAE"],a:1,e:"音楽生成AIではRNNなどのディープラーニングモデルを用いてデータセットの情報を水増しします。RNNはシーケンスデータの処理に長けているため、音楽（音符の連続）の生成に適しています。"},
+{ch:3,cat:"音楽生成AI",d:2,q:"音楽生成AIを利用する際のデメリットや注意点として、適切でないものはどれか。",o:["生成した音楽が他の楽曲と非常に似ている場合、著作権などの法的制約に関わる可能性がある","AIが作曲した音楽を人間が作曲したものとして販売することは倫理的に問題とされる可能性がある","AIが生成した音楽は人間の感情的な深みや複雑さを完全に捉えることは難しいとされる","AIが生成した音楽は必ずオリジナルであるため、ストリーミングサービスへの大量投稿に問題はない"],a:3,e:"音楽生成AIを用いて作成した音楽をストリーミングサービスに大量にアップロードすると、伝統的な作曲家やミュージシャンに対する需要が減少したり、市場が混乱したりする可能性があると指摘されています。"},
+{ch:3,cat:"音声生成AI",d:2,q:"音声生成AIのトレーニングで、既存の音声データに周波数の変更や音の高さの変更、ノイズの追加などを施して学習データを増やす手法を何と呼ぶか。",o:["データ拡張技術","次元削減","正則化","チャンク分割"],a:0,e:"トレーニング用のデータ総数を増やす手法として、既にある音声データに対して周波数の変更、音の高さの変更、ノイズの追加などを施すデータ拡張技術が用いられます。これによってAIはより幅広い発音パターンを学習することができます。"},
+{ch:3,cat:"音声生成AI",d:2,q:"特定の人物画像の口の動きを音声に同期させる技術を何と呼ぶか。",o:["フェイススワッピング","リップシンク技術","モーションキャプチャ","ボイスチェンジ"],a:1,e:"近年では音声生成技術に加え、特定の人物画像の口の動きを音声に同期させるリップシンク技術が進化し、バーチャルヒューマンの制作にも幅広く応用されています。"},
+{ch:3,cat:"動画生成AI",d:2,q:"Google DeepMindが2025年5月のGoogle I/Oで発表した、映像と同時に環境音やセリフなどの音声も一括で合成できる動画生成AIはどれか。",o:["Sora","Veo3","Gemini Nano","Stable Video"],a:1,e:"Google DeepMindが2025年5月のGoogle I/Oで発表したVeo3は、現実と見間違うほど高精細な映像を生成できるうえ、動画と同時に環境音やセリフなどの音声も一括で合成できる点が大きな特徴です。"},
+{ch:3,cat:"動画生成AI",d:2,q:"動画生成AIにおいて、各フレーム間の一貫性を保つために利用されるネットワークとして本文で挙げられているものはどれか。",o:["RNNのようなシーケンスデータを扱うことができるネットワーク","n-gramモデル","エキスパートシステム","ルールベースシステム"],a:0,e:"動画は時間的に連続するフレームの集合であるため、各フレーム間の一貫性を保つことが重要です。そのため、RNNのようなシーケンスデータを扱うことができるネットワークが利用されます。"},
+{ch:3,cat:"ディープフェイク",d:1,q:"ディープラーニングや生成AIを利用して非常にリアルなコンテンツを作成し、人を故意に騙すことを目的として使用される技術を何と呼ぶか。",o:["ディープフェイク","ディープラーニング","ディフュージョン","ディスクレイマー"],a:0,e:"ディープラーニングや生成AIを利用して非常にリアルな画像コンテンツなどを作成し、人を故意に騙すことを目的として使用される技術をディープフェイクと呼ぶことがあります。偽情報（ディスインフォメーション）の拡散など社会的な問題も引き起こしています。"},
+{ch:3,cat:"ディープフェイク",d:2,q:"ディープフェイク技術の特徴および注意点として、適切でないものはどれか。",o:["高い精度で人物の顔や声を再現することができる","高度に進化したものは人間の目や現行のAI技術でも見分けることが難しい場合がある","法的な側面はまだ完全には定義されておらず、法規制の変化に対応していく必要がある","学習データに類似した生成物ができる可能性は、技術的に完全にゼロにできる"],a:3,e:"生成AIは大量の画像や動画データを学習しているため、学習に使用された画像や映像に類似性の高い生成物ができてしまう可能性を完全にゼロにはできません。"},
+{ch:3,cat:"ディープフェイク",d:2,q:"本文で紹介されている「ディープフェイクボイス詐欺事件」で使用された技術はどれか。",o:["音声生成AIによる仕入れ先の声の模倣","画像生成AIによる偽の請求書作成","動画生成AIによるビデオ通話のなりすまし","テキスト生成AIによる偽メールの作成"],a:0,e:"イギリスの会社に、いつもの仕入先からいつもの声で仕入れ代金の請求の電話がかかり、被害者は約3,400万円を送金しました。しかしこの請求は詐欺師が音声生成AIを用いて仕入れ先の主人の声を模倣したものでした。"},
+{ch:3,cat:"ディープフェイク",d:3,q:"2023年5月にインターネットで拡散した、アメリカ国防総省近辺での爆発を示唆する偽造画像が引き起こした影響として、本文に記載されているものはどれか。",o:["国防総省が閉鎖された","ダウ・ジョーンズ平均株価が一時的に100ドル以上下落した","SNSサービスが停止した","現地で実際に火災が発生した"],a:1,e:"AIによって生成されたと推測される偽造画像がブルームバーグを模倣したアカウントからも投稿され、ニューヨーク証券取引所のダウ・ジョーンズ平均株価が一時的に100ドル以上下落する影響を及ぼしました。"},
+{ch:3,cat:"ディープフェイク",d:2,q:"ディープフェイクなどの脅威への対策として、本文で「最も重要」とされているものはどれか。",o:["SNSの利用を完全にやめること","生成AI全般に関するリテラシーを高め、偽の情報に騙されないための教養を身につけること","全ての動画を専門機関に鑑定してもらうこと","スマートフォンのカメラ機能を無効化すること"],a:1,e:"ディープフェイク技術が急速に進化し手軽にアクセスできるようになるにつれ詐欺の可能性は増加します。このような脅威への対策としては、ディープフェイクや生成AI全般に関するリテラシーを高め、偽の情報に騙されないための教養を身につけることが最も重要とされています。"},
+{ch:3,cat:"RAG",d:1,q:"RAG（Retrieval-Augmented Generation）の日本語訳として正しいものはどれか。",o:["検索拡張生成","強化学習生成","再帰型生成","自己回帰生成"],a:0,e:"RAG（Retrieval-Augmented Generation：検索拡張生成）とは、AIが質問に答える際に、まず関連する情報を検索してから、その情報を基に回答を生成する技術です。膨大な文書群から適切な情報を検索・抽出し、その内容を基にLLMに回答を生成させる仕組みです。"},
+{ch:3,cat:"RAG",d:2,q:"AIモデルが学習用データとして取り込んだ情報の最終更新時点のことを何と呼ぶか。",o:["ナレッジカットオフ","ハルシネーション","チャンク","エンベッティング"],a:0,e:"従来のAIチャットボットや言語モデルは学習時に覚えた知識だけで回答していました。このモデルが学習用データとして取り込んだ情報の最終更新時点のことをナレッジカットオフと言います。"},
+{ch:3,cat:"RAG",d:2,q:"従来のAIシステムが抱えていた限界として、本文で挙げられていないものはどれか。",o:["情報の鮮度の問題","専門性と個別性の問題","ハルシネーション（幻覚）の問題","日本語が一切扱えない問題"],a:3,e:"本文では従来のAIシステムの限界として、情報の鮮度の問題、専門性と個別性の問題、ハルシネーション（幻覚）の問題の3つが挙げられています。日本語が扱えないという記述はありません。"},
+{ch:3,cat:"RAG",d:3,q:"RAGの概念を正式に提案した2020年の論文を発表した研究チームの所属として正しいものはどれか。",o:["Google Brain","Facebook AI Research（現Meta AI）","OpenAI","Microsoft Research"],a:1,e:"2020年、Facebook AI Research（現Meta AI）のPatrick Lewisらの研究チームが、\"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\"という論文を発表し、RAGの概念を正式に提案しました。"},
+{ch:3,cat:"RAG",d:2,q:"RAGシステムの主要コンポーネントの組み合わせとして正しいものはどれか。",o:["データ準備・インデックス化層、検索部分（Retriever）、生成部分（Generator）","エンコーダ、潜在ベクトル、デコーダ","生成器、識別器、評価器","入力層、隠れ層、出力層"],a:0,e:"RAGシステムは大きく分けて、1. データ準備・インデックス化層（Data Preparation & Indexing Layer）、2. 検索部分（Retriever）、3. 生成部分（Generator）の3つの主要コンポーネントで構成されています。"},
+{ch:3,cat:"RAG",d:2,q:"RAGにおいて、大きな文書を検索・処理しやすいサイズに分割する処理を何と呼ぶか。",o:["チャンク分割（Chunking）","エンベッティング","リランキング","マスキング"],a:0,e:"大きな文書は、検索・処理しやすいサイズの「チャンク」に分割されます。章や節などの論理的な区切りを尊重し、各チャンクが500〜1000語程度になるよう調整するなどの方針があり、適切なチャンク分割により検索精度が大幅に向上します。"},
+{ch:3,cat:"RAG",d:2,q:"文書をコンピューターが扱いやすい数値ベクトルに変換することを何と呼ぶか。",o:["エンベッティング","チャンキング","ファインチューニング","クラスタリング"],a:0,e:"分割されたチャンクは高次元ベクトルに変換されます。この文書をコンピューターが扱いやすい数値ベクトルに変換することをエンベッティングと呼び、似た内容のチャンクは似たベクトルを持つようになります。"},
+{ch:3,cat:"RAG",d:3,q:"作成されたベクトルを格納する専用データベースの例として、本文で挙げられていないものはどれか。",o:["Pinecone","Weaviate","Chroma","Kubernetes"],a:3,e:"作成されたベクトルは、高速検索のための専用ベクトルデータベース（例：Pinecone、Weaviate、Chroma、FAISSなど）に格納されます。Kubernetesはコンテナオーケストレーションツールであり、ベクトルデータベースではありません。"},
+{ch:3,cat:"RAG",d:2,q:"RAGシステムのメリットとして、適切でないものはどれか。",o:["情報の鮮度と正確性が向上する","組織固有の知識やニッチな専門分野に対応できる","新しい情報をデータベースに追加するだけで対応でき、更新コストを削減できる","回答の根拠となった情報源は一切開示されないため、機密性が高い"],a:3,e:"RAGシステムでは回答とともに参照した情報源を明示できるため、透明性と説明可能性が向上します。これによりユーザーは回答の根拠や情報源の信頼性を自分で確認・評価できるようになり、AIシステムへの信頼性が大幅に向上します。"},
+{ch:3,cat:"AIエージェント",d:1,q:"AIエージェントの説明として、最も適切なものはどれか。",o:["人があらかじめ詳細な手順を指定しなくても、自律的に目標を分解し行動計画を立てて実行できるシステム","質問に対して定型的な回答のみを返すチャットボット","画像を高精細に生成することに特化したモデル","文書をベクトル化して検索するデータベース"],a:0,e:"AIエージェントとは、人があらかじめ詳細な手順を指定しなくても、自律的に目標を分解し、最適な行動計画を立てて実行できる人工知能システムを指します。「状況を把握→計画→行動→結果の評価」というサイクルを自ら回す点が特徴です。"},
+{ch:3,cat:"AIエージェント",d:2,q:"AIエージェントの実装アプローチのうち「ワークフロー型」の説明として、最も適切なものはどれか。",o:["最終目標だけを与えると、エージェント自身がタスクを分解し自己評価しながらループを回す","あらかじめ定義した業務フローをLLMや外部APIが埋める方式である","学習データのみに基づいて回答を生成する方式である","人間が全ての操作を手動で行う方式である"],a:1,e:"ワークフロー型は、あらかじめ定義した業務フロー（ステップや判断分岐）をLLMや外部APIが埋める方式です。手順が明確で変更頻度も低いタスクに向き、品質や権限を管理しやすい反面、想定外のタスクには弱く、フロー変更時には改修が必要です。"},
+{ch:3,cat:"AIエージェント",d:2,q:"自律型AIエージェントの代表例として、本文で挙げられていないものはどれか。",o:["AutoGPT","Devin","OpenAI Operator","BERT"],a:3,e:"自律型の代表例としてAutoGPTやDevin、OpenAI Operatorなどが挙げられています。BERTはGoogleが開発した自然言語処理モデルであり、自律型AIエージェントではありません。"},
+{ch:3,cat:"AIエージェント",d:3,q:"拡張LLMを鎖状に連結する際の役割分担として、本文で挙げられていないものはどれか。",o:["ルーティング（Routing）","並列化（Parallelization）","オーケストレーター／ワーカー（Orchestrator-Workers）","マスキング（Masking）"],a:3,e:"本文では、ルーティング（Routing）、並列化（Parallelization）、オーケストレーター／ワーカー（Orchestrator-Workers）、評価者／最適化（Evaluator-Optimizer）の4つが挙げられています。マスキングはBERTのMLMで用いられる手法です。"},
+{ch:3,cat:"AIエージェント",d:2,q:"「AI Slides」「AI Sheets」「AI Call For Me」など多彩な機能を1つに統合したオールインワン型エージェントはどれか。",o:["Manus","GenSparkスーパーエージェント","Skywork AI","OpenAI Operator"],a:1,e:"GenSparkスーパーエージェントは「AI Slides」「AI Sheets」「AI Call For Me」など多彩な機能を1つに統合したオールインワン型エージェントです。旅程の立案から画像生成、電話代行までこなし、モバイルアプリ版も提供されています。"},
+{ch:3,cat:"AIエージェント",d:2,q:"シンガポール発の汎用エージェントで、クラウド上で非同期に動作し複雑なオンライン業務を遂行するツールはどれか。",o:["Manus","GenSpark","Skywork AI","Devin"],a:0,e:"Manusはシンガポール発の汎用エージェントで、クラウド上で非同期に動作し、人手を介さずに複雑なオンライン業務を遂行します。多数の履歴書を分析し評価結果をExcelやCSVにまとめるなど、長時間かかる事務処理の全自動化が可能です。"},
+{ch:3,cat:"MCP",d:2,q:"MCPに関する説明として、最も適切なものはどれか。",o:["Anthropic社が公開した、LLMが外部のデータソースやツールと安全に接続するためのオープンスタンダードである","Googleが開発した画像認識アーキテクチャである","OpenAIが開発した動画生成モデルである","Microsoftが提供する業務用チャットツールである"],a:0,e:"MCPはAnthropic社が公開したオープンスタンダードで、LLMが外部のデータソースやツールと安全かつ一貫した方法で接続するための“共通ポート”です。公式サイトでは「USB-CのAI版」と喩えられています。"},
+{ch:3,cat:"MCP",d:3,q:"MCPの通信で、クライアントとサーバーの間でやり取りされるメッセージ形式として本文に記載されているものはどれか。",o:["JSON‐RPC互換メッセージ","SOAPメッセージ","GraphQLクエリ","バイナリストリーム"],a:0,e:"MCPはクライアント（LLMを呼び出すアプリケーション）とサーバー（外部ツールやデータベース）との通信によって機能します。両者はJSON‐RPC互換メッセージをやり取りし、自然言語から外部APIを実行できるようになります。"},
+{ch:3,cat:"AIエージェント",d:2,q:"自律型エージェントを用いる際の注意点として、本文で挙げられているものはどれか。",o:["コスト増大とエラー連鎖のリスクがあるため、サンドボックス環境での検証とガードレール設計が不可欠である","一度設計すれば以後の検証は不要である","外部ツールとの連携は行わないため、セキュリティ上の懸念はない","必ず人間が全ての手順を事前に指定しなければならない"],a:0,e:"自律型エージェントの実装自体は「LLM＋ツール＋ループ」というシンプルな構造ですが、コスト増大とエラー連鎖のリスクがあるため、サンドボックス環境での十分な検証とガードレールの設計が不可欠であるとされています。"},
+/* ===== 第3章 追加 ===== */
+{ch:3,cat:"生成AIの定義",d:1,q:"生成AI（Generative AI）の説明として、最も適切なものはどれか。",o:["機械学習によってテキスト、画像、動画、音声、音楽などの新しいデータを生成するAI","既存のデータを検索して表示するだけのAI","ルールベースで条件分岐を行うプログラム","データを分類することだけに特化したAI"],a:0,e:"生成AI（Generative AI）は機械学習によってテキスト、プログラムコード、画像、動画、音声、音楽などの新しいデータを生成するAIであり、今現在も急速に進化をし続けています。"},
+{ch:3,cat:"自然言語処理",d:2,q:"自然言語処理（NLP）の説明として、最も適切なものはどれか。",o:["コンピュータが自然言語の複雑さや曖昧さを扱いながら、テキストデータを理解・生成するために必要な技術の総称","画像を数値データに変換する技術の総称","音声波形を生成する技術の総称","データベースを高速検索する技術の総称"],a:0,e:"自然言語処理（NLP）とは、コンピュータが自然言語（日本語や英語など）の複雑さや曖昧さを扱いながら、テキストデータを理解・生成するために必要な技術の総称です。"},
+{ch:3,cat:"テキスト生成AI",d:2,q:"テキスト生成AIの学習データとして、本文で挙げられているものの組み合わせはどれか。",o:["Web上の文章、書籍、ニュース記事、会話データ","顔認証データと指紋データ","株価データと気象データのみ","社内文書のみ"],a:0,e:"NLPの技術と機械学習の技術を組み合わせることで大量のテキストデータを学習し、パターンや構造を把握して文章を生成します。学習データには、Web上の文章、書籍、ニュース記事、会話データなど、様々な情報源が使われます。"},
+{ch:3,cat:"テキスト生成AI",d:2,q:"テキスト生成AIによるプログラミングコードの生成について、本文の記述と合致するものはどれか。",o:["部分的なコードの生成が可能で、人間が入力したコードの誤りを見つけ訂正することもできる","Webアプリケーション開発の全工程を完全に自動化できる","専門知識がなければ一切利用できない","日本語のコメントは生成できない"],a:0,e:"専門知識がなくとも高速かつ正確なコード生成が可能ですが、ホームページ作成やWebアプリケーション開発など現時点でそれら全てを仕上げることはできず、部分的なコードの生成を行うことができます。また人間が入力したコードの誤りを見つけ訂正することもできます。"},
+{ch:3,cat:"画像生成AI",d:3,q:"VAEを用いた画像生成において、再現された絵と元の絵の差異を測るために用いられるものはどれか。",o:["損失関数","活性化関数","報酬関数","位置エンコーディング"],a:0,e:"デコーダは潜在ベクトルを受け取り元の絵の再現に挑戦します。再現された絵（デコーダの出力）と元の絵の差異は損失関数によって測られ、デコーダは元の絵を再現するための「スキル」を獲得します。"},
+{ch:3,cat:"画像生成AI",d:3,q:"最新の画像生成モデルにおいて、看板の文字や細線といった細部まで破綻なく生成できるようになった要因として本文に記載されているものはどれか。",o:["ディフュージョンモデルと自己回帰型Transformerをハイブリッド化したこと","GANのみを大規模化したこと","VAEのみを大規模化したこと","ルールベースの描画エンジンを併用したこと"],a:0,e:"画像をトークン列として扱う自己回帰型Transformerを組み合わせることで、看板の文字や細線といった細部まで破綻なく生成できるようになり、最新モデルはディフュージョンと自己回帰モデルをハイブリッド化して「指示どおり・細部まで忠実」な画像生成を実現しています。"},
+{ch:3,cat:"画像生成AI",d:2,q:"画像生成AIのメリットとして、本文で挙げられている「データの補完と拡張」の例はどれか。",o:["特定の種類の犬の画像が集めにくい場合に、新たな画像を生成してデータセットを補完する","画像の著作権を自動的に判定する","画像を高速に圧縮して保存する","画像の撮影者を特定する"],a:0,e:"特定のカテゴリーやクラスの画像データが不足している場合でも補完できます。例えばチワワの画像を集めることが難しい場合、画像生成AIを用いて新たなチワワの画像を生成しデータセットを補完・拡張することが可能です。また画像の欠損部分の補完も可能です。"},
+{ch:3,cat:"音楽生成AI",d:3,q:"音楽生成AIの動作プロセスにおいて、ステップ3で行われることとして本文に記載されているものはどれか。",o:["生成した音楽を人間のリスナーに提供し、感想や評価のフィードバックを獲得する","既存の音楽データセットから学習する","水増ししたデータセットを元に新しい音楽を生成する","フィードバックを新たな学習データとして追加する"],a:0,e:"ステップ1で既存の音楽データセットから学習、ステップ2で新しい音楽を生成、ステップ3で生成した音楽を人間のリスナーに提供し感想や評価のフィードバックを獲得、ステップ4でそのフィードバックを新たな学習データとして追加します。"},
+{ch:3,cat:"音声生成AI",d:2,q:"音声生成AIのディープラーニングモデルのトレーニングに一般的に用いられる学習手法はどれか。",o:["教師あり学習","強化学習のみ","クラスタリング","次元削減"],a:0,e:"ディープラーニングモデルのトレーニングには、一般的に教師あり学習が用いられます。正解データのラベルが貼られたデータセットによって、AIは音声の特徴を学習します。"},
+{ch:3,cat:"音声生成AI",d:2,q:"音声生成AIの技術例として、本文で挙げられているものの組み合わせはどれか。",o:["OpenAIのTTS（Text-to-Speech）やEleven Labs","Stable DiffusionやDALL·E","GenSparkやManus","PineconeやWeaviate"],a:0,e:"音声生成AIには、OpenAIのTTS（Text-to-Speech）やEleven Labsなど、さまざまな技術が存在します。近年ではリップシンク技術と組み合わせてバーチャルヒューマンの制作にも応用されています。"},
+{ch:3,cat:"音声生成AI",d:2,q:"音声生成AIについて、本文で特に強調されているリスクはどれか。",o:["実在する人物が実際には発したことのない言葉をAIが生成し、詐欺行為や誤情報の拡散に悪用されること","音声ファイルの容量が大きくなること","再生に専用機器が必要になること","多言語に対応できないこと"],a:0,e:"音声生成AIは有用である反面、悪用される頻度が高い生成AIの1つです。特に、実在する人物が実際には発したことのない言葉をAIが生成し悪用するケースが考えられ、詐欺行為や誤情報の拡散が引き起こされる可能性があります。"},
+{ch:3,cat:"動画生成AI",d:3,q:"動画生成の過程におけるGANとVAEの役割分担について、本文の記述と合致するものはどれか。",o:["GANは本物らしいフレーム生成の役割を担い、VAEはデータの生成モデルを学習する役割を担う","GANはフレーム間の一貫性を保ち、VAEは音声を生成する","GANは動画を圧縮し、VAEは動画を配信する","GANは字幕を生成し、VAEは翻訳を行う"],a:0,e:"動画生成の過程では、GANは本物らしいフレーム生成の役割を担い、VAEはデータの生成モデルを学習する役割を担います。またフレーム間の一貫性を保つためRNNのようなネットワークが利用されます。"},
+{ch:3,cat:"動画生成AI",d:2,q:"動画生成AIのメリットとして本文で挙げられている「再利用とリマスタリング」の例はどれか。",o:["古い映画やビデオを高解像度にリマスタリングする","動画の著作権を自動登録する","動画を自動的にSNSへ拡散する","撮影機材を自動制御する"],a:0,e:"既存の映像コンテンツを再利用して新しい形式や解像度に変換することができます。例えば古い映画やビデオを高解像度にリマスタリングする際に活用されます。また異なる映像形式や画面比率に変換することも可能です。"},
+{ch:3,cat:"動画生成AI",d:2,q:"動画生成AIのメリットのうち、プライバシーとセキュリティの観点から本文で挙げられている例はどれか。",o:["顔や個人情報を自動的にモザイク処理するツールとして活用できる","動画の視聴者を自動的に特定できる","動画を暗号化して配信できる","動画の削除履歴を保存できる"],a:0,e:"プライバシーとセキュリティの観点からもメリットがあります。例えば、顔や個人情報を自動的にモザイク処理するためのツールとして活用されることがあります。また映像内の特定の要素を自動的に非表示にすることも可能です。"},
+{ch:3,cat:"ディープフェイク",d:2,q:"中国で発生した「フェイススワッピング詐欺事件」の内容として、本文に記載されているものはどれか。",o:["詐欺師が被害者の友人に顔ごとなりすまし、ビデオ通話を通じて約8,500万円を送金させた","偽の音声で仕入れ代金を請求し約3,400万円を送金させた","偽造画像により株価が下落した","偽のQRコードで個人情報を盗んだ"],a:0,e:"中国では、詐欺師がディープフェイク技術を使い被害者の友人に顔ごとなりすまし、ビデオ通話を通じて約8,500万円を送金させるという事件が起こりました。"},
+{ch:3,cat:"RAG",d:2,q:"RAGが解決した「専門性と個別性の問題」の具体例として、本文に記載されているものはどれか。",o:["企業固有の製品情報や社内ルールなど、一般的な学習データに含まれない情報に回答できなかったこと","日本語の文法が理解できなかったこと","画像を認識できなかったこと","処理速度が遅かったこと"],a:0,e:"従来のAIは企業固有の製品情報、社内ルール、専門的な業界知識など一般的な学習データに含まれていない情報については全く回答することができませんでした。「当社の新製品の仕様は？」「社内の休暇申請手続きは？」といった質問には対応できませんでした。"},
+{ch:3,cat:"RAG",d:3,q:"初期のRAGシステムの特徴として、本文で挙げられていないものはどれか。",o:["Wikipedia全体を知識ベースとして使用","Dense Passage Retrieval（DPR）を用いた高精度な情報検索","BART言語モデルを用いた自然な文章生成","GPT-4を用いたマルチモーダル処理"],a:3,e:"初期のRAGシステムは、Wikipedia全体を知識ベースとして使用、Dense Passage Retrieval（DPR）を用いた高精度な情報検索、BART言語モデルを用いた自然な文章生成、知識集約的なタスクでの高い性能という特徴を持っていました。"},
+{ch:3,cat:"RAG",d:3,q:"2020年のRAG論文で組み合わせられた2つの記憶方式の組み合わせとして正しいものはどれか。",o:["パラメトリック記憶とノンパラメトリック記憶","短期記憶と長期記憶","揮発性記憶と不揮発性記憶","構造化記憶と非構造化記憶"],a:0,e:"研究チームは、従来の「パラメトリック記憶」（モデルのパラメータに知識を記憶）と「ノンパラメトリック記憶」（外部データベースから知識を検索）を組み合わせることで、既存の問題を解決できることを実証しました。"},
+{ch:3,cat:"RAG",d:3,q:"RAGにおける多段階検索プロセスの順序として、正しいものはどれか。",o:["粗検索 → 精密検索 → 再ランキング","再ランキング → 粗検索 → 精密検索","精密検索 → 粗検索 → 再ランキング","粗検索 → 再ランキング → 精密検索"],a:0,e:"現代のRAGシステムでは、1. 粗検索（Coarse Retrieval）でベクトル検索により候補を絞り込み、2. 精密検索（Fine-grained Retrieval）でより詳細な類似度計算により上位を選出し、3. 再ランキング（Re-ranking）で総合的に評価して最終的な順位付けを行います。"},
+{ch:3,cat:"RAG",d:3,q:"RAGの検索部分における「クエリの理解と拡張」に含まれない処理はどれか。",o:["意図分析","キーワード抽出","同義語展開","チャンク分割"],a:3,e:"クエリの理解と拡張では、意図分析、キーワード抽出、同義語展開、コンテキスト考慮が行われます。チャンク分割はデータ準備・インデックス化層で行われる処理です。"},
+{ch:3,cat:"RAG",d:3,q:"RAGシステムによる更新コストの削減について、本文に記載されている記述はどれか。",o:["新しい情報をデータベースに追加するだけで対応でき、更新コストは従来の1/100以下になる","更新のたびにモデル全体を再学習する必要がある","更新コストは従来と変わらない","更新には数週間から数ヶ月が必要である"],a:0,e:"従来の言語モデルを更新するには全体を再学習する必要があり、数百万円から数千万円のコストと数週間から数ヶ月の時間が必要でした。RAGシステムでは新しい情報をデータベースに追加するだけで対応できるため、更新コストは従来の1/100以下になります。"},
+{ch:3,cat:"RAG",d:2,q:"RAGの生成部分における回答生成戦略として、本文で挙げられていないものはどれか。",o:["説明型回答","比較型回答","手順型回答","感情型回答"],a:3,e:"生成部分では質問の種類に応じて、説明型回答、比較型回答、手順型回答、分析型回答という異なる生成戦略を使用します。感情型回答は挙げられていません。"},
+{ch:3,cat:"RAG",d:2,q:"RAGのユースケースとして、本文で挙げられていない分野はどれか。",o:["顧客サポート","社内ナレッジマネジメント","教育分野の個別適応学習","気象予報の数値シミュレーション"],a:3,e:"本文では、企業での顧客サポートの自動化・社内ナレッジマネジメント、教育分野での個別適応学習システム、製造業での設備保全・品質管理やサプライチェーン最適化がユースケースとして挙げられています。"},
+{ch:3,cat:"AIエージェント",d:1,q:"2025年が何と呼ばれているか、本文の記述として正しいものはどれか。",o:["AIエージェント元年","生成AI元年","シンギュラリティ元年","LLM元年"],a:0,e:"2025年は「AIエージェント元年」と呼ばれています。主要テック企業が相次いでエージェント戦略を打ち出し、OpenAIはブラウザ操作まで自動化する“Operator”を公開するなど、実用段階への移行が加速しています。"},
+{ch:3,cat:"AIエージェント",d:2,q:"AIエージェントがチャットボットと異なる点として、本文で述べられているものはどれか。",o:["「状況を把握→計画→行動→結果の評価」というサイクルを自ら回し、複数のタスクを横断的にこなせる","日本語に対応している点","インターネットに接続できる点","画像を出力できる点"],a:0,e:"単に質問に答えるだけのチャットボットと異なり、「状況を把握→計画→行動→結果の評価」というサイクルを自ら回すことで、複数のタスクを横断的にこなせる点が特徴です。"},
+{ch:3,cat:"AIエージェント",d:2,q:"ワークフロー型AIエージェントが向いているタスクとして、本文に記載されているものはどれか。",o:["受注処理・請求書発行・社内FAQ応答など、手順が明確で変更頻度も低いタスク","マーケット調査や競合分析など状況が流動的なタスク","未知の状況に柔軟に対応する必要があるタスク","長期プロジェクトの進捗管理"],a:0,e:"ワークフロー型はRPAやiPaaSの考え方に近く、受注処理・請求書発行・社内FAQ応答・定型レポート生成など、「手順が明確で変更頻度も低いタスク」に向いています。流動的なタスクは自律型が力を発揮します。"},
+{ch:3,cat:"AIエージェント",d:3,q:"外部ツールなどと接続された拡張LLMが可能になる機能の組み合わせとして、本文に記載されているものはどれか。",o:["検索（Retrieval）＋ツール呼び出し（Tool Use）＋メモリ（Memory）","分類＋回帰＋クラスタリング","エンコード＋デコード＋アテンション","学習＋推論＋評価"],a:0,e:"外部ツールなどとの接続がされた拡張LLMは、検索（Retrieval）＋ツール呼び出し（Tool Use）＋メモリ（Memory）が可能になっており、外部ツールを実際に実行する機能と情報取得をする機能が付いているということになります。"},
+{ch:3,cat:"AIエージェント",d:3,q:"自律型エージェントが繰り返すサイクルの順序として、本文の記述に合致するものはどれか。",o:["目標を受け取り計画を立案 → ツールを自ら選択して実行 → 環境から得た実測値を評価 → 必要に応じてタスクを再分割・再実行","ツールを実行 → 目標を受け取る → 評価する → 計画する","評価 → 実行 → 計画 → 目標設定","計画 → 評価 → 目標設定 → 実行"],a:0,e:"自律型エージェントは、1. 目標を受け取り計画を立案、2. ツールを自ら選択して実行、3. 環境から得た“実測値”を評価、4. 必要に応じてタスクを再分割・再実行、というサイクルを繰り返します。"},
+{ch:3,cat:"AIエージェント",d:2,q:"シンプルな指示からレポート、スライド、スプレッドシート、ポッドキャストまで生成する「ワークスペース型」エージェントはどれか。",o:["Skywork AI","Manus","OpenAI Operator","GenSpark"],a:0,e:"Skywork AIは、シンプルな指示からレポート、スライド、スプレッドシート、ポッドキャストまで多モーダルなコンテンツを生成する「ワークスペース型」エージェントです。市場調査や比較レポート作成を高速化します。"},
+{ch:3,cat:"MCP",d:3,q:"MCPを用いて自然言語から外部APIを実行する手順のうち、最初に行われるものはどれか。",o:["クライアントがサーバーにリクエストを送り、利用可能なツールとその入出力スキーマを受け取る","LLMがユーザーの指示を解析してツールを選択する","JSON形式のコマンドをサーバーへ送信する","サーバーがAPI実行結果をJSONで返す"],a:0,e:"MCPの手順は、1. 接続とツール一覧の取得（クライアントがサーバーから利用可能なツールと入出力スキーマを受け取る）、2. LLMによるツール選択、3. API呼び出しの生成と送信、4. 結果の受信と応答、の順で進みます。"},
+{ch:3,cat:"AIエージェント",d:2,q:"OpenAI Operatorの2025年5月のアップデートで採用された新モデルとして、本文に記載されているものはどれか。",o:["GPT-4oベースの新モデル","GPT-3.5ベースの新モデル","BERTベースの新モデル","Geminiベースの新モデル"],a:0,e:"OpenAI Operatorはブラウザ上でフォーム入力やネット通販、資料作成などの繰り返し作業を自動化できるエージェントです。2025年5月のアップデートでGPT-4oベースの新モデルが採用され、ウェブ閲覧やアプリ操作の正確性とスピードが向上しました。"},
+{ch:3,cat:"テキスト生成AI",d:2,q:"テキスト生成AIのメリット「アイデアの創出」に関する説明として、本文の記述と合致するものはどれか。",o:["人間が文章を書く際は経験や知識、感情に左右されるが、AIを使えば個人の発想にない文章を生成できる","AIは常に人間より優れたアイデアを出すことができる","AIは感情を持つため独創的な発想ができる","AIはインターネットを参照しないため中立的である"],a:0,e:"Web上にある様々な既存のコンテンツから情報を集めたうえで分析し、幅広い選択肢を提案することができます。人間が文章を書く際は経験や知識、感情に左右されますが、テキスト生成AIを活用すれば個人の発想にない文章を生成できます。"},
+/* ===== 第4章 情報リテラシー・基本理念とAI社会原則 ===== */
+{ch:4,cat:"インターネットリテラシー",d:1,q:"インターネットリテラシーの説明として、最も適切なものはどれか。",o:["インターネットのルール・便利さ・脅威を理解し、適切に使用するためのスキルと知識","インターネット回線の速度を測定する技術","プログラミング言語を用いてWebサイトを構築する技能","SNSのフォロワー数を増やすためのマーケティング手法"],a:0,e:"インターネットリテラシーとは、インターネットのルール・便利さ・脅威を理解し、適切に使用するためのスキルと知識を指します。テクノロジーの理解、情報リテラシー、セキュリティとプライバシー、デジタル市民権などの要素を含んでいます。"},
+{ch:4,cat:"フィッシング詐欺",d:1,q:"メールやWebサイトを通じてユーザーの個人情報を盗み出す詐欺を何と呼ぶか。",o:["フィッシング詐欺","ランサムウェア","ソーシャルエンジニアリング","なりすまし"],a:0,e:"フィッシング詐欺は、メールやWebサイトを通じてユーザーの個人情報を盗み出す詐欺です。攻撃者は実在するサイトを真似た偽のWebサイトを作り、誘導するメールを送り、入力された情報を不正利用します。"},
+{ch:4,cat:"フィッシング詐欺",d:2,q:"SMS（ショートメッセージサービス）を介して行われるフィッシング詐欺の呼称はどれか。",o:["ヴィッシング","スミッシング","スピアフィッシング","ベイト攻撃"],a:1,e:"フィッシング詐欺の類似手法には、SMSを介して行われる「スミッシング（SMSフィッシング）」や、通話を介して行われる「ヴィッシング（Voice Phishing）」があります。"},
+{ch:4,cat:"QRコード",d:2,q:"悪意のあるQRコードから身を守るための対策として、適切でないものはどれか。",o:["疑わしいQRコードを読み込まない","リンク先で無意識にパスワード等を入力せず、一旦URLの確認を行う","公共の場に無秩序に貼られたQRコードには警戒する","QRコードは外観で判別できるため、見た目に問題がなければ安全と判断する"],a:3,e:"正規のQRコードが偽のQRコードへ物理的に貼りなおされてしまう場合、外観だけでは詐欺行為を疑う余地がありません。そのため見た目で安全と判断することはできず、URLの確認など別の警戒が必要です。"},
+{ch:4,cat:"Wi-Fiの脅威",d:2,q:"公共の場のWi-Fiに関する対策として、適切でないものはどれか。",o:["デバイスの「Wi-Fiをオフにする」または「利用可能なWi-Fiに自動接続しない」設定にする","正規のWi-Fiであることが確認できない場合は接続しない","店舗のポップや張り紙でSSIDやパスワードを確認してから接続する","表示名が正規のものに見えれば、確認せずに接続してよい"],a:3,e:"攻撃者はWi-Fiを正規のネットワークだと思わせる名前で設置しています。表示名が正規のものに見えても正規のWi-Fiでない可能性があるため、周囲を確認して正規のWi-Fiであることを確かめてから接続する必要があります。"},
+{ch:4,cat:"マルウェア",d:2,q:"コンピュータのデータを無断で暗号化し、使用者に身代金を要求するマルウェアはどれか。",o:["ランサムウェア","スパイウェア","アドウェア","ワーム"],a:0,e:"マルウェアの中でも特に危険なのがランサムウェアです。これはコンピュータのデータを無断で暗号化し、使用者に身代金を要求するものです。支払いを行ってもデータが復元されるとは限らず、更に高額な身代金を求められる可能性もあります。"},
+{ch:4,cat:"ソーシャルエンジニアリング",d:2,q:"ソーシャルエンジニアリング攻撃の説明として、最も適切なものはどれか。",o:["人間の心理的な隙を利用して個人情報や重要なデータを盗み出す手法","ソフトウェアの脆弱性を突いてシステムに侵入する手法","大量のアクセスでサーバをダウンさせる手法","通信経路上のデータを暗号化する技術"],a:0,e:"ソーシャルエンジニアリング攻撃とは、人間の心理的な隙を利用して個人情報や重要なデータを盗み出す手法です。信頼性や権威、恐怖、好奇心などの感情を上手に誘導し、意図的に情報を提供させようとします。具体例として「スピアフィッシング」「ベイト攻撃」「ブラックメール」などがあります。"},
+{ch:4,cat:"生成AIと脅威",d:2,q:"生成AIの技術的発展が攻撃者にもたらす影響として、本文の記述と合致するものはどれか。",o:["攻撃の準備に必要な時間的・金銭的コストを削減してしまう","攻撃者は生成AIを利用できないため、脅威は減少する","偽サイトの品質は下がり、見分けが容易になる","音声や顔のコピーには依然として高度なスキルが必要である"],a:0,e:"生成AIの技術的発展により、フィッシングサイトの制作やメールテンプレートの準備といったタスクが一瞬で完了します。つまり攻撃者にも技術力を与え、準備にかかる時間的・金銭的コストを削減してしまうということです。"},
+{ch:4,cat:"個人情報保護法",d:2,q:"個人情報保護法に基づき2016年に設置された、個人情報の適切な取り扱いを監視・監督する機関はどれか。",o:["消費者庁","個人情報保護委員会","公正取引委員会","特許庁"],a:1,e:"2016年には、個人情報保護法に基づき個人情報保護委員会が設置されました。個人情報の適切な取り扱いを監視・監督し、違反があった場合は是正勧告や命令などを行う権限を持つ内閣府の外局です。"},
+{ch:4,cat:"個人情報保護法",d:3,q:"2017年に施行された改正個人情報保護法による変更点として、最も適切なものはどれか。",o:["5,000人以下の個人情報を持つ事業者も含め、個人情報を業務で取り扱う全ての事業者が対象となった","個人情報の海外転送が完全に禁止された","個人情報取扱事業者に対する規制が緩和された","個人情報保護委員会が廃止された"],a:0,e:"従来の法律では5,000人以下の個人情報を持つ中小企業や小規模事業者は適用外でしたが、2017年施行の改正によって、個人情報を業務で取り扱う全ての事業者が対象となりました。"},
+{ch:4,cat:"個人情報の定義",d:2,q:"個人情報の定義に関する説明として、適切でないものはどれか。",o:["生存する個人に関する情報であること","特定の個人を識別・特定できる情報であること","他の情報と容易に照合することで個人を識別できる情報も該当する","死者の情報や会社に関する情報も個人情報に含まれる"],a:3,e:"個人情報は「生存する個人に関する情報であること」が要件であり、死者の情報や会社に関する情報は含まれません。氏名や顔写真のほか、他の情報と容易に照合可能で個人を識別できる情報や個人識別符号も個人情報に該当します。"},
+{ch:4,cat:"個人識別符号",d:2,q:"個人識別符号の例として、適切でないものはどれか。",o:["顔認証データ、指紋認証データ、虹彩、声紋","パスポート番号、基礎年金番号、運転免許証番号","マイナンバー、住民票コード、保険者番号","勤務先の会社名、部署名"],a:3,e:"個人識別符号は、その情報だけで特定の個人を識別できる文字・番号・記号です。身体の一部の特徴を電子処理のために変換した符号（顔認証データ、指紋、虹彩、声紋等）と、利用者ごとに割り振られる符号（パスポート番号、マイナンバー等）があります。"},
+{ch:4,cat:"要配慮個人情報",d:2,q:"要配慮個人情報の取り扱いに関する説明として、最も適切なものはどれか。",o:["取得・利用・第三者提供の前に、原則として本人から明示的な同意を得る必要がある","本人の同意なく自由に第三者提供できる","漏洩が発生しても個人情報保護委員会への報告は不要である","匿名加工すれば要配慮個人情報には該当しなくなるため、加工前も同意は不要である"],a:0,e:"要配慮個人情報は本人が不当な差別や偏見などの不利益を被らないよう特に配慮すべき個人情報です。取得・利用・第三者提供の前に原則として明示的な同意が必要であり、漏洩等が発生した場合は個人情報保護委員会に報告しなければなりません。"},
+{ch:4,cat:"匿名加工情報",d:2,q:"匿名加工情報の説明として、最も適切なものはどれか。",o:["特定の個人を識別できないように加工し、当該個人情報を復元できないようにした情報","氏名だけをマスキングした情報","個人情報を暗号化して保存した情報","本人の同意を得て第三者に提供した個人情報"],a:0,e:"匿名加工情報とは、法に定められた措置を講じて特定の個人を識別することができないように個人情報を加工し、当該個人情報を復元することができないようにした情報です。単純なマスキングだけではなく、再識別化が不可能な状態にする一連の手続きを含みます。"},
+{ch:4,cat:"生成AIと個人情報",d:2,q:"生成AIサービスに個人情報を含むプロンプトを入力する際の注意点として、適切でないものはどれか。",o:["特定された個人情報の利用目的を達成するために必要な範囲内であることを確認する","利用目的を超える利用には、事前に本人の同意を得る","生成AIサービス事業者が当該個人情報を機械学習に利用するか否かを事前に確認する","生成AIは匿名で利用できるため、目的外利用の制限は適用されない"],a:3,e:"収集した個人情報は、目的外での使用や不正な提供を避ける必要があります。生成AIを利用する場合であっても個人情報保護法の規律は適用されるため、利用目的の範囲内であることの確認や本人同意の取得が必要です。"},
+{ch:4,cat:"知的財産権",d:2,q:"特許権による保護（独占）の期間として正しいものはどれか。",o:["登録日から始まり、出願日から20年後に終了する","登録日から10年間","著作者の死後70年間","登録日から25年間"],a:0,e:"特許による保護（独占）の期間は、登録日から始まり、出願日から20年後に終了します。特許は発明の内容を書類にまとめ特許庁に出願し、所定の審査を経て新規性等が認められると付与されます。"},
+{ch:4,cat:"知的財産権",d:2,q:"商標権による保護（独占）の期間に関する説明として正しいものはどれか。",o:["商標の登録日から10年間で、更新により半永久的に存続させることが可能","出願日から20年後に終了し、更新はできない","著作者の死後70年間","登録日から25年間で、更新はできない"],a:0,e:"商標権による保護（独占）の期間は、商標の登録日から10年間です。更新により半永久的に商標権を存続させることが可能です。"},
+{ch:4,cat:"知的財産権",d:2,q:"意匠権による保護（独占）の期間として正しいものはどれか。",o:["登録日から始まり、出願日から25年後に終了する","登録日から10年間","出願日から20年後に終了する","公表後70年間"],a:0,e:"意匠権による保護（独占）の期間は、登録日から始まり、出願日から25年後に終了します。意匠とは物品・建築物・画像等のデザインであり、意匠法により規定されています。"},
+{ch:4,cat:"著作権",d:2,q:"著作権が他の産業財産権と大きく異なる点として、最も適切なものはどれか。",o:["著作物を創作した時点で発生し、権利取得のための出願や審査が必要ない","特許庁への出願と審査が必要である","保護期間が一律10年である","私的使用であっても必ず侵害となる"],a:0,e:"著作権は、著作物を創作した時点で発生します。そのため特許、商標権、意匠権とは異なり、権利の取得のための出願や審査が必要ないというのが大きな特徴です。"},
+{ch:4,cat:"著作権",d:2,q:"著作権の保護期間に関する説明として正しいものはどれか。",o:["原則として個人の著作物は著作者の死後70年、法人等の団体の著作物は公表後70年","一律に創作から50年","個人・法人ともに公表後20年","登録日から25年"],a:0,e:"著作権による保護（独占）の期間は、原則として、個人の著作物の場合は著作者の死後70年間まで、法人等の団体の著作物の場合は公表後70年間までとなります。"},
+{ch:4,cat:"著作権",d:3,q:"著作権侵害が認められる要件に関する説明として、最も適切なものはどれか。",o:["対象物が元の著作物に類似し、かつ元の著作物に依拠している場合に認められる","偶然似てしまった場合でも常に侵害となる","故意がある場合に限り侵害となる","出願・登録された著作物に限り侵害となる"],a:0,e:"著作権侵害は、侵害の疑いのある対象物が元の著作物に類似し、かつ元の著作物に依拠している場合に認められます。意図せずに既存の著作物と偶然似てしまった場合には依拠性が否定され、著作権侵害とは認められません。"},
+{ch:4,cat:"肖像権",d:2,q:"肖像権に関する説明として、最も適切なものはどれか。",o:["法律で定められた権利ではなく、判例によって確立された権利である","著作権法により明文で規定された権利である","侵害した場合は必ず刑事責任が生じる","著名人のみが有する権利である"],a:0,e:"肖像権は、無断でみだりに自身の顔・姿態の写真・動画等を撮影・公開・利用されないための権利であり、法律で定められた権利ではなく判例によって確立された権利です。刑法の定めがなく、刑事上の責任は生じません。"},
+{ch:4,cat:"パブリシティ権",d:2,q:"パブリシティ権の説明として、最も適切なものはどれか。",o:["著名人の肖像・氏名等の持つ顧客吸引力から生じる経済的な利益・価値を排他的に利用する権利","誰もが自分の写真を無断で撮影されない権利","企業の営業秘密を保護する権利","発明を独占的に実施できる権利"],a:0,e:"パブリシティ権とは、著名人の肖像（顔・容姿の写真・絵等）・氏名等の持つ顧客吸引力から生じる経済的な利益・価値を排他的に利用する権利です。肖像権と同様に法律ではなく判例によって確立された権利です。"},
+{ch:4,cat:"パブリシティ権",d:3,q:"パブリシティ権侵害となる基準として、本文で挙げられていないものはどれか。",o:["肖像・氏名等それ自体を独立して鑑賞の対象となる商品等として使用する","商品等の差別化を図る目的で肖像・氏名等を商品に付す","肖像・氏名等を商品等の広告として使用する","私的な範囲で著名人の写真を鑑賞する"],a:3,e:"パブリシティ権侵害は、①肖像・氏名等それ自体を独立して鑑賞の対象となる商品等として使用する、②商品等の差別化を図る目的で商品に付す、③商品等の広告として使用する、のいずれかを満たし顧客吸引力の利用を目的とする場合に成立します。"},
+{ch:4,cat:"営業秘密",d:2,q:"不正競争防止法上の営業秘密として認められるための3要件の組み合わせとして正しいものはどれか。",o:["秘密管理性・有用性・非公知性","新規性・進歩性・産業上の利用可能性","識別力・独自性・継続性","創作性・固定性・公表性"],a:0,e:"営業秘密として認められるためには、①秘密管理性（秘密として適正な管理がされていること）、②有用性（事業活動に有用であること）、③非公知性（公に知られていないこと）の3つの要件を満たす必要があります。"},
+{ch:4,cat:"限定提供データ",d:3,q:"不正競争防止法における「限定提供データ」の要件として、適切でないものはどれか。",o:["相当量が蓄積されたデータであること","不特定多数には提供されず、特定の者に限定して提供されること","ID・パスワード等によるアクセス制限など電磁的方法により管理されていること","営業秘密と同様に秘密管理性が要件とされること"],a:3,e:"限定提供データは、営業秘密のような秘密管理性は要件とされていません。①相当量の蓄積、②特定の者への限定提供、③電磁的方法による管理の3点を満たすもので、不正に取得・使用・開示する行為等は不正競争防止法により保護されます。"},
+{ch:4,cat:"生成AIと知的財産",d:3,q:"生成AIの利用と特許侵害に関する説明として、最も適切なものはどれか。",o:["生成物が偶然特許発明と一致した場合、その事実を知らなくても特許侵害となる","模倣を意図していなければ特許侵害にはならない","生成AIが生成したものは全て特許侵害の対象外である","私的な実施であっても必ず特許侵害となる"],a:0,e:"生成AIに入力した内容が特許発明と異なる内容であっても、生成物が偶然特許発明と一致してしまった場合には、その事実を知らずに利用しても特許侵害となります。なお特許侵害となり得るのは事業としての実施に限られます。"},
+{ch:4,cat:"生成AIと著作権",d:3,q:"文化庁の見解を踏まえた、AI生成物と著作権に関する説明として最も適切なものはどれか。",o:["人が「創作意図」を持ち「創作的寄与」と認められる行為を行った場合、著作物に該当し得る","AIが生成したものは常に著作物として保護される","「生成」ボタンを押すだけでも人の著作物と認められる","AI生成物は一切著作権の対象とならないことが法律で明記されている"],a:0,e:"文化庁の見解では、人が思想感情を創作的に表現するための「道具」としてAIを使用したものと認められれば著作物に該当し、AI利用者が著作者となると考えられます。判断は人の「創作意図」と「創作的寄与」の有無によります。"},
+{ch:4,cat:"生成AIと知的財産",d:3,q:"生成AIが生成した商標に関する説明として、最も適切なものはどれか。",o:["商標法は使用に対して商標権を付与する趣旨のため、生成AIが生成した商標も保護対象となり得る","生成AIが生成した商標は一切保護されない","人が創作的に関与しない限り商標登録は認められない","商標権は創作に対して付与されるため、AI生成物は対象外である"],a:0,e:"商標法には、商標の創作に対して商標権を付与するのではなく、商標の使用に対して商標権を付与するという趣旨があります。そのため生成AIが生成した商標であっても、人が生み出した商標と同じく商標権の保護対象となり得ます。"},
+{ch:4,cat:"生成AIと営業秘密",d:2,q:"生成AIが生成した生成物と営業秘密の関係について、最も適切なものはどれか。",o:["秘密管理性・有用性・非公知性の3条件を満たせば営業秘密として保護される","人が生み出したものでなければ営業秘密として保護されない","AI生成物は公知情報とみなされ保護されない","営業秘密として保護されるには特許庁への登録が必要である"],a:0,e:"不正競争防止法により保護される営業秘密は、人が生み出したものである必要はありません。①秘密管理性、②有用性、③非公知性の3つの条件を満たせば、生成AIが生成した生成物であっても営業秘密として保護されます。"},
+{ch:4,cat:"AI社会の基本理念",d:2,q:"「AI事業者ガイドライン」で提唱されている3つの基本理念の組み合わせとして正しいものはどれか。",o:["人間の尊厳が尊重される社会（Dignity）、多様な背景を持つ人々が多様な幸せを追求できる社会（Diversity & Inclusion）、持続可能な社会（Sustainability）","安全性、公平性、透明性","人間中心、教育・リテラシー、イノベーション","開発者、提供者、利用者"],a:0,e:"2019年3月公表の「人間中心のAI社会原則」が基本となり、AIによってもたらされる3つの価値が「基本理念」として提唱されています。①人間の尊厳が尊重される社会（Dignity）、②多様な背景を持つ人々が多様な幸せを追求できる社会（Diversity & Inclusion）、③持続可能な社会（Sustainability）です。"},
+{ch:4,cat:"AI事業者ガイドライン",d:2,q:"「AI事業者ガイドライン（第1.0版）」を公表した省庁の組み合わせとして正しいものはどれか。",o:["経済産業省と総務省","内閣府と文部科学省","法務省と特許庁","厚生労働省と国土交通省"],a:0,e:"2024年4月、経済産業省と総務省は、生成AIの普及を始めとする近年の技術の急激な変化等に対応すべく、関連する既存のガイドラインを統合・アップデートしとりまとめた「AI事業者ガイドライン（第1.0版）」を公表し、2025年3月には第1.1版が公表されました。"},
+{ch:4,cat:"共通の指針",d:3,q:"「AI事業者ガイドライン」における共通の指針10項目に含まれないものはどれか。",o:["人間中心","安全性","収益最大化","アカウンタビリティ"],a:2,e:"共通の指針は、❶人間中心、❷安全性、❸公平性、❹プライバシー保護、❺セキュリティ確保、❻透明性、❼アカウンタビリティ、❽教育・リテラシー、❾公正競争確保、❿イノベーションの10項目に整理されています。"},
+{ch:4,cat:"共通の指針",d:2,q:"共通の指針「公平性」に関する説明として、最も適切なものはどれか。",o:["人種、性別、国籍、年齢等の多様な背景を理由とした不当で有害な偏見及び差別をなくすよう努める","AIの出力を全て公開する","AIの利用料金を一律にする","全ての人に同じAIモデルを提供する"],a:0,e:"公平性の指針では、特定の個人ないし集団への人種、性別、国籍、年齢、政治的信念、宗教等の多様な背景を理由とした不当で有害な偏見及び差別をなくすよう努めることが重要とされています。また回避できないバイアスがあることを認識し、許容可能か評価することも求められます。"},
+{ch:4,cat:"共通の指針",d:3,q:"共通の指針「透明性」における「関連するステークホルダーへの情報提供」の考え方として、最も適切なものはどれか。",o:["アルゴリズムやソースコードの開示を必ずしも想定するものではない","アルゴリズムとソースコードの全面公開が必須である","一切の情報提供を行わないことが望ましい","営業秘密であっても全て開示しなければならない"],a:0,e:"「関連するステークホルダーへの情報提供」は、アルゴリズム又はソースコードの開示を必ずしも想定するものではなく、プライバシー及び営業秘密を尊重して、採用する技術の特性及び用途に照らし、社会的合理性が認められる範囲で実施するとされています。"},
+{ch:4,cat:"AIガバナンス",d:3,q:"AIガバナンスの構築における最初のステップとして本文に示されているものはどれか。",o:["環境・リスク分析の実施","AIマネジメントシステムの運用","責任者の公表","国際規格の取得"],a:0,e:"AIガバナンスの構築では、まずAIシステム・サービスがもたらす便益やリスク、社会的受容、外部環境の変化、AI習熟度などを考慮して「環境・リスク分析」を実施します。その後、AIガバナンス・ゴールの設定、AIマネジメントシステムの設計・運用と続きます。"},
+{ch:4,cat:"3つの主体",d:2,q:"「AI事業者ガイドライン」が示すAIの事業活動を担う3つの主体の組み合わせとして正しいものはどれか。",o:["AI開発者、AI提供者、AI利用者","AI研究者、AI販売者、AI消費者","AI設計者、AI運用者、AI監査者","AI発明者、AI著作者、AI管理者"],a:0,e:"「AI事業者ガイドライン」では、AI開発者（AI Developer）、AI提供者（AI Provider）、AI利用者（AI Business User）の3つに大別しています。"},
+{ch:4,cat:"3つの主体",d:3,q:"AI提供者（AI Provider）の説明として、最も適切なものはどれか。",o:["モデルそのものの構築や開発は行わないが、構築済みモデルを使用してAIツールなどを開発・提供する事業者","AIのモデルそのものの構築及び提供をする事業者","事業活動においてAIシステム又はAIサービスを利用する事業者","AIに関する法規制を策定する行政機関"],a:0,e:"AI提供者は、AIシステムをアプリケーション、製品、既存のシステム、ビジネスプロセス等に組み込んだサービスとしてAI利用者に提供する事業者です。モデルそのものの構築や開発は行わないものの、構築済みモデルを使用してAIツールなどを開発・提供する事業者が該当します。"},
+{ch:4,cat:"3つの主体",d:2,q:"AI利用者（AI Business User）に関する留意事項として、適切でないものはどれか。",o:["AI提供者が設計において想定した範囲内でAIシステム・サービスを利用する","プロンプトに含まれるバイアスに留意し、責任をもって出力結果の事業利用判断を行う","AIシステム・サービスへ個人情報や機密情報を不適切に入力しないよう注意を払う","出力結果は常に正確であるため、ステークホルダーへの情報提供は不要である"],a:3,e:"AI利用者は、出力結果を事業判断に活用した際は、その結果を関連するステークホルダーに合理的な範囲で情報を提供することが求められます。またAI提供者が定めたサービス規約を遵守する必要があります。"},
+{ch:4,cat:"AI新法",d:1,q:"2025年6月4日に公布された、日本において人工知能分野に特化した初の法律の正式名称はどれか。",o:["人工知能関連技術の研究開発及び活用の推進に関する法律","人工知能規制法","AI利活用促進基本法","デジタル社会形成基本法"],a:0,e:"2025年6月4日、「人工知能関連技術の研究開発及び活用の推進に関する法律」（通称：AI新法）が公布されました。これは日本において人工知能（AI）分野に特化した初の法律となります。"},
+{ch:4,cat:"AI新法",d:2,q:"AI新法の性格に関する説明として、最も適切なものはどれか。",o:["基本法的な性格の法律であり、罰則規定を設けず企業の自主性を尊重する推進法である","EUのAI規制法と同様に、違反企業に巨額の罰金を科す規制法である","AIの開発を全面的に禁止する法律である","個人情報保護法を廃止し置き換える法律である"],a:0,e:"AI新法は基本法的な性格の法律で、EUのようなAI規制法ではありません。AIの開発・活用の推進を主目的とし、罰則規定を設けず企業の自主性を尊重する推進法としての性格を持ちます。一方で国による調査・分析・指導の権限も定めています。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法において、内閣に設置されることが定められている組織はどれか。",o:["AI戦略本部","個人情報保護委員会","デジタル庁","AI倫理審査会"],a:0,e:"AI新法では司令塔機能の確立として、内閣にAI戦略本部を設置することが定められています。首相を本部長とし、全閣僚が参加します。法律は全4章28条（附則を除く）で構成されています。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法における活用事業者の責務に関する説明として、最も適切なものはどれか。",o:["他の主体が努力義務であるのに対し、国や地方公共団体の施策への協力義務が課されている","一切の義務は課されていない","違反した場合は必ず刑事罰が科される","AIの開発を停止する義務が課されている"],a:0,e:"AI新法で重要な規定の一つが活用事業者の責務です。他の主体が「努めるものとする」という努力義務であるのに対し、活用事業者には国や地方公共団体が実施する施策への「協力しなければならない」というより強い協力義務が課されています。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法とAI事業者ガイドラインの違いに関する説明として、適切でないものはどれか。",o:["ガイドラインは法的拘束力がなく、自主的な遵守を促すソフトローである","AI新法は活用事業者に協力義務を課す法的義務がある","AI新法は国が情報収集・調査研究を行う権限を明記している","AI新法の制定によりAI事業者ガイドラインは廃止された"],a:3,e:"AI新法とAI事業者ガイドラインは相互補完的な関係にあります。ガイドラインはAIガバナンスの具体的な実践方法や自主的取り組みの指針を提示し、AI新法は法的な枠組みの提供や最低限の義務の明確化、悪質事案への対応を担います。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法における「必要な措置」に関する説明として、最も適切なものはどれか。",o:["国は調査結果に基づき指導・助言・情報提供等を行うが、事業者名は原則公表とはされていない","違反した事業者名は必ず公表される","罰金が科される","事業免許が取り消される"],a:0,e:"AI新法には罰則規定はなく、国は情報収集・調査研究を行い、その結果に基づいて指導・助言・情報提供その他の必要な措置を講ずることとされています。国会審議では事業者名について原則公表とはせず、個別案件ごとに公表の是非を検討する旨が示されています。"},
+{ch:4,cat:"生成AIと著作権リスク",d:3,q:"生成AIによる著作権侵害のリスクに関する説明として、最も適切なものはどれか。",o:["開発・学習段階と生成・利用段階の2つの段階で問題となり得る","生成AIの学習行為それ自体が常に著作権侵害となる","生成・利用段階でのみ問題となり、学習段階では一切問題にならない","著作権者の許諾があれば依拠性は判断されない"],a:0,e:"生成AIによる著作権侵害のリスクは、主に①開発・学習段階、②生成・利用段階の2つの段階で問題となります。なお、生成AIの学習行為それ自体が常に著作権侵害となるわけではなく、利用の目的や態様等を踏まえて個別に判断されます。"},
+{ch:4,cat:"AI新法",d:3,q:"2023年6月に個人情報保護委員会がOpenAIに対して行った注意喚起の内容として、本文に記載されているものはどれか。",o:["利用目的を日本語で通知することと、センシティブな情報の取得について適切な対応を求めた","日本国内でのサービス提供を停止するよう求めた","全てのデータを日本国内で保管するよう求めた","有料プランの提供を禁止した"],a:0,e:"2023年6月、OpenAIに対して個人情報保護委員会から注意喚起がなされました。内容は、利用目的を日本語で通知すること、およびセンシティブな情報の取得について適切な対応を求めるものでした。"},
+/* ===== 第4章 追加 ===== */
+{ch:4,cat:"インターネットリテラシー",d:2,q:"インターネットリテラシーの要素のうち、第4章で「生成AIに置き換えて理解すること」が最大の狙いとされているものの組み合わせはどれか。",o:["セキュリティとプライバシー、デジタル市民権","テクノロジーの理解、情報リテラシー","プログラミングとネットワーク","著作権と特許権"],a:0,e:"インターネットリテラシーの要素のうち、セキュリティとプライバシー、デジタル市民権について、生成AIに置き換えて理解することがこの章の最大の狙いであると本文に記載されています。"},
+{ch:4,cat:"フィッシング詐欺",d:2,q:"フィッシング詐欺の手順として、本文の説明に合致するものはどれか。",o:["攻撃者が実在するサイトを真似た偽サイトを作り、誘導メールを送り、入力された情報を不正利用する","攻撃者がユーザーのPCを直接遠隔操作して情報を抜き取る","攻撃者がデータを暗号化して身代金を要求する","攻撃者が偽のWi-Fiを設置して通信を盗聴する"],a:0,e:"フィッシング詐欺は、①偽のWebサイトを作る、②誘導メールを送る、③ユーザーが偽サイトにアクセスする、④ユーザーが個人情報を自発的に入力する、⑤攻撃者が手に入れた情報で不正な買い物を行う、という手順で行われます。"},
+{ch:4,cat:"アップロードサービス",d:2,q:"ファイルをアップロードして利用するサイトについて、本文で指摘されている脅威に関する説明として最も適切なものはどれか。",o:["アップロード時とダウンロード時の両方に一定の脅威が潜んでいる","アップロード時にのみ脅威が存在する","ダウンロード時にのみ脅威が存在する","公式サイトであれば脅威は一切存在しない"],a:0,e:"ウイルスチェックサイトやPDF編集サイトなど、手持ちのファイルをアップロードすることで利用できる便利なサイトには、アップロード時とダウンロード時の両方で一定の脅威が潜んでいることを知っておく必要があります。"},
+{ch:4,cat:"不適切コンテンツ",d:2,q:"不適切なコンテンツへのWebアクセスについて、本文の記述と合致するものはどれか。",o:["自ら攻撃者の縄張りへ足を踏み入れることと等しく、詐欺被害等に遭遇する可能性が格段に増す","広告さえクリックしなければ安全である","ブラウザのシークレットモードを使えば安全である","ウイルス対策ソフトがあれば一切問題ない"],a:0,e:"不適切なコンテンツにアクセスするという行為は、自ら攻撃者の縄張りへ足を踏み入れることと等しく、詐欺被害等に遭遇する可能性が格段に増します。そのようなサイトでのURLのクリックやダウンロード等は絶対に避けるべきです。"},
+{ch:4,cat:"ランサムウェア",d:2,q:"ランサムウェアに感染し身代金を要求された場合の説明として、本文の記述と合致するものはどれか。",o:["支払いを行ってもデータが復元されるとは限らず、更に高額な身代金を求められる可能性もある","支払えば必ずデータが復元される","支払わなくても自動的にデータが復元される","身代金は法律により上限が定められている"],a:0,e:"要求された身代金を払うことでしかデータの復元ができないというメッセージが表示されますが、たとえ支払いを行ったとしても、データが復元されるとは限らず、更に高額な身代金を求められる可能性もあります。"},
+{ch:4,cat:"ソーシャルエンジニアリング",d:2,q:"ソーシャルエンジニアリング攻撃から身を守るために重要なこととして、本文に記載されているものはどれか。",o:["疑わしいリクエストやメッセージに常に懐疑的な態度を持ち、要求が正当であることを確認する","全てのメールを開封しないようにする","インターネットの利用を完全にやめる","SNSのアカウントを毎月作り直す"],a:0,e:"ソーシャルエンジニアリング攻撃から身を守るためには、疑わしいリクエストやメッセージに対して常に懐疑的な態度を持つことが重要です。また、個人情報を共有する前に、その要求が正当であることを確認する必要があります。"},
+{ch:4,cat:"プライバシー設定",d:2,q:"プライバシー設定に関する説明として、本文の記述と合致するものはどれか。",o:["これまで紹介した詐欺とは異なり、あなた自身が設定するものである","サービス提供者が自動的に最適化してくれるものである","一度設定すれば変更する必要はない","企業向けサービスにのみ存在する機能である"],a:0,e:"プライバシー設定では、他のユーザーや企業があなたの個人情報にどの程度アクセスできるのかを設定できます。これまで紹介してきた詐欺とは異なり、プライバシー設定はあなた自身が設定するものであり、意図する設定になっているか常に確認しておく必要があります。"},
+{ch:4,cat:"生成AIと脅威",d:2,q:"生成AIを用いた詐欺の例として、本文で挙げられていないものはどれか。",o:["高品質なコピーサイトの作成","違和感のないフィッシングメールの作成","息子の声でかかってくるオレオレ詐欺の電話","銀行のATMを物理的に破壊する行為"],a:3,e:"本文では生成AIを用いた詐欺として、高品質なコピーサイト、違和感のないフィッシングメール、フェイク動画のSNS拡散、息子の声でかかってくるオレオレ詐欺の電話、なりすまし、音楽生成AIの悪用、詐欺の自動化、国際ロマンス詐欺、恋愛詐欺が挙げられています。"},
+{ch:4,cat:"生成AIと脅威",d:2,q:"生成AIによる「詐欺の自動化」について、本文の記述と合致するものはどれか。",o:["大量の詐欺メッセージの同時送信や自動返信により、大規模かつ効率的な攻撃が可能になる","詐欺行為が自動的に検知され防止される","攻撃者の身元が自動的に特定される","詐欺被害額が自動的に補償される"],a:0,e:"大量の詐欺メッセージを同時に送信、テキスト生成AIにより自動で返信など、詐欺のためのアクションを自動化し複数の詐欺操作を同時に行うことが可能です。これにより攻撃者は以前よりも大規模かつ効率的な攻撃を行うことができるようになります。"},
+{ch:4,cat:"国際ロマンス詐欺",d:2,q:"国際ロマンス詐欺の説明として、最も適切なものはどれか。",o:["交流サイトなどで知り合った海外の相手を装い、恋人や結婚相手のように振る舞って金銭を送金させる特殊詐欺","海外旅行の代金を不当に請求する詐欺","国際電話の通話料を騙し取る詐欺","外国為替の取引を装った投資詐欺"],a:0,e:"国際ロマンス詐欺は、主にインターネット上の交流サイトなどで知り合った海外の相手を言葉巧みに騙して、恋人や結婚相手になったかのように振る舞い、金銭を送金させる特殊詐欺です。各種生成AIを使い架空の美男美女を作り出す可能性が指摘されています。"},
+{ch:4,cat:"個人情報保護法",d:2,q:"個人情報保護法の目的として、本文に記載されているものはどれか。",o:["個人情報の有用性に配慮しつつ、個人の権利利益を保護すること","個人情報の一切の利用を禁止すること","企業の営業秘密を保護すること","デジタル社会の進展を抑制すること"],a:0,e:"個人情報保護法は、個人情報の適正な取扱いに関し基本理念及び基本方針の作成その他の個人情報の保護に関する施策の基本となる事項を定め、個人情報の有用性に配慮しつつ、個人の権利利益を保護することを目的としています。"},
+{ch:4,cat:"個人情報保護法",d:2,q:"個人情報保護法が全面施行された年として、本文に記載されているものはどれか。",o:["2005年","2016年","2017年","2022年"],a:0,e:"個人情報保護法（個人情報の保護に関する法律）は2005年に全面施行された個人情報の保護に関する法律です。2016年には個人情報保護委員会が設置され、2017年には改正個人情報保護法が施行されました。"},
+{ch:4,cat:"機微情報",d:3,q:"機微（センシティブ）情報が定義されているガイドラインとして、本文に記載されているものはどれか。",o:["金融分野における個人情報保護に関するガイドライン","AI事業者ガイドライン","医療情報システムの安全管理に関するガイドライン","電子商取引及び情報財取引等に関する準則"],a:0,e:"機微（センシティブ）情報とは、『金融分野における個人情報保護に関するガイドライン』第5条1項で定義されている情報です。政治的見解、宗教、参加労働組合、人種や民族、健康状態、性生活または性的指向、刑事処分の事実などが含まれます。"},
+{ch:4,cat:"匿名加工情報",d:3,q:"匿名加工情報を取り扱う事業者の義務として、本文で挙げられていないものはどれか。",o:["個人を復元できないように加工する義務","加工方法等の情報の安全管理措置を講じる義務","情報に含まれる個人に関する情報の項目を公表する義務","匿名加工情報を作成するたびに個人情報保護委員会の事前認可を受ける義務"],a:3,e:"事業者の義務は、①加工する義務、②加工方法等の安全管理措置、③項目の公表、④第三者提供時の公表と明示、⑤本人を識別する目的での照合禁止、⑥適正な取扱い確保のための措置と公表の努力義務、の6つです。事前認可の義務は挙げられていません。"},
+{ch:4,cat:"海外の法規制",d:3,q:"シンガポールの個人データ保護法（PDPA）に関する説明として、本文に記載されているものはどれか。",o:["違反が認定された場合、個人情報保護委員会（PDPC）から是正命令や罰金が科されることがある","罰則規定が一切ない推進法である","AIの利用は適用対象外である","EU域内の事業者にのみ適用される"],a:0,e:"シンガポールでは個人データ保護法（PDPA）に基づき、事業者が個人情報を収集・利用・提供する際には原則として本人の同意を得る義務などが課されています。PDPA違反が認定された場合、個人情報保護委員会（PDPC）から是正命令や罰金が科されることがあります。"},
+{ch:4,cat:"知的財産",d:2,q:"知的財産と知的財産権の関係について、本文の説明として最も適切なものはどれか。",o:["知的財産は生み出されるもの、知的財産権はそれを保護するものという一体の関係にある","知的財産と知的財産権は同一の概念である","知的財産権がなければ知的財産は成立しない","知的財産は法律用語ではなく、知的財産権のみが法的概念である"],a:0,e:"知的財産とは新しいアイデア、創作物、新しいデザイン、ビジネス・技術上の有用な情報等です。知的財産権とはこれらを法的に保護する権利です。知的財産と知的財産権は、生み出されるものとそれを保護するものという一体の関係を有します。"},
+{ch:4,cat:"発明と特許",d:2,q:"「発明」に該当しないものとして、本文に記載されているものはどれか。",o:["人の技能や単なる人的な取り決め等、技術的な要素が含まれないもの","IT・ソフトウェアに関する技術的なアイデア","製品の製造方法・機械の制御方法","技術的な要素によって実現されるビジネスモデル"],a:0,e:"発明とは簡単にいうと技術的なアイデアです。IT・ソフトウェア、機械・構造物、製造方法、技術的要素によるビジネスモデル、化学物質・材料・医薬等が対象となります。人の技能や単なる人的な取り決め等、技術的な要素が含まれないものは発明には該当しません。"},
+{ch:4,cat:"商標",d:2,q:"商標を構成するものとして、本文で挙げられていないものはどれか。",o:["文字、図形、色彩","立体形状、音、ホログラム","企業・店・商品等の名称やロゴマーク","発明の技術的な仕組み"],a:3,e:"商標は、文字、図形、色彩、立体形状、音、ホログラム等により構成されるもので、ビジネスで使用するものが対象になります。具体例として企業・店・商品・サービス等の名称やロゴマーク、キャッチフレーズ、宣伝・広告用のメロディー、商品の容器の形状が挙げられます。"},
+{ch:4,cat:"意匠",d:2,q:"意匠に該当しないものとして、本文に記載されているものはどれか。",o:["人が通常見ることができない機械・装置の内部構造","家具や日用品の形状","オフィスや店の内装","画面に表示されるアイコン"],a:0,e:"意匠は物品・建築物・画像等のデザインです。人が通常見ることができない機械・装置の内部構造、液体・粉状物・粒状物等の固定の形状を持たないもの等は意匠に該当しません。"},
+{ch:4,cat:"著作物",d:2,q:"著作物の定義として、本文の記述に合致するものはどれか。",o:["文芸、学術、美術、または音楽に関する思想や感情を独自に表現した創作物","技術的なアイデアを具体化したもの","自分と他者の商品・サービスを識別するためのもの","物品・建築物・画像等のデザイン"],a:0,e:"著作物とは、簡単にいうと文芸、学術、美術、または音楽に関する思想や感情を独自に表現した創作物です。言語・文章、音楽、舞踊、美術、建築、図形、画像・映像、プログラム等、非常に幅広いものが対象となります。"},
+{ch:4,cat:"著作権",d:2,q:"著作物の私的使用と著作権侵害に関する説明として、最も適切なものはどれか。",o:["私的に使用する分には侵害にならないが、インターネット・SNS等で公開すると侵害となるおそれがある","私的な範囲であればSNSへの公開も問題ない","商用利用でなければ一切侵害にならない","私的使用であっても常に侵害となる"],a:0,e:"著作物を私的に使用する（個人・家庭・少数の親しいグループ等の範囲内で使用する）分には著作権侵害にはなりません。ただし、商用利用でない場合であっても、インターネット・SNS等で著作物を公開すると著作権侵害となるおそれがあるため注意が必要です。"},
+{ch:4,cat:"肖像権",d:3,q:"肖像権の侵害が成立する可能性が高くなる条件として、本文で挙げられていないものはどれか。",o:["被写体を特定することができる","被写体の許可を取っていない","SNS等の拡散性が高い媒体に投稿をしている","撮影機材が業務用の高性能なものである"],a:3,e:"肖像権侵害が成立する可能性が高くなる条件として、①被写体を特定できる、②被写体の許可を取っていない、③SNS等の拡散性が高い媒体に投稿している、④撮影された場所が自宅・病室等の私的領域である、が挙げられています。"},
+{ch:4,cat:"肖像権",d:3,q:"肖像権侵害の判断基準となる「受忍の限度」の説明として、正しいものはどれか。",o:["社会共同生活上この程度までは我慢すべきだと評価される範囲のこと","損害賠償金の上限額のこと","撮影が許可される時間の上限のこと","著作権の保護期間のこと"],a:0,e:"受忍の限度とは、社会共同生活上この程度までは我慢すべきだと評価される範囲のことです。肖像権侵害は、当該撮影・利用行為が被撮影者の人格的利益を侵害し、社会生活上受忍の限度を超えるものといえるかどうかを基準として判断されます。"},
+{ch:4,cat:"不正競争防止法",d:2,q:"不正競争防止法に違反する行為として、本文に記載されているものはどれか。",o:["営業秘密を窃盗、詐欺、強迫等により不正に取得する行為","自社で開発した技術を特許出願する行為","他社の公開特許公報を閲覧する行為","自社の営業秘密を社内で共有する行為"],a:0,e:"不正競争防止法とは、事業者間の公正な競争等のために不正競争の防止等を規定する法律です。営業秘密を窃盗、詐欺、強迫等により不正に取得する行為や、不正取得された営業秘密を悪意又は重過失で使用・開示する行為は不正競争防止法に違反します。"},
+{ch:4,cat:"生成AIと発明",d:3,q:"特許庁の見解を踏まえた、AIを利用した発明の発明者に関する説明として最も適切なものはどれか。",o:["人が創作的に関与していれば人の発明となるが、人が関与していないAIによる発明は日本では人の発明と認められず特許も取得できない","AIが単独で発明者になることができる","AIを利用した発明は全て特許を取得できない","AIを利用した発明は必ず共同発明となる"],a:0,e:"AIを活用した発明について、人が創作的に関与していれば人の発明となる（人が発明者になる）と考えられます。一方で人が創作的に関与していないAIによる発明は、日本では人の発明とは認められず、特許の取得もできません。"},
+{ch:4,cat:"生成AIと知的財産",d:3,q:"人が創作活動に関与していないAIによる意匠に関する説明として、正しいものはどれか。",o:["少なくとも日本では意匠登録を受ける権利が発生しない","自動的に意匠権が付与される","AIが意匠の創作者として登録される","意匠権の保護期間が2倍になる"],a:0,e:"人が意匠を創作すると意匠登録を受ける権利が自然に発生しますが、人が創作活動に関与していないAIによる意匠に関しては、少なくとも日本では意匠登録を受ける権利が発生しません。"},
+{ch:4,cat:"生成AIと著作権",d:3,q:"文化庁の見解において、著作物に該当しないとされる例はどれか。",o:["人が何ら指示を与えず（又は簡単な指示を与えるにとどまり）「生成」のボタンを押すだけでAIが生成したもの","人がAIを道具として使用し、創作意図と創作的寄与をもって生成したもの","人が創作した著作物を生成AIで発展させたもの","生成AIが生成したものを人が創作的に発展させたもの"],a:0,e:"AIが自律的に生成したものは「思想又は感情を創作的に表現したもの」ではなく、著作物に該当しないと考えられます。例として、人が何ら指示を与えず（又は簡単な指示を与えるにとどまり）「生成」のボタンを押すだけでAIが生成したものが挙げられています。"},
+{ch:4,cat:"著作権侵害の防止",d:2,q:"生成AI利用時の著作権侵害の防止策として、本文で挙げられているものはどれか。",o:["入力時および利用時において、自身で創作した文章・画像・音楽等を用い、他者のものは用いない","生成物に必ずAI生成である旨を記載する","生成AIの利用を全面的に禁止する","著作権登録を行ってから生成AIを利用する"],a:0,e:"著作権侵害の防止策として、①生成AIへの情報の入力時および生成物の利用時において、自身で創作した文章・画像・音楽等を用い他者のものは用いない、②入力時において著作物ではない情報（指示・質問等）のみを入力する、が挙げられています。"},
+{ch:4,cat:"生成AIと肖像権",d:3,q:"2023年11月に生成AIを用いて作られSNS上で拡散し問題となった事例として、本文に記載されているものはどれか。",o:["岸田文雄【元】総理のフェイク動画","アメリカ国防総省の爆発を示唆する偽造画像","著名アーティストの楽曲の無断生成","企業のロゴマークの無断生成"],a:0,e:"2023年11月に、岸田文雄【元】総理のフェイク動画が生成AIを用いて作られ、SNS上で拡散されたことが世間で騒がれ問題となりました。本件においては肖像権の問題も指摘されました。"},
+{ch:4,cat:"不正競争防止法",d:2,q:"生成AI利用時の不正競争防止法違反の防止策として、本文で「行わないようにすべき」とされているものはどれか。",o:["生成AIに営業秘密を入力すること自体","生成AIを業務で利用すること","生成AIの利用ログを保存すること","生成AIの利用ルールを社内で定めること"],a:0,e:"生成AIの利用における不正競争防止法違反の防止策として、①生成AIに営業秘密を入力すること自体、②入力してしまった場合に生成AIが生成した生成物を利用すること、は行わないようにすべきとされています。"},
+{ch:4,cat:"AI利活用原則",d:2,q:"「AI利活用原則」を構成する枠組みとして、本文に記載されているものの組み合わせはどれか。",o:["AIガイドライン・基本理念・AI社会原則","開発者・提供者・利用者","安全性・公平性・透明性","Dignity・Diversity・Sustainability"],a:0,e:"AIガイドラインを含む枠組みを「AI利活用原則」といい、「基本理念」と「AI社会原則」の2つを合わせた3つの関係がピラミッド構造を成しています。"},
+{ch:4,cat:"AI事業者ガイドライン",d:3,q:"「AI事業者ガイドライン」において、「A. 基本理念」「B. 原則」「C. 共通の指針」に加えて定義されているものの組み合わせはどれか。",o:["D. 高度なAIシステムに関係する事業者に共通の指針、E. AIガバナンスの構築","D. 罰則規定、E. 監督機関の設置","D. 国際条約、E. 業界団体の自主規制","D. 技術標準、E. 認証制度"],a:0,e:"「A. 基本理念」「B. 原則」「C. 共通の指針」がピラミッド構造として定義され、これに加え「D. 高度なAIシステムに関係する事業者に共通の指針」、「E. AIガバナンスの構築」がそれぞれ定義されています。"},
+{ch:4,cat:"基本理念",d:2,q:"基本理念のうち「人間の尊厳が尊重される社会（Dignity）」の説明として、最も適切なものはどれか。",o:["人間がAIを道具として使いこなすことで能力を発揮し、物質的にも精神的にも豊かな生活を送れる社会","多様な背景と価値観を持つ人々が多様な幸せを追求できる社会","社会の格差を解消し地球規模の環境問題にも対応可能な社会","AIが人間の意思決定を代替する社会"],a:0,e:"人間がAIに過度に依存したり人間の行動をコントロールすることにAIが利用される社会ではなく、人間がAIを道具として使いこなすことによって様々な能力をさらに発揮し、物質的にも精神的にも豊かな生活を送ることができる社会を構築する必要があるとされています。"},
+{ch:4,cat:"人間中心",d:3,q:"共通の指針「人間中心」に包含される内容として、本文で挙げられていないものはどれか。",o:["人間の尊厳及び個人の自律","AIによる意思決定・感情の操作等への留意","偽情報等への対策","収益の最大化"],a:3,e:"「人間中心」には、人間の尊厳及び個人の自律、AIによる意思決定・感情の操作等への留意、偽情報等への対策、多様性・包摂性の確保、利用者支援、持続可能性の確保が包含されています。"},
+{ch:4,cat:"人間中心",d:3,q:"共通の指針「人間中心」の「持続可能性の確保」において、生成AIなど計算量の多いAIシステムに求められる対策として本文に記載されているものはどれか。",o:["モデルの軽量化や目的に応じたモデルの使い分け","利用者数の制限","出力回数の上限設定","オフライン利用の義務化"],a:0,e:"AIシステム・サービスの開発・提供・利用においてはライフサイクル全体で地球環境への影響も検討することが重要とされ、特に生成AIなど計算量の多いAIシステムにおいては、モデルの軽量化や目的に応じたモデルの使い分け等の対策を講じることが必要になります。"},
+{ch:4,cat:"安全性",d:2,q:"共通の指針「安全性」に包含される「適正学習」の内容として、本文に記載されているものはどれか。",o:["権利侵害複製物等の違法なコンテンツや情報等を学習データに含めない","学習データの量を最大化する","学習を毎日行う","学習結果を全て公開する"],a:0,e:"適正学習では、AIの学習を試みる際にシステムやツールの特性を理解し、正確かつ最新なデータを利用するとともに、権利侵害複製物等の違法なコンテンツや情報等を学習データに含めないことにも注意が必要とされています。"},
+{ch:4,cat:"公平性",d:3,q:"共通の指針「公平性」における「人間の判断の介在」に関して、本文で注意すべきとされているものはどれか。",o:["人間の判断が自動化バイアスに左右されないような対策を講じるべきである","人間の判断は常にAIより正確であるため優先すべきである","人間の判断は一切介在させるべきではない","人間の判断はAIの出力を必ず追認すべきである"],a:0,e:"AIに単独で判断させるだけでなく、適切なタイミングで人間の判断を介在させるようなオペレーションを構築することが必要です。なおその際には、人間の判断が自動化バイアスに左右されないような対策を講じるべきであるとされています。"},
+{ch:4,cat:"透明性",d:2,q:"共通の指針「透明性」における「検証可能性の確保」として、本文に記載されているものはどれか。",o:["AIシステム・サービスの開発過程や利用時の入出力のログを記録・保存する","ソースコードを全面公開する","第三者機関の監査を毎年受ける","利用者数を公表する"],a:0,e:"AIの検証可能性を確保するために、AIシステム・サービスの開発過程や利用時の入出力のログを記録・保存するように注意しましょう、と記載されています。"},
+{ch:4,cat:"アカウンタビリティ",d:3,q:"共通の指針「アカウンタビリティ」における「トレーサビリティの向上」の説明として、最も適切なものはどれか。",o:["データの出所や開発・提供・利用中の意思決定等について、技術的に可能かつ合理的な範囲で追跡・遡求が可能な状態を確保する","全ての利用ログを一般公開する","AIの判断根拠を必ず数式で示す","利用者の個人情報を全て記録する"],a:0,e:"トレーサビリティの向上とは、データの出所、AIシステム・サービスの開発・提供・利用中に行われた意思決定等について、技術的に可能かつ合理的な範囲で追跡・遡求が可能な状態を確保することです。"},
+{ch:4,cat:"教育・リテラシー",d:2,q:"共通の指針「教育・リテラシー」に関する説明として、本文の記述と合致するものはどれか。",o:["主体内のAIに関わる者だけでなく、ステークホルダーに対しても教育を行うことが期待される","AI開発者のみが教育の対象である","教育は法的義務として課されている","教育内容は国が一律に定める"],a:0,e:"各主体は、主体内のAIに関わる者が正しい理解及び社会的に正しい利用ができる知識・リテラシー・倫理感を持つために必要な教育を行うことが期待されます。また、AIの複雑性や誤情報、意図的な悪用の可能性も勘案し、ステークホルダーに対しても教育を行うことが期待されます。"},
+{ch:4,cat:"高度なAIシステム",d:3,q:"「高度なAIシステムに関係する事業者に共通の指針」に含まれる項目として、本文で挙げられていないものはどれか。",o:["AIライフサイクル全体にわたるリスクの特定、評価、軽減","市場投入後のリスクと脆弱性の特定と対処","AI生成コンテンツの透明性向上","AI開発企業の株式公開義務"],a:3,e:"高度なAIシステムに関係する事業者に共通の指針は、リスクの特定・評価・軽減、市場投入後の対処、能力や限界の透明性確保、責任ある情報共有とインシデント報告、AIガバナンスと個人情報保護、セキュリティ強化、AI生成コンテンツの透明性向上など全12項目です。"},
+{ch:4,cat:"AIガバナンス",d:3,q:"AIガバナンスを推進する上で重要とされる、状況に合わせて細やかな加筆修正を行うサイクルを何と呼ぶか。",o:["アジャイル・ガバナンス","ウォーターフォール・ガバナンス","トップダウン・ガバナンス","セルフ・ガバナンス"],a:0,e:"各事業者が自社の取り組みに反映するためには経営層の責任は大きく、リーダーシップを発揮しながら状況に合わせて細やかな加筆修正を行っていく、いわゆるアジャイル・ガバナンスのサイクルを回すことが重要であるとされています。"},
+{ch:4,cat:"AI開発者",d:3,q:"AI開発者に関する留意事項として、本文で「AI開発時」に挙げられているものはどれか。",o:["AIモデルを構成する各技術要素によってバイアスが含まれうることまで検討し、点検を行う","AI利用者に対してサービス規約を提示する","出力結果の事業利用判断を行う","AI提供者が定めた利用上の留意点を遵守する"],a:0,e:"AI開発者はAIモデルを直接的に設計し変更を加えることができるため、AIの出力に与える影響力が高いという性質があります。AI開発時には、AIモデルを構成する各技術要素によってバイアスが含まれうることまで検討し点検を行うことなどが求められます。"},
+{ch:4,cat:"AI提供者",d:3,q:"AI提供者に関する留意事項として、「AIシステム・サービス提供後」に挙げられているものはどれか。",o:["適切な目的でAIシステム・サービスが利用されているかを定期的に検証する","学習データに含まれるバイアスを考慮したデータの管理や点検を行う","プロンプトに含まれるバイアスに留意する","AIモデルそのものを設計・変更する"],a:0,e:"AIシステム・サービス提供後の留意事項として、適切な目的で利用されているかの定期的な検証、プライバシー侵害への対処と再発防止、攻撃手法を考慮した脆弱性対応、AI利用者への「共通の指針」対応状況の提供、サービス規約等の文書化が挙げられています。"},
+{ch:4,cat:"AI新法",d:2,q:"AI新法制定の背景として本文に記載されている、2025年版情報通信白書における日本の個人の生成AI利用率はどれか。",o:["26.7%","50.0%","59.2%","68.8%"],a:0,e:"総務省の2025年版情報通信白書によると、日本の個人の生成AI利用率は26.7%で、中国の59.2%や米国の68.8%と大きな差があります。また生成AIを業務で利用している企業も約5割（50.0%）にとどまっています。"},
+{ch:4,cat:"AI新法",d:3,q:"EUのAI規制法について、本文に記載されている内容として正しいものはどれか。",o:["2024年に発効し、違反事業者には最大3500万ユーロなどの巨額の罰金を科す厳格な規制を導入した","罰則を設けず自主性を尊重する推進法である","2025年に発効した基本法である","生成AIは規制対象外である"],a:0,e:"欧州連合（EU）は2024年にAI規制法を発効しました。生成AIの提供企業にAIでつくられた内容であることを明示させるなど透明性の義務を課し、違反事業者には最大3500万ユーロ（約57億円）などの巨額の罰金を科す厳格な規制を導入しています。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法における日本の立場として、本文で表現されているものはどれか。",o:["「イノベーション促進とリスク対応の両立」という独自の「第三の道」","EUと同様の厳格な規制路線","米国と同様の完全な規制撤廃路線","国際協調を行わない独自路線"],a:0,e:"EUの厳格な規制と、規制的な大統領令を撤回し開発促進に重点をおく米国という国際情勢の中で、日本は「イノベーション促進とリスク対応の両立」という独自の「第三の道」を選択しました。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法第2条が定義する「人工知能関連技術」に含まれないものはどれか。",o:["紙媒体による情報の保管技術","ディープラーニング","自然言語処理","画像認識"],a:0,e:"「人工知能関連技術」の定義は非常に広範囲で、ディープラーニング、自然言語処理、画像認識、生成AI等の主要技術を全て包含します。人間の認知・推論・判断といった知的能力を代替する機能を実現するために必要な技術等が対象です。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法第16条において国に与えられている権限として、本文に記載されているものはどれか。",o:["国内外のAI関連技術の動向に関する情報収集や、権利侵害事案の分析・対策の検討などの調査研究","違反事業者への罰金の賦課","AI事業者の営業停止処分","AIモデルの強制的な公開命令"],a:0,e:"第16条は国に強力な調査権限を与えています。国内外のAI関連技術の研究開発・活用動向に関する情報収集、不正な目的・不適切な方法による権利侵害事案の分析・対策の検討などを行い、その結果に基づき指導・助言・情報提供等の措置を講じます。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法第13条「適正性の確保」が反映しようとしている国際的な原則として、本文に記載されているものはどれか。",o:["G7広島AIプロセスで示された「人間中心のAI」「信頼できるAI」「透明性の確保」といった原則","国連憲章の基本原則","WTO協定の原則","パリ協定の原則"],a:0,e:"国は、AI関連技術の研究開発及び活用の適正な実施を図るため、国際的な規範の趣旨に即した指針の整備その他の必要な施策を講じることとされています。これはG7広島AIプロセスで示された「人間中心のAI」「信頼できるAI」「透明性の確保」といった原則を国内法に反映させるものです。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法の附帯決議において、対策強化が求められているリスクとして本文に記載されているものはどれか。",o:["AI技術を悪用したディープフェイクポルノ、とりわけ児童の画像等を使用したもの","AIによる株価操作","AIによる電力消費の増大","AIによる雇用の減少"],a:0,e:"第217回国会において採択された附帯決議では、AI技術を悪用したディープフェイクポルノ、とりわけ児童の画像等を使用したものへの対策について、厳正な取り締まりおよび被害者の保護と救済、サイト管理者等への削除要請等の対策強化を求めています。"},
+{ch:4,cat:"AI新法",d:3,q:"従業員が自社の機密情報を生成AIに入力することのリスクとして、本文に記載されているものはどれか。",o:["不正競争防止法上の「営業秘密」としての保護を失う可能性がある","著作権が自動的に生成AI事業者に移転する","特許出願が無効になる","個人情報保護委員会から罰金が科される"],a:0,e:"従業員が自社の機密情報を生成AIに入力することで、不正競争防止法上の「営業秘密」としての保護を失う可能性があります。営業秘密の要件のうち「秘密管理性」を失わせる恐れがあるためです。"},
+{ch:4,cat:"AI新法",d:3,q:"AI新法の施行スケジュールに関する説明として、本文に記載されているものはどれか。",o:["公布日は2025年6月4日で、第1章・第2章は原則として公布日に施行された","全ての章が2026年4月に施行された","公布から1年後に全面施行される","施行日は未定である"],a:0,e:"公布日は2025年6月4日で、施行日は原則として公布日（第1章、第2章）です。第3章および第4章については、公布日から3月以内に政令で定める日とされています。"},
+{ch:4,cat:"AI新法",d:2,q:"生成AIの急速な普及が生み出す新たなリスクとして、AI新法の背景で挙げられていないものはどれか。",o:["ディープフェイクの脅威","犯罪への悪用","権利侵害の多発","通信インフラの物理的な老朽化"],a:3,e:"本文では、①ディープフェイクの脅威、②犯罪への悪用（サイバー攻撃、詐欺、なりすまし等）、③権利侵害の多発（著作権侵害、プライバシー侵害、個人情報の不正利用等）が急増するAIリスクとして挙げられています。"},
+/* ===== 第5章 テキスト生成AIのプロンプト制作と実例 ===== */
+{ch:5,cat:"LM",d:2,q:"LM（Language Model：言語モデル）の説明として、最も適切なものはどれか。",o:["自然言語からなる文章をコンピュータで扱うための確率モデル","画像を分類するための畳み込みモデル","報酬に基づいて行動を最適化するモデル","データを低次元に圧縮するモデル"],a:0,e:"LMとは、自然言語からなる文章をコンピュータで扱うための確率モデルです。ある文章が与えられたときに単語や文の並びに着目し、その文章が自然言語としてどれだけ自然であるかを評価する数学的なモデルです。"},
+{ch:5,cat:"n-gramモデル",d:2,q:"n-gramモデルの説明として、適切でないものはどれか。",o:["テキスト内のn個の連続する単語または文字の出現頻度を数え上げる","単純な言語モデルとして高速処理が可能である","文脈や単語の順序を考慮すべきタスクで性能が劣る","長い文章の処理に特に適している"],a:3,e:"n-gramモデルはnが有限かつ比較的小さい整数を参照値とするため高速処理が可能ですが、文脈や単語の順序を考慮すべきタスクで性能が劣り、長い文章に対しては適していません。"},
+{ch:5,cat:"LLM",d:2,q:"一般的にLLM（大規模言語モデル）と言われるものが持つパラメータ数の目安として、本文に記載されているものはどれか。",o:["数万以上","数百万以上","数十億以上","数兆以上"],a:2,e:"LLMは非常に大規模なデータセットを用いてトレーニングされた自然言語処理モデルで、一般的には数十億以上のパラメータを持つものがLLMと言われています。LMとは比較にならない程大量のテキストデータを使用して学習されます。"},
+{ch:5,cat:"LLMの学習",d:2,q:"LLMの2段階のトレーニングの組み合わせとして正しいものはどれか。",o:["プレトレーニングとファインチューニング","教師あり学習と強化学習","クラスタリングと次元削減","エンコードとデコード"],a:0,e:"LLMではプレトレーニングとファインチューニングの2段階のトレーニングを利用して高い精度を実現しています。プレトレーニングは大量のテキストデータで自然言語の知識を獲得する学習で、通常ラベルの無いデータを用いた教師なし学習が用いられます。"},
+{ch:5,cat:"ファインチューニング",d:2,q:"ファインチューニングの3つのステップとして、本文に記載されていないものはどれか。",o:["モデルのトレーニング","ハイパーパラメータの調整","モデルの評価","データベースのインデックス化"],a:3,e:"ファインチューニングは、①モデルのトレーニング、②ハイパーパラメータの調整、③モデルの評価の3つのステップで行われます。評価では、使用されたデータセットとは異なる新しいデータセットを使用します。"},
+{ch:5,cat:"ハイパーパラメータ",d:2,q:"ハイパーパラメータの説明として、最も適切なものはどれか。",o:["モデル学習前に手動で設定・調整が可能なパラメータ","学習の過程でモデルが自動的に獲得する重み","出力される文章の文字数","学習データの総量"],a:0,e:"ハイパーパラメータとは、モデル学習前に手動で設定・調整が可能なパラメータです。ハイパーパラメータを調整することで、モデルの複雑さや学習の進行度合いを制御させることができます。"},
+{ch:5,cat:"Temperature",d:2,q:"LLMのパラメータであるTemperatureに関する説明として、最も適切なものはどれか。",o:["0に近づくほど結果が一意に定まりやすく、1に近いほどランダム性の高い回答が選ばれる","0に近づくほどランダム性が高くなる","値を大きくするほど処理速度が向上する","出力される文字数を指定するパラメータである"],a:0,e:"Temperatureは基本的に0〜1の間で設定する値です。0に近づくほど選ばれる可能性が高いと思われる回答が選択され結果が一意に定まりやすく、1に近いほどランダム性の高い回答が選ばれます。詩や絵など創造的なタスクでは1に近い方が効果的な場合があります。"},
+{ch:5,cat:"Top-p",d:2,q:"Top-pに関する説明として、最も適切なものはどれか。",o:["Temperatureと同じように、出力生成のランダム性を制御する","出力の最大トークン数を制御する","学習データの量を制御する","応答速度を制御する"],a:0,e:"Top-pはTemperatureと同じように、出力生成のランダム性を制御します。低くすると選ばれる可能性が高いワードが出力され、高くするとランダム性が強くなります。公式サービスページからの利用では通常見かけませんが、API利用時には見かけることがあります。"},
+{ch:5,cat:"プロンプトエンジニアリング",d:1,q:"プロンプトエンジニアリングの説明として、最も適切なものはどれか。",o:["AIに対する指示や質問（プロンプト）を設計し、最適な結果を得るための技術や戦略","AIモデルの内部パラメータを直接書き換える技術","AIの学習データを収集・整理する作業","AIサーバーの負荷を分散させる技術"],a:0,e:"プロンプトエンジニアリングは、人工知能システム（特に自然言語生成AI）に対する指示や質問（プロンプト）を設計し、最適な結果を得るための技術や戦略を指します。AIが出力する応答はプロンプトの設計に大きく依存します。"},
+{ch:5,cat:"プロンプトの4要素",d:2,q:"プロンプト入力時に意識することで出力の質が向上する4つの要素の組み合わせとして正しいものはどれか。",o:["Instruction、Context、Input Data、Output Indicator","Temperature、Top-p、Token、Threshold","Retrieval、Augmentation、Generation、Evaluation","Encoder、Decoder、Attention、Position"],a:0,e:"出力の質が向上する要素は、Instruction（命令）、Context（文脈）、Input Data（入力データ）、Output Indicator（出力指示）の4つです。これらを組み合わせることで、具体的で明確な指示を与えることができます。"},
+{ch:5,cat:"プロンプトの4要素",d:2,q:"プロンプトの要素のうち、「あなたはプロのマーケターです」という記述が該当するものはどれか。",o:["Instruction（命令）","Context（文脈）","Input Data（入力データ）","Output Indicator（出力指示）"],a:1,e:"Context（文脈）はプロンプトの背景情報を示す要素で、「あなたはプロのマーケターです」といった記述が該当します。Instructionは「文章を要約して」のような指示、Output Indicatorは「要約：」のような出力形式の指示です。"},
+{ch:5,cat:"プロンプトの注意点",d:2,q:"生成AIの出力の質に関する注意点として、本文で挙げられていないものはどれか。",o:["プロンプトを繰り返し微調整することで出力の質が変わること","使用しているモデルの能力と限界を理解しておくこと","具体性や一貫性を求める場合、限定的な言葉を入力すること","出力における倫理性は自動的に担保されていること"],a:3,e:"本文では注意点として「出力における倫理性は担保されていないこと」が挙げられています。倫理性が自動的に担保されるわけではないため、人間による確認が必要です。"},
+{ch:5,cat:"Zero-Shot",d:1,q:"Zero-Shotプロンプティングの説明として、最も適切なものはどれか。",o:["Shot（例示）が0個の文章構成で入力を行う、最も簡単なプロンプティング","例文を2、3個入力して質問を行う手法","段階的に思考過程を出力させる手法","複数のAIモデルを組み合わせる手法"],a:0,e:"Zero-ShotプロンプティングはShot（例示）が0個の文章構成で入力を行う、聞きたい質問をそのまま入力して回答を得るだけの最も簡単なプロンプティングです。簡単なタスクであれば信頼性の高い回答が得られますが、複雑なタスクでは信頼性が低くなる場合があります。"},
+{ch:5,cat:"Few-Shot",d:1,q:"例文を2、3個入力して質問を行うことで、より望ましい回答を得るプロンプティング手法はどれか。",o:["Zero-Shotプロンプティング","Few-Shotプロンプティング","Chain-of-Thoughtプロンプティング","ネガティブプロンプティング"],a:1,e:"生成AIはプロンプトで提示された文章を学習して出力する性質があります。そのため例文を2、3個入力して質問を行うことで、より望ましい回答を得ることが可能です。これをFew-Shotプロンプティングといいます。"},
+{ch:5,cat:"ハルシネーション",d:2,q:"Zero-Shotプロンプティングで注意すべき「Hallucination（ハルシネーション）」の説明として、最も適切なものはどれか。",o:["「もっともらしいウソ」と訳され、事実と異なる内容を本当のことのように出力する振る舞い","AIが応答を拒否する現象","AIの処理が途中で停止する現象","AIが同じ回答を繰り返す現象"],a:0,e:"Hallucinationは「もっともらしいウソ」と訳され、事実とは異なる内容や、文脈と無関係な内容をあたかも本当の事かのように出力する振る舞いを指します。明らかに間違っているとわかる例もあれば見分けがつかない例も多いため、最終的に人間の判断を介入させて確認しましょう。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"生成AIで文章を校正する際のリスクや注意点として、適切でないものはどれか。",o:["校正したい文章が機密情報に該当しないか確認する","個人が特定され得る情報をプロンプトの一部に使用することは控える","校正後に出力された文章は必ず人間の目で再確認する","AIの校正結果は文法的に正確なので、内容確認は不要である"],a:3,e:"AIモデルはユーザーの意図しない、または不適切な内容を出力する可能性があります。また訓練データセットの偏りを反映し、偏見などの特定の視点を過度に強調する内容が出力される可能性もあるため、校正後の文章は必ず人間の目で再確認する必要があります。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"長すぎる文章を要約させようとしてエラーが返された場合の対処法として、本文に記載されているものはどれか。",o:["適切な文章量で区切り、複数回に渡り小分けにして入力する","Temperatureを1以上に設定する","同じプロンプトを繰り返し送信する","要約を諦めて全文を読む"],a:0,e:"要約したい文章が長すぎる場合、生成AIモデルの性能によってエラーが返されることがあります。その場合は、適切な文章量で区切り、複数回に渡り小分けにして入力することで解消できます。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"文章の読み手の対象を変更して出力を操作する方法の例として、最も適切なものはどれか。",o:["「10歳の小学生でも分かる簡単な文章にしてください」と指定する","「あなたはプロのデータサイエンティストです」と指定する","Temperatureを0に設定する","Few-Shotで例文を3つ与える"],a:0,e:"指定した年齢や身分、属性に向けた文章に変換することができます。「10歳の小学生」や「取引先の社長」などのように明確に指定するとイメージに近い文章を出力できます。なお「あなたはプロのデータサイエンティストです」は話者（話し手）の設定を変更する方法です。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"「あなたはプロのデータサイエンティストです」のように役割を与えるプロンプト技法の目的として、最も適切なものはどれか。",o:["話し手の人物像を設定して出力を操作し、専門的な立場からの意見を得る","出力される文字数を正確に制御する","AIの学習データを追加する","計算精度を向上させる"],a:0,e:"「話し手の人物像を設定して、出力を操作する」方法です。役割を与えない場合は一般的な内容が出力されますが、役割を与えると設定した役割を踏まえた出力に切り替わります。専門的な立場からの意見が欲しい場合などに役立つプロンプト技法です。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIでメール文を作成する際のリスクや注意点として、適切でないものはどれか。",o:["作成したメール文章に機密情報や個人情報が含まれていないか確認する","個人情報は架空の情報へ置き換えて入力し、セキュリティを担保する","AIが作成したメールは感情的な要素や人間らしい個性を欠くことが多い","会社ごとのフォーマットもAIが自動的に判断するため、修正は不要である"],a:3,e:"メールなどは会社毎にフォーマットが定まっている場合が多く、個々の会社の特色に合わせた文章を生成することはできないため、最終的には人間の手で修正を加える必要が生じます。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"アンケート項目を生成AIで作成する際の注意点として、本文で挙げられているものはどれか。",o:["訓練データに含まれるバイアスがAIの出力に反映される可能性があるため、差別的な発言やバイアスの有無を必ず確認する","アンケート項目は必ず10個にしなければならない","アンケートの回答は必ずAIに分析させなければならない","作成したアンケートは公開してはならない"],a:0,e:"生成AIは訓練データに基づいて出力するため、訓練データに含まれるバイアスがAIの出力に反映される可能性があります。したがって、出力された文章に差別的な発言やバイアスが含まれていないかを必ず確認しましょう。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIによるタスク抽出に関する説明として、最も適切なものはどれか。",o:["メモやメールから短時間でタスクを抽出できるが、全てのタスクを抽出できるとは限らない","メールから全てのタスクを漏れなく抽出できることが保証されている","抽出のたびに元のメール文を再入力する必要がある","タスク抽出は日本語には対応していない"],a:0,e:"メモやメールなどの文章から一瞬でタスクを抽出することができますが、必ずしも文章から全てのタスクを抽出することができるとは限りません。また続けてプロンプトを入力する際は、メールの原文を再度入力する必要がありません。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIによる姓と名の分離、ふりがなの記載に関する説明として、最も適切なものはどれか。",o:["難読な苗字でも対応可能だが、必ずしも正しいとは限らないため確認が必要である","日本語の氏名は完全に正確に分離できる","ふりがなの付与は100%の精度が保証されている","Excelの関数でしか実現できない処理である"],a:0,e:"姓と名の分離は難読苗字でも対応が可能ですが、必ずしも正しいとは限らないので確認は必要です。ふりがなの記載についても同様に、必ずしも正しいとは限らないため確認が必要とされています。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIと「質問させながら一緒に進める」方法の特徴として、本文で述べられているものはどれか。",o:["会話をしながらゴールに向かい、少しずつタスクを抽出・整理でき、これはインターネット検索との大きな違いである","一度のプロンプトで全ての作業が完了する点","検索エンジンと同じ動作をする点","出力が必ず正確である点"],a:0,e:"生成AIに必要な情報を質問させ、それに答える形でロードマップを作成するなど、会話をしながら目標としているゴールに向かい、少しずつタスクを抽出し整理することができます。これはインターネット検索との大きな違いであると本文で述べられています。"},
+{ch:5,cat:"不得意なこと",d:2,q:"テキスト生成AIが不得意とすることとして、本文で挙げられていないものはどれか。",o:["正確な文字数の指定","計算","最新の情報","文章の要約"],a:3,e:"本文ではテキスト生成AIの不得意なこととして、①正確な文字数の指定、②計算、③最新の情報、④芸術の批評が挙げられています。文章の要約は生成AIが得意とするタスクの一つです。"},
+{ch:5,cat:"不得意なこと",d:2,q:"テキスト生成AIが芸術の批評を不得意とする理由として、本文に記載されているものはどれか。",o:["AIは独自の思考や感情を持たないため","芸術作品の画像を読み込めないため","著作権上の制限があるため","日本語での表現が難しいため"],a:0,e:"AIは独自の思考や感情を持たないため、絵画や音楽など感性が必要な芸術の批評は不得意とされています。実際にAI自身も「私は人工知能ですので、感情を持つことはありません」と前置きした上で一般的な評価を述べる形になります。"},
+{ch:5,cat:"不得意なこと",d:2,q:"最新の情報に関する生成AIの弱点を克服しているサービスとして、本文で挙げられているものはどれか。",o:["Perplexity AI","GPT-3.5","BERT","Stable Diffusion"],a:0,e:"インターネット上の情報ソースを基に文章を生成するPerplexity AIは、インターネット情報をリアルタイムで検索し提供するため最新のトピックにも対応できるのが強みであり、GPTシリーズが不得意としているポイントを克服しています。"},
+{ch:5,cat:"テキスト生成AIの限界",d:3,q:"AIによるテキスト生成の限界の原因として、本文で挙げられていないものはどれか。",o:["AIが参照する情報リソースの期間的制限","AI独自で育まれる情報や体験が存在しないこと","専門的な計算能力への制約","インターネット回線速度の制限"],a:3,e:"本文では限界の原因として、AIが参照する情報リソースの期間的制限、AI独自で育まれる情報や体験が存在しないこと、専門的な計算能力への制約、複雑な文章や文脈に対する不完全な理解が挙げられています。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"生成AIによる文章の整理（句読点や改行の追加）に関連する使い方として、本文で挙げられていないものはどれか。",o:["語彙の強化","構造の改善","文体の調整","動画の自動生成"],a:3,e:"本文では同じようなシーンでのプロンプティングの例として、語彙の強化、構造の改善、文体の調整、文法チェック、情報の整合性のチェックが挙げられています。動画の自動生成は含まれていません。"},
+{ch:5,cat:"API",d:2,q:"本文におけるAPIの説明として、正しいものはどれか。",o:["ソフトウェアの一部機能を共有する仕組み","AIモデルの学習データの総称","プロンプトの入力欄のこと","ハルシネーションを検知する機能"],a:0,e:"API（Application Programming Interface）は、ソフトウェアの一部機能を共有する仕組みです。ChatGPTなどを公式サービス提供ページから使用する場合はTemperatureやTop-pといったパラメータを見かけませんが、APIを用いた利用をする場合は見かけることがあります。"},
+/* ===== 第5章 追加 ===== */
+{ch:5,cat:"LM",d:2,q:"LMが応用されている自然言語処理のタスクとして、本文で挙げられていないものはどれか。",o:["文章生成","翻訳","質問応答","画像分類"],a:3,e:"LMは、文章生成や翻訳、文書の分類、質問応答といった自然言語処理のタスクに数多く応用されています。画像分類は自然言語処理のタスクではありません。"},
+{ch:5,cat:"n-gramモデル",d:3,q:"「これは赤いリンゴです。」をn=2のn-gramで分割した例として、本文の記述に合致するものはどれか。",o:["（これは,赤い）（赤い,リンゴ）（リンゴ,です）","（これは,赤い,リンゴ）（赤い,リンゴ,です）","（これは）（赤い）（リンゴ）（です）","（これは赤い）（リンゴです）"],a:0,e:"n=2の場合は（これは,赤い）（赤い,リンゴ）（リンゴ,です）、n=3の場合は（これは,赤い,リンゴ）（赤い,リンゴ,です）と分割されます。n個の連続する単語の出現頻度を数え上げ、確率的に次の単語を予測します。"},
+{ch:5,cat:"ニューラル言語モデル",d:2,q:"ニューラル言語モデルがn-gramモデルと比較した際の特徴として、本文に記載されているものはどれか。",o:["処理能力の負荷が大きいため、コンピュータの処理性能も求められる","処理が高速で低負荷である","文脈を一切考慮しない","短い文章にのみ適している"],a:0,e:"ニューラル言語モデルは大規模なコーパスを学習し、単語やフレーズの連続性に基づいて次の単語を予測します。n-gramモデルに比べて処理能力の負荷が大きいため、コンピュータの処理性能も求められます。"},
+{ch:5,cat:"LLM",d:2,q:"LLMが高い精度で行えるタスクとして、本文で挙げられていないものはどれか。",o:["自然言語生成、文書生成","質問応答、感情分析","機械翻訳、テキスト要約","高精細な動画の生成"],a:3,e:"LLMは、自然言語生成、文書生成、質問応答、感情分析、機械翻訳、文書分類、テキスト要約、言語モデリングといった自然言語処理タスクを高い精度で行うことができます。"},
+{ch:5,cat:"プレトレーニング",d:2,q:"プレトレーニング（Pre-training）の説明として、最も適切なものはどれか。",o:["大量のラベルの無いテキストデータからパターンを発見させる教師なし学習が用いられ、自然言語の知識を獲得する","タスク特有のデータで追加学習を行い、性能を向上させる","人間の評価者からフィードバックを受けて学習する","モデルの出力をランダムに制御する"],a:0,e:"プレトレーニングとは、大量のテキストデータを使用して自然言語の知識を獲得するための学習方法です。通常、数十億〜数千億以上といわれるラベルの無いテキストデータからパターンを発見させる教師なし学習が用いられます。"},
+{ch:5,cat:"ファインチューニング",d:2,q:"ファインチューニング（Fine-tuning）の説明として、最も適切なものはどれか。",o:["タスク特有のデータやコンテキストに応じた語彙や表現を学習し、タスクの性能を向上させるトレーニングプロセス","大量のラベルなしデータから一般的な言語知識を獲得する学習","出力のランダム性を制御するパラメータ調整","学習済みモデルを削除して再構築すること"],a:0,e:"ファインチューニングとは、タスク特有のデータやコンテキスト（文脈）に応じた語彙や表現を学習し、タスクの性能を向上させるトレーニングプロセスです。これによって固有のニーズに特化したモデルを作成することができます。"},
+{ch:5,cat:"ファインチューニング",d:3,q:"ファインチューニングの「モデルの評価」ステップにおいて用いるデータとして、本文に記載されているものはどれか。",o:["トレーニングで使用されたデータセットとは異なる新しいデータセット","トレーニングで使用したものと同一のデータセット","プレトレーニングで使用したデータセット全体","ラベルのないデータセットのみ"],a:0,e:"トレーニングの完了後、使用されたデータセットとは異なる新しいデータセットを使用し、ファインチューニングされたモデルが未知のデータにどの程度よく対応できているかを評価します。"},
+{ch:5,cat:"Temperature",d:3,q:"Temperatureに1を超える数値を設定した場合について、本文に記載されているものはどれか。",o:["自由度が高すぎて適切な文章が得られにくくなる","処理が停止してエラーになる","出力が必ず同じ内容になる","日本語が出力されなくなる"],a:0,e:"Temperatureは基本的に0〜1の間で設定する値です。1を超える数値を設定すると自由度が高すぎて適切な文章が得られにくくなります。"},
+{ch:5,cat:"プロンプトエンジニアリング",d:2,q:"本文で示されている、プロンプトエンジニアリングの最もシンプルかつ汎用的な手法として最適解を出力する方法はどれか。",o:["指示文章を変更する","Temperatureを変更する","Top-pを変更する","モデルを再学習させる"],a:0,e:"出力が予想外あるいは欲しい文章とは違う場合、TemperatureやTop-pの調整でモデルの設定を変更することも手段の一つですが、本文ではよりシンプルかつ汎用的な手法として、指示文章を変更して最適解を出力する方法（プロンプトエンジニアリング）を学習します。"},
+{ch:5,cat:"プロンプトの4要素",d:2,q:"プロンプトの要素のうち、「要約：」のように出力を指示するための項目が該当するものはどれか。",o:["Instruction（命令）","Context（文脈）","Input Data（入力データ）","Output Indicator（出力指示）"],a:3,e:"Output Indicator（出力指示）はAIの出力がどのような形式であるべきかを示す要素で、「要約：」のように出力を指示するための項目が該当します。"},
+{ch:5,cat:"プロンプトの4要素",d:2,q:"プロンプトの要素のうち、「文章を要約して」という記述が該当するものはどれか。",o:["Instruction（命令）","Context（文脈）","Input Data（入力データ）","Output Indicator（出力指示）"],a:0,e:"Instruction（命令）はAIに何を行ってほしいかの指示を示す要素で、「文章を要約して」といった記述が該当します。"},
+{ch:5,cat:"プロンプティング",d:2,q:"LLMモデルにプロンプトを入力する際の形式について、本文の記述と合致するものはどれか。",o:["形式に決まりはなく、質問だけでなく命令や要望なども入力可能である","必ず疑問文で入力しなければならない","必ず箇条書きで入力しなければならない","英語でのみ入力可能である"],a:0,e:"LLMモデルにプロンプトを入力する際の形式には決まりがないため、どのような文章でも入力可能です。例えば、質問だけでなく、命令や要望なども可能です。ただし入力の際に意識することで出力の質が向上する要素はあります。"},
+{ch:5,cat:"Zero-Shot",d:2,q:"Zero-Shotプロンプティングの信頼性に関する説明として、最も適切なものはどれか。",o:["簡単なタスクであれば信頼性の高い回答が得られるが、複雑なタスクでは信頼性が低くなる場合がある","どのようなタスクでも常に高い信頼性が得られる","簡単なタスクほど信頼性が低くなる","信頼性は入力する文字数のみで決まる"],a:0,e:"Zero-Shotプロンプティングは何かについて調べる、簡単な文章を作成するなどの日常の簡単なタスクに用います。簡単なタスクであれば信頼性の高い回答が得られますが、タスクが複雑な場合や一意に定まらない回答が欲しい場合は信頼性が低くなる場合があります。"},
+{ch:5,cat:"Few-Shot",d:3,q:"Few-Shotプロンプティングにおいて、提示する例文のフォーマットに関する本文の記述として正しいものはどれか。",o:["フォーマットがランダムな場合も、難解でない限り適切な出力を得ることができる","フォーマットは必ず統一しなければ機能しない","フォーマットは表形式でなければならない","フォーマットは英語で記述しなければならない"],a:0,e:"Few-Shotプロンプティングでは例文を示すことで欲しい出力が得られますが、フォーマットがランダムな場合も、難解でない限り適切な出力を得ることができると本文に記載されています。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"生成AIによる文章の整理の活用例として、音声文字起こしなどの文章に対して行えることはどれか。",o:["句読点や段落の区切りなどを挿入して読みやすく整える","音声ファイルを自動生成する","話者の声質を変換する","録音時間を短縮する"],a:0,e:"音声文字起こしなどで作成された整理されていない文章に、手間のかかる句読点や段落の区切りなどを挿入できます。これにより読みやすい形で出力されます。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"生成AIによる文章の要約について、本文の記述と合致するものはどれか。",o:["常に正しいとは限らないが、概要を把握したいときには有用である","要約結果は常に正確であることが保証されている","要約は日本語には対応していない","要約すると必ず情報が失われないよう補完される"],a:0,e:"全てを読むには長すぎる文章を要約することができます。常に正しいとは限りませんが、概要を把握したいときには有用であると本文に記載されています。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"箇条書きを文章に変換する機能について、本文で述べられているメリットはどれか。",o:["修正が必要な場合もあるが、素案作成などの準備タスクを大幅に減らすことができる","変換結果は修正不要で完成品として使用できる","箇条書きの項目数を自動で増やせる","文章から箇条書きへの逆変換はできない"],a:0,e:"箇条書きでまとめた説明文を文章化することができます。修正が必要な場合もありますが、素案作成などの準備タスクを大幅に減らすことができます。もちろん、文章を箇条書きに直すこともできます。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"文章を会話のやり取りへ変換する機能について、本文で挙げられている活用シーンはどれか。",o:["台本制作","翻訳作業","データ分析","画像生成"],a:0,e:"一般的な文章を会話のようなやり取りへ変換できます。この際、登場人物を指定することでより希望に沿った出力の形へ操作することができます。この方法は台本制作などのシーンで非常に役立ちます。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"「Webエンジニアの仕事について、飲食店に例えて教えてください」というプロンプトが活用するテクニックはどれか。",o:["例え話で理解を深める","話者の設定を変更する","数字の変換","Few-Shotプロンプティング"],a:0,e:"自分の知らない分野について、例え話で理解を深めることができます。「Webエンジニアの仕事について、飲食店に例えて教えてください」といったプロンプトがその例として挙げられています。"},
+{ch:5,cat:"プロンプト実践",d:2,q:"読み手の対象を設定する方法が特に役立つ場面として、本文に記載されているものはどれか。",o:["専門用語が多く難解な言葉で書かれた文章の読解に困っている時","正確な文字数を指定したい時","計算結果を求めたい時","最新のニュースを知りたい時"],a:0,e:"読み手の対象を設定し出力を操作する方法は、特に難解な言葉で書かれた文章の読解に困っている時などに役立ちます。「中学1年生でもわかる表現で説明をしてください」のように一文をつけ加えるだけで、噛み砕いた表現での出力や単語の定義が一緒に表示されます。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIでメール文を作成する際、個人情報の扱いについて本文で推奨されている方法はどれか。",o:["架空の情報へ置き換えて入力する（例：AI株式会社 上田 様 →〇〇株式会社 佐藤 様）","実名のまま入力し、出力後に削除する","個人情報を暗号化して入力する","社内ネットワークからのみ入力する"],a:0,e:"プロンプトとして入力する個人情報は、架空の情報へ置き換えて入力し、セキュリティを担保しましょう。本文では【例】AI株式会社 上田 様 →〇〇株式会社 佐藤 様 という置き換えが示されています。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIによるアンケートの分析でできることとして、本文に記載されているものはどれか。",o:["口コミやアンケートのデータを整理・分析し、良い点や改善点を抽出する","回答者の個人情報を自動的に特定する","アンケートの回答を自動的に収集する","回答率を自動的に向上させる"],a:0,e:"口コミやアンケートなどのデータを整理し、分析することができます。分析の結果から、良い点や改善点の抽出も可能です。本文では新商品のアンケート結果から良い点と改善点を整理する例が示されています。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"キャッチコピーの作成において、出力の精度を自分の要求に近づけるために有効な方法として本文に記載されているものはどれか。",o:["「一流のコピーライター」などの肩書きや役割を与え、できるだけ詳細な情報を入力する","Temperatureを0に設定する","同じプロンプトを10回繰り返す","英語で入力する"],a:0,e:"特徴を伝えるだけでキャッチコピーを作成できます。この際に「一流のコピーライター」などの肩書きや役割を与えたり、できるだけ詳細な情報を入力したりすることで、出力される文章の精度を自分の要求に近づけることができます。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"ビジネス書類のテンプレート作成における注意点として、本文に記載されているものはどれか。",o:["秘匿性の高い情報や個人情報が含まれる可能性が高いため、架空の名称や情報を入力し最終的に人間が編集する","テンプレートは必ずそのまま使用する","ビジネス書類の作成には生成AIを使用してはならない","作成したテンプレートは必ず社外に公開する"],a:0,e:"ビジネスにおいて作成される書類は、秘匿性の高い情報や個人情報が含まれる可能性が非常に高いため、プロンプトを入力する際は架空の名称や情報を入力し、最終的に人間の手で編集作業を行いましょう。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"業務の手順を分解させる際に、より分かりやすい出力を得るための工夫として本文に記載されているものはどれか。",o:["「表形式で」など求める出力形式を指定する","Temperatureを1以上に設定する","英語で質問する","Few-Shotで10個の例を示す"],a:0,e:"慣れない業務や未経験のタスクなど、プロセスとその順番を分解して教えてくれます。さらに、求める出力形式を指定（本文では「表形式で」と入力）することで、より分かりやすい出力を得ることができます。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIによるディベートの活用シーンとして、本文に記載されているものはどれか。",o:["問題点の発見や会議前のシミュレーション","従業員の評価","契約書の締結","顧客情報の管理"],a:0,e:"あるテーマに対して、役割を与えることでディベートを行うことができます。問題点の発見や会議前のシミュレーションなどに活用できます。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIによるブレインストーミングの活用方法として、本文に記載されているものはどれか。",o:["テーマを与えてアイデアを出させ、さらに出力されたアイデアを深掘りすることもできる","アイデアの著作権を自動登録できる","参加者のスケジュールを自動調整できる","アイデアの実現可能性を確実に判定できる"],a:0,e:"何か新しい発想を得たい時などに、テーマを与えることでブレインストーミングを行うことができます。さらに出力されたアイディアを深掘りすることもできます。"},
+{ch:5,cat:"不得意なこと",d:2,q:"GPT-3.5に「人工知能について、50文字で説明してください」と指示した場合の対処法として、本文に記載されているものはどれか。",o:["文中に「詳しく」や「分かりやすく」などの言葉を追加してプロンプトを作成する","Temperatureを0に設定する","同じ質問を繰り返す","英語で質問する"],a:0,e:"GPT-3.5の場合は正確な文字数の指定は不得意とされています。正確な文字数での出力は難しく意図した出力にそぐわない場合があるため、文中に「詳しく」や「分かりやすく」などの言葉を追加し、プロンプトを作成するようにしましょう。"},
+{ch:5,cat:"不得意なこと",d:2,q:"本文でGPT-3.5が不得意とされている「計算」について、示されている例として正しいものはどれか。",o:["2023×510の計算で誤った回答を出力した","1＋1の計算で誤った回答を出力した","小数点の計算のみ誤った","計算は常に正確に行えた"],a:0,e:"GPT-3.5の場合は計算は不得意とされています。本文では「2023×510= は?」という問いに対し「1,034,130」と出力しましたが、正しい答えは1,031,730であり、間違った回答を出力した例が示されています。"},
+{ch:5,cat:"不得意なこと",d:2,q:"生成AIの「最新の情報」への対応について、本文の記述と合致するものはどれか。",o:["使用する生成AIモデルによって、「最新の情報」が「いつまでの情報なのか」は異なる","全ての生成AIモデルで学習データの範囲は同一である","生成AIは常にリアルタイムの情報を参照できる","最新の情報を扱えるモデルは存在しない"],a:0,e:"学習データが最新の情報に追いついていないことについては、出力できないまたは不正確な情報を出力してしまいます。使用する生成AIモデルによって「最新の情報」が「いつまでの情報なのか」は異なるため、目的に応じてモデルを変更することが重要です。"},
+{ch:5,cat:"数字の変換",d:2,q:"「十一億二千三百四十五万六千七百八十九をアラビア数字に直してください」というプロンプトが該当する活用例はどれか。",o:["数字の変換","計算","文章の整理","翻訳"],a:0,e:"手動では手間のかかる数字の変換を行うことができます。本文では「十一億二千三百四十五万六千七百八十九をアラビア数字に直してください」というプロンプト例と「1123456789」という出力例が示されています。"},
+{ch:5,cat:"ビジネス応用",d:2,q:"生成AIによる外国語の翻訳を行う際のプロンプトについて、本文に記載されている方法はどれか。",o:["何語に翻訳するかを指定し、文章を記載する","翻訳元の言語のみを指定する","翻訳の精度を数値で指定する","辞書データを事前にアップロードする"],a:0,e:"翻訳を行うことができます。何語に翻訳するかを指定し文章を記載します。本文では英文を日本語に訳す例が示されています。また指定した英単語を用いて英文を作成し、日本語訳をつけることも可能です。"},
+];
+
+/* ===== 設定 ===== */
+const CHNAME = {1:"第1章 AI（人工知能）",2:"第2章 生成AI",3:"第3章 生成AIの動向",4:"第4章 情報リテラシー・AI社会原則",5:"第5章 プロンプト制作と実例"};
+const CHSHORT = {1:"第1章",2:"第2章",3:"第3章",4:"第4章",5:"第5章"};
+const MIX = {1:10,2:12,3:12,4:16,5:10};   // 全章モードの章別出題数（計60問）
+const TOTAL = 60, CH_N = 25, LIMIT = 60*60, PASS = 0.8;
+
+/* ===== 状態 ===== */
+const S = {mode:"exam", range:"all", qs:[], i:0, ans:[], flags:[], t0:0, timer:null, left:LIMIT, elapsed:0, filter:"all"};
+const $ = id => document.getElementById(id);
+const shuffle = a => {const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+const mmss = s => String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const stars = d => "★".repeat(d)+"☆".repeat(3-d);
+
+$("pool-n").textContent = POOL.length;
+
+/* ===== 開始画面 ===== */
+document.querySelectorAll(".sel").forEach(b=>b.addEventListener("click",()=>{
+  const k=b.dataset.k;
+  document.querySelectorAll('.sel[data-k="'+k+'"]').forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); S[k]=b.dataset.v;
+}));
+$("go").addEventListener("click",()=>buildAndStart());
+
+/* 選択肢もシャッフルして出題 */
+function prepare(q){
+  const idx = shuffle([0,1,2,3]);
+  return {...q, opts: idx.map(i=>q.o[i]), correct: idx.indexOf(q.a)};
+}
+
+function buildAndStart(custom){
+  let picked;
+  if(custom){ picked = custom; }
+  else if(S.range==="all"){
+    picked = [];
+    for(const ch of [1,2,3,4,5]){
+      const pool = shuffle(POOL.filter(q=>q.ch===+ch));
+      picked = picked.concat(pool.slice(0, MIX[ch]));
+    }
+    picked = shuffle(picked).map(prepare);
+  } else {
+    const ch = +S.range;
+    picked = shuffle(POOL.filter(q=>q.ch===ch)).slice(0,CH_N).map(prepare);
+  }
+  S.qs = picked; S.i = 0;
+  S.ans = new Array(picked.length).fill(null);
+  S.flags = new Array(picked.length).fill(false);
+  S.elapsed = 0; S.left = LIMIT;
+  $("s-start").classList.add("hide");
+  $("s-result").classList.add("hide");
+  $("s-quiz").classList.remove("hide");
+  $("bar-area").style.display="block";
+  $("mode-pill").classList.remove("hide");
+  $("mode-pill").textContent = S.mode==="exam" ? "本番モード" : "学習モード";
+  $("clock").classList.remove("hide");
+  startTimer();
+  buildPalette(); render();
+  window.scrollTo(0,0);
+}
+
+/* ===== タイマー ===== */
+function startTimer(){
+  clearInterval(S.timer);
+  S.t0 = Date.now();
+  tick();
+  S.timer = setInterval(tick, 1000);
+}
+function tick(){
+  S.elapsed = Math.floor((Date.now()-S.t0)/1000);
+  if(S.mode==="exam"){
+    S.left = LIMIT - S.elapsed;
+    if(S.left<=0){ clearInterval(S.timer); $("clock").textContent="00:00"; finish(true); return; }
+    $("clock").textContent = mmss(S.left);
+    $("clock").classList.toggle("warn", S.left<=300);
+  } else {
+    $("clock").textContent = mmss(S.elapsed);
+  }
+}
+
+/* ===== 問題描画 ===== */
+function render(){
+  const q = S.qs[S.i];
+  $("q-no").textContent = "Q"+(S.i+1)+" / "+S.qs.length;
+  $("q-ch").textContent = CHSHORT[q.ch];
+  $("q-cat").textContent = q.cat;
+  $("q-d").textContent = "難易度 "+stars(q.d);
+  $("q-text").textContent = q.q;
+
+  const wrap = $("q-opts"); wrap.innerHTML="";
+  const N = ["①","②","③","④"];
+  const answered = S.ans[S.i]!==null;
+  const showFB = S.mode==="study" && answered;
+
+  q.opts.forEach((txt,i)=>{
+    const b=document.createElement("button");
+    b.className="o";
+    if(S.ans[S.i]===i) b.classList.add("on");
+    if(showFB){
+      b.disabled=true;
+      if(i===q.correct) b.classList.replace("on","right")||b.classList.add("right");
+      else if(S.ans[S.i]===i){ b.classList.remove("on"); b.classList.add("wrong"); }
+    }
+    b.innerHTML='<span class="n">'+N[i]+'</span><span>'+esc(txt)+'</span>';
+    b.addEventListener("click",()=>choose(i));
+    wrap.appendChild(b);
+  });
+
+  const exp=$("q-exp");
+  if(showFB){
+    const ok = S.ans[S.i]===q.correct;
+    exp.className="exp show "+(ok?"o":"x");
+    exp.innerHTML='<div class="h">'+(ok?"正解":"不正解　正解は "+N[q.correct])+'</div>'+esc(q.e);
+  } else { exp.className="exp"; exp.innerHTML=""; }
+
+  $("prev").disabled = S.i===0;
+  $("next").textContent = S.i===S.qs.length-1 ? "採点する →" : "次の問題 →";
+  $("flag").classList.toggle("on", S.flags[S.i]);
+  $("flag").textContent = S.flags[S.i] ? "🔖 見直しマーク中" : "🔖 あとで見直す";
+  updateBar(); updatePalette();
+}
+
+function choose(i){
+  if(S.mode==="study" && S.ans[S.i]!==null) return;
+  S.ans[S.i]=i;
+  render();
+}
+
+/* ===== ナビ ===== */
+$("prev").addEventListener("click",()=>{ if(S.i>0){S.i--;render();window.scrollTo(0,0);} });
+$("next").addEventListener("click",()=>{
+  if(S.i===S.qs.length-1){ tryFinish(); }
+  else { S.i++; render(); window.scrollTo(0,0); }
+});
+$("flag").addEventListener("click",()=>{ S.flags[S.i]=!S.flags[S.i]; render(); });
+$("finish").addEventListener("click",tryFinish);
+
+function buildPalette(){
+  const p=$("pal"); p.innerHTML="";
+  S.qs.forEach((_,i)=>{
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.addEventListener("click",()=>{S.i=i;render();window.scrollTo(0,0);});
+    p.appendChild(b);
+  });
+}
+function updatePalette(){
+  [...$("pal").children].forEach((b,i)=>{
+    b.className="";
+    if(S.ans[i]!==null) b.classList.add("done");
+    if(S.flags[i]) b.classList.add("flag");
+    if(i===S.i) b.classList.add("cur");
+  });
+}
+function updateBar(){
+  const done=S.ans.filter(a=>a!==null).length;
+  $("fill").style.width = (done/S.qs.length*100)+"%";
+  $("prog").textContent = done+" / "+S.qs.length+" 解答済";
+}
+
+/* ===== 採点 ===== */
+function tryFinish(){
+  const un = S.ans.filter(a=>a===null).length;
+  if(un>0){
+    $("m-body").textContent = "未解答が "+un+" 問あります。このまま採点しますか？（未解答は誤答として扱われます）";
+    $("modal").classList.add("on");
+  } else finish(false);
+}
+$("m-ok").addEventListener("click",()=>{$("modal").classList.remove("on");finish(false);});
+$("m-no").addEventListener("click",()=>{$("modal").classList.remove("on");});
+
+function finish(timeup){
+  clearInterval(S.timer);
+  const total=S.qs.length;
+  const score=S.qs.reduce((n,q,i)=>n+(S.ans[i]===q.correct?1:0),0);
+  const rate=score/total;
+  $("s-quiz").classList.add("hide");
+  $("s-result").classList.remove("hide");
+  $("bar-area").style.display="none";
+  $("clock").classList.add("hide");
+  $("r-score").textContent=score;
+  $("r-total").textContent=total;
+  $("r-rate").textContent=Math.round(rate*100)+"%";
+  $("r-miss").textContent=total-score;
+  $("r-time").textContent=mmss(Math.min(S.elapsed,LIMIT));
+  const j=$("r-judge");
+  if(rate>=PASS){ j.className="judge pass"; j.textContent="合格ライン（80%）到達"; }
+  else { j.className="judge fail"; j.textContent="合格ライン（80%）未達"; }
+
+  // 章別内訳
+  const by={};
+  S.qs.forEach((q,i)=>{ by[q.ch]=by[q.ch]||{n:0,c:0}; by[q.ch].n++; if(S.ans[i]===q.correct) by[q.ch].c++; });
+  let msg = timeup ? "<b>制限時間に達したため自動採点しました。</b><br>" : "";
+  msg += "<b>章別の正答数</b><br>";
+  Object.keys(by).sort().forEach(ch=>{ msg += CHNAME[ch]+"：<b>"+by[ch].c+" / "+by[ch].n+"問</b><br>"; });
+  msg += "<br>正答率が低かった章は、教材の該当章を読み直してから「誤答だけをもう一度解く」で復習してください。";
+  $("r-msg").innerHTML=msg;
+
+  renderList();
+  window.scrollTo(0,0);
+}
+
+function renderList(){
+  const N=["①","②","③","④"];
+  const box=$("r-list"); box.innerHTML="";
+  S.qs.forEach((q,i)=>{
+    const ok=S.ans[i]===q.correct;
+    if(S.filter==="miss"&&ok) return;
+    if(S.filter==="hit"&&!ok) return;
+    const d=document.createElement("div");
+    d.className="rev "+(ok?"hit":"miss");
+    let h='<div class="qmeta"><span class="tag no">Q'+(i+1)+'</span><span class="tag ch">'+CHSHORT[q.ch]+'</span><span class="tag">'+esc(q.cat)+'</span><span class="tag" style="background:'+(ok?"var(--ok-soft);color:var(--ok)":"var(--ng-soft);color:var(--ng)")+'">'+(ok?"正解":"不正解")+'</span></div>';
+    h+='<div class="q">'+esc(q.q)+'</div>';
+    if(!ok) h+='<div class="a you"><b>あなたの解答：</b>'+(S.ans[i]===null?"未解答":N[S.ans[i]]+" "+esc(q.opts[S.ans[i]]))+'</div>';
+    h+='<div class="a cor"><b>正解：</b>'+N[q.correct]+" "+esc(q.opts[q.correct])+'</div>';
+    h+='<div class="e"><b>解説</b><br>'+esc(q.e)+'</div>';
+    d.innerHTML=h; box.appendChild(d);
+  });
+  if(!box.children.length) box.innerHTML='<p class="lead" style="padding:14px 0">該当する問題はありません。</p>';
+}
+document.querySelectorAll(".filters button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); S.filter=b.dataset.f; renderList();
+}));
+
+/* ===== 再挑戦 ===== */
+$("again-miss").addEventListener("click",()=>{
+  const miss=S.qs.filter((q,i)=>S.ans[i]!==q.correct);
+  if(!miss.length){ alert("全問正解です。復習する問題がありません。"); return; }
+  S.mode="study"; buildAndStart(shuffle(miss));
+});
+$("again-new").addEventListener("click",()=>buildAndStart());
+$("again-top").addEventListener("click",()=>{
+  clearInterval(S.timer);
+  $("s-result").classList.add("hide");
+  $("s-quiz").classList.add("hide");
+  $("s-start").classList.remove("hide");
+  $("mode-pill").classList.add("hide");
+  $("clock").classList.add("hide");
+  window.scrollTo(0,0);
+});
+
+/* キーボード操作 */
+document.addEventListener("keydown",e=>{
+  if($("s-quiz").classList.contains("hide")) return;
+  if(["1","2","3","4"].includes(e.key)){ choose(+e.key-1); }
+  if(e.key==="ArrowRight") $("next").click();
+  if(e.key==="ArrowLeft" && !$("prev").disabled) $("prev").click();
+});
+</script>
+</body>
+</html>
